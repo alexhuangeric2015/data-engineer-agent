@@ -1,0 +1,762 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数据建模师智能体总体设计</title><style>body{margin:0;background:#edf2f7;color:#1e293b;font:16px/1.85 "PingFang SC","Microsoft YaHei",sans-serif}main{max-width:1180px;margin:32px auto;background:white;padding:48px 56px;border-radius:18px}a{color:#1d4ed8}nav{margin:24px 0;padding:20px 24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px}nav ol{columns:2;font-size:14px}h1{font-size:30px;color:#172554;margin:0 0 24px}h2{margin:48px 0 20px;padding:12px 18px;background:#eff6ff;border-left:5px solid #2563eb;border-radius:0 8px 8px 0;color:#1e3a8a;font-size:23px}h3{margin:30px 0 16px;font-size:19px;color:#334155}blockquote{background:#f8fafc;border-left:4px solid #94a3b8;margin:0;padding:14px 24px}table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}th{background:#eff6ff;color:#1e3a8a;text-align:left}td,th{padding:12px 14px;border:1px solid #dbe4ee}tr:nth-child(even){background:#f8fafc}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:22px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;font:14px/1.9 "PingFang SC",sans-serif}.diagram{margin:24px 0;padding:24px 12px;background:white;border:1px solid #dbe4ee;border-radius:14px;text-align:center;overflow-x:auto}.diagram svg{width:100%;height:auto;max-height:none}li{margin:6px 0}.preview-note{font-size:13px;color:#64748b}@media print{body{background:white}main{margin:0;padding:10px}.diagram,table{break-inside:avoid}h2,h3{break-after:avoid}}</style></head><body><main><p class="preview-note">离线图形预览｜图形由 Mermaid 生成；可编辑源码见同名 Markdown 文件。</p><h1>数据建模师智能体总体设计</h1>
+<blockquote>
+<p><strong>文档版本：V2.0 评审稿｜日期：2026-10-08</strong><br><strong>面向读者：架构、平台配置、MCP 接入、业务口径、开发测试及验收人员。</strong><br>对应<a href="%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1%E5%B8%88%E6%99%BA%E8%83%BD%E4%BD%93%E6%A6%82%E8%A6%81%E8%AE%BE%E8%AE%A1.html">概要设计</a>。本文定义实施与验证约定，不表示配置已上线或平台能力已实测。原方案保持不变。</p>
+</blockquote><nav aria-label="文档目录"><strong>目录</strong><ol><li><a href="#section-1">1. 目标、约束与设计决策</a></li><li><a href="#section-2">2. 平台能力核验与接入条件</a></li><li><a href="#section-3">3. 任务确认单与证据衔接</a></li><li><a href="#section-4">4. Agent 提示词与配置设计</a></li><li><a href="#section-5">5. 四项 SKILL 的执行设计</a></li><li><a href="#section-6">6. MCP 能力与结果约定</a></li><li><a href="#section-7">7. 编码与验证时序</a></li><li><a href="#section-8">8. 评审规则与报告</a></li><li><a href="#section-9">9. SQL 验证设计</a></li><li><a href="#section-10">10. 权限、资料可信边界与日志</a></li><li><a href="#section-11">11. 部署、配置版本与运行维护</a></li><li><a href="#section-12">12. 试点评估与验收设计</a></li><li><a href="#section-13">13. 职责分工与待确认事项</a></li><li><a href="#section-14">14. 架构评审问题落实对照</a></li><li><a href="#section-15">15. 参考与适用边界</a></li></ol></nav>
+<h2 id="section-1">1. 目标、约束与设计决策</h2>
+<h3>1.1 基础约束</h3>
+<ul>
+<li>在 HiAgent 上构建一个“数据建模师”Agent，提供查询、建模与设计评审、SQL 编码、SQL 评审四类能力。</li>
+<li>接受“部分治理结果准确有效、可通过 MCP 查询”及“资产平台已有表粒度说明”两个前提，不建设治理程序或正式映射写入能力。</li>
+<li>首期采用一个业务域、一个目标 SQL 引擎和约定范围的批处理 SQL。具体业务域、引擎、SQL 集合边界由阶段 0 确认，不擅自选定。</li>
+<li>单一入口不等于长期单一会话。设计、编码、评审可以使用同一个 Agent 的不同会话，通过明确材料衔接。</li>
+<li>人工仍负责口径确认、验证与交付决策。模型输出的“通过”不是生产准入凭证。</li>
+</ul>
+<h3>1.2 关键架构决策</h3>
+<table>
+<thead>
+<tr>
+<th>决策</th>
+<th>采用方式</th>
+<th>调整条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>任务选择</td>
+<td>提示词说明能力与 SKILL 选择规则，技能描述补充适用条件</td>
+<td>自动选择不达标时使用显式任务类型或技能引用</td>
+</tr>
+<tr>
+<td>技能协作</td>
+<td>Agent 按已加载说明组织查询和场景步骤</td>
+<td>不支持组合加载时，将必要公共步骤纳入场景技能，统一维护后发布</td>
+</tr>
+<tr>
+<td>流程承载</td>
+<td>SKILL 定义步骤，确认单与既有流程记录人工确认</td>
+<td>有必须程序拦截的要求时，再复用工作流或后端校验</td>
+</tr>
+<tr>
+<td>工具接入</td>
+<td>复用现有 MCP；不足部分才适配</td>
+<td>无法提供关键查询或结果约定时，明确适配工作量</td>
+</tr>
+<tr>
+<td>验证路径</td>
+<td>必须指定负责人和验证方法，自动接入按需</td>
+<td>现有平台具备接口且接入收益明确时封装工具</td>
+</tr>
+<tr>
+<td>状态与证据</td>
+<td>现有文件、平台附件、调用记录、开发交付系统</td>
+<td>量级或协作需求超出已有能力时再评估存储服务</td>
+</tr>
+<tr>
+<td>评审入口</td>
+<td>同一个 Agent，新会话或完整重建输入</td>
+<td>不依赖新 Agent 来证明评审独立性</td>
+</tr>
+</tbody></table>
+<p>四层逻辑架构见概要设计；下图说明实际配置和调用，避免把 SKILL 误认为可运行的独立服务。</p>
+<h3>图 1：运行与配置关系——Agent 执行，SKILL 指导</h3>
+<div class="diagram" id="diagram-0"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="-7.5 -8 964.96875 446.625" style="max-width: 964.96875px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="render-0"><style>#render-0{font-size:17px;fill:#333;}#render-0 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#render-0 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#render-0 .edge-thickness-normal{stroke-width:2px;}#render-0 .edge-thickness-thick{stroke-width:3.5px;}#render-0 .edge-pattern-solid{stroke-dasharray:0;}#render-0 .edge-pattern-dashed{stroke-dasharray:3;}#render-0 .edge-pattern-dotted{stroke-dasharray:2;}#render-0 .marker{fill:#64748b;stroke:#64748b;}#render-0 .marker.cross{stroke:#64748b;}#render-0 svg{font-size:17px;}#render-0 .label{color:#333;}#render-0 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-0 .cluster-label span,#render-0 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-0 .label text,#render-0 span,#render-0 p{fill:#333;color:#333;}#render-0 .node rect,#render-0 .node circle,#render-0 .node ellipse,#render-0 .node polygon,#render-0 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#render-0 .flowchart-label text{text-anchor:middle;}#render-0 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#render-0 .node .label{text-align:center;}#render-0 .node.clickable{cursor:pointer;}#render-0 .arrowheadPath{fill:#0b0b0b;}#render-0 .edgePath .path{stroke:#64748b;stroke-width:2.0px;}#render-0 .flowchart-link{stroke:#64748b;fill:none;}#render-0 .edgeLabel{background-color:#ffffff;text-align:center;}#render-0 .edgeLabel rect{opacity:0.5;background-color:#ffffff;fill:#ffffff;}#render-0 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#render-0 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#render-0 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-0 .cluster span,#render-0 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-0 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#render-0 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#render-0 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#render-0 .agent&gt;*{fill:#1e3a8a!important;stroke:#1e3a8a!important;color:#ffffff!important;stroke-width:2px!important;}#render-0 .agent span{fill:#1e3a8a!important;stroke:#1e3a8a!important;color:#ffffff!important;stroke-width:2px!important;}#render-0 .agent tspan{fill:#ffffff!important;}#render-0 .cfg&gt;*{fill:#f5f3ff!important;stroke:#c4b5fd!important;color:#5b21b6!important;rx:10!important;ry:10!important;}#render-0 .cfg span{fill:#f5f3ff!important;stroke:#c4b5fd!important;color:#5b21b6!important;rx:10!important;ry:10!important;}#render-0 .cfg tspan{fill:#5b21b6!important;}#render-0 .tool&gt;*{fill:#ecfeff!important;stroke:#67e8f9!important;color:#155e75!important;rx:10!important;ry:10!important;}#render-0 .tool span{fill:#ecfeff!important;stroke:#67e8f9!important;color:#155e75!important;rx:10!important;ry:10!important;}#render-0 .tool tspan{fill:#155e75!important;}#render-0 .out&gt;*{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:10!important;ry:10!important;}#render-0 .out span{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:10!important;ry:10!important;}#render-0 .out tspan{fill:#065f46!important;}</style><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="6" viewBox="0 0 10 10" class="marker flowchart" id="render-0_flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart" id="render-0_flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="render-0_flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="render-0_flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="render-0_flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="render-0_flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#render-0_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-F" id="L-A-F-0" d="M528.67,115.656L546.053,102.87C563.436,90.083,598.202,64.51,625.286,51.724C652.369,38.938,671.769,38.938,681.469,38.938L691.169,38.938"></path><path marker-end="url(#render-0_flowchart-pointEnd)" style="fill:none;stroke-width:2px;stroke-dasharray:3;" class="edge-thickness-normal edge-pattern-dotted flowchart-link LS-CFG LE-A" id="L-CFG-A-0" d="M272,154.594L281.167,154.594C290.333,154.594,308.667,154.594,326.117,154.594C343.567,154.594,360.133,154.594,368.417,154.594L376.7,154.594"></path><path marker-end="url(#render-0_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-USE" id="L-A-USE-0" d="M528.67,193.531L546.053,206.318C563.436,219.104,598.202,244.677,629.369,257.464C660.535,270.25,688.102,270.25,701.885,270.25L715.669,270.25"></path></g><g class="edgeLabels"><g transform="translate(632.96875, 38.9375)" class="edgeLabel"><g transform="translate(-42.5, -15.71875)" class="label"><foreignObject height="31.4375" width="85"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">读取与输出</span></div></foreignObject></g></g><g transform="translate(327, 154.59375)" class="edgeLabel"><g transform="translate(-34, -15.71875)" class="label"><foreignObject height="31.4375" width="68"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">加载配置</span></div></foreignObject></g></g><g transform="translate(632.96875, 270.25)" class="edgeLabel"><g transform="translate(-34, -15.71875)" class="label"><foreignObject height="31.4375" width="68"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">真实调用</span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(713.46875, 101.875)" class="root"><g class="clusters"><g id="USE" class="cluster default flowchart-label"><rect height="320.75" width="204" y="8" x="8" ry="0" rx="0" style="fill:#f0fdfa;stroke:#5eead4;"></rect><g transform="translate(50.5, 8)" class="cluster-label"><foreignObject height="31.4375" width="119"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">运行时使用能力</span></div></foreignObject></g></g></g><g class="edgePaths"><path style="stroke-width: 0;fill:none;" class="edge-thickness-thick edge-pattern-solid flowchart-link LS-M LE-K" id="L-M-K-0" d="M110,79.438L110,83.604C110,87.771,110,96.104,110,104.438C110,112.771,110,121.104,110,125.271L110,129.438"></path><path style="stroke-width: 0;fill:none;" class="edge-thickness-thick edge-pattern-solid flowchart-link LS-K LE-V" id="L-K-V-0" d="M110,175.875L110,180.042C110,184.208,110,192.542,110,200.875C110,209.208,110,217.542,110,221.708L110,225.875"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(110, 56.21875)" data-id="M" data-node="true" id="flowchart-M-7" class="node default tool flowchart-label"><rect height="46.4375" width="132.609375" y="-23.21875" x="-66.3046875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-58.8046875, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="117.609375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">只读 MCP 工具</span></div></foreignObject></g></g><g transform="translate(110, 152.65625)" data-id="K" data-node="true" id="flowchart-K-8" class="node default tool flowchart-label"><rect height="46.4375" width="134" y="-23.21875" x="-67" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-59.5, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="119"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">原生知识库检索</span></div></foreignObject></g></g><g transform="translate(110, 264.8125)" data-id="V" data-node="true" id="flowchart-V-9" class="node default tool flowchart-label"><rect height="77.875" width="134" y="-38.9375" x="-67" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-59.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="119"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">已有校验工具<br>接入方式待核验</span></div></foreignObject></g></g></g></g><g transform="translate(-7.5, 1.9375)" class="root"><g class="clusters"><g id="CFG" class="cluster default flowchart-label"><rect height="289.3125" width="272" y="8" x="8" ry="0" rx="0" style="fill:#faf5ff;stroke:#c4b5fd;"></rect><g transform="translate(75.7734375, 8)" class="cluster-label"><foreignObject height="31.4375" width="136.453125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">HiAgent 配置资产</span></div></foreignObject></g></g></g><g class="edgePaths"><path style="stroke-width: 0;fill:none;" class="edge-thickness-thick edge-pattern-solid flowchart-link LS-P LE-S" id="L-P-S-0" d="M144,79.438L144,83.604C144,87.771,144,96.104,144,104.438C144,112.771,144,121.104,144,125.271L144,129.438"></path><path style="stroke-width: 0;fill:none;" class="edge-thickness-thick edge-pattern-solid flowchart-link LS-S LE-B" id="L-S-B-0" d="M144,175.875L144,180.042C144,184.208,144,192.542,144,200.875C144,209.208,144,217.542,144,221.708L144,225.875"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(144, 56.21875)" data-id="P" data-node="true" id="flowchart-P-0" class="node default cfg flowchart-label"><rect height="46.4375" width="117.859375" y="-23.21875" x="-58.9296875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-51.4296875, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="102.859375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Agent 提示词</span></div></foreignObject></g></g><g transform="translate(144, 152.65625)" data-id="S" data-node="true" id="flowchart-S-1" class="node default cfg flowchart-label"><rect height="46.4375" width="101.15625" y="-23.21875" x="-50.578125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-43.078125, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="86.15625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">四项 SKILL</span></div></foreignObject></g></g><g transform="translate(144, 249.09375)" data-id="B" data-node="true" id="flowchart-B-2" class="node default cfg flowchart-label"><rect height="46.4375" width="202" y="-23.21875" x="-101" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-93.5, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="187"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">模型、工具与知识库绑定</span></div></foreignObject></g></g></g></g><g transform="translate(475.734375, 154.59375)" data-id="A" data-node="true" id="flowchart-A-6" class="node default agent flowchart-label"><rect height="77.875" width="187.46875" y="-38.9375" x="-93.734375" ry="38.9375" rx="38.9375" style=""></rect><g transform="translate(-76.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">数据建模师 Agent<br>执行查询与任务步骤</span></div></foreignObject></g></g><g transform="translate(822.96875, 38.9375)" data-id="F" data-node="true" id="flowchart-F-13" class="node default out flowchart-label"><rect height="77.875" width="253" y="-38.9375" x="-126.5" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-119, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="238"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">任务材料与成果<br>确认单、证据、代码、评审报告</span></div></foreignObject></g></g></g></g></g></svg></div>
+
+
+<p>虚线表示配置，实线表示使用能力。图中的绑定、加载、导出等行为都须在目标 HiAgent 版本核验；本图不预设 UI 名称或 API。</p>
+<h2 id="section-2">2. 平台能力核验与接入条件</h2>
+<p>已有证据仅是用户完成了字典查询试用。下表其他能力初始状态均为“待验证”。核验记录包括平台版本、模型版本、操作输入、调用轨迹、结果和限制。</p>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>验证行为</th>
+<th>完成条件</th>
+<th>不满足时的处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H01</td>
+<td>正确选择技能</td>
+<td>查询、设计、编码、评审样例命中预期技能或实际使用相应说明</td>
+<td>用户显式选择任务或技能；不把正确答案等同于技能已加载</td>
+</tr>
+<tr>
+<td>H02</td>
+<td>组合使用技能</td>
+<td>编码任务能获取公共元数据要求并完成后续步骤</td>
+<td>场景技能包含公共步骤，避免依赖不支持的技能互调</td>
+</tr>
+<tr>
+<td>H03</td>
+<td>技能使用 MCP</td>
+<td>参数、结果和后续回答能在记录中核对</td>
+<td>检查绑定与工具说明；关键工具不可用时阻塞对应场景</td>
+</tr>
+<tr>
+<td>H04</td>
+<td>缺口补充后继续</td>
+<td>保存已有事实，补充后重新核验口径，无重复丢失</td>
+<td>用确认单重建上下文后继续</td>
+</tr>
+<tr>
+<td>H05</td>
+<td>授权与身份</td>
+<td>可确认实际调用身份，越权案例被服务端拒绝</td>
+<td>使用经批准的受限服务身份；范围不能等价时不开放对应工具</td>
+</tr>
+<tr>
+<td>H06</td>
+<td>知识检索与来源</td>
+<td>查询相关规范并识别版本、来源与适用范围</td>
+<td>使用受控材料附件；规范不足时报告未覆盖检查项</td>
+</tr>
+<tr>
+<td>H07</td>
+<td>执行记录与导出</td>
+<td>能保留必要调用记录、成果和版本</td>
+<td>使用既有记录加人工归档；无法追溯关键事实时不承诺可复核交付</td>
+</tr>
+<tr>
+<td>H08</td>
+<td>语法或编译检查</td>
+<td>指定引擎的验证路径、人员与结果格式确定</td>
+<td>人员在已有环境验证；无路径时仅限未验证草稿展示</td>
+</tr>
+</tbody></table>
+<p>阶段 0 输出：核验报告、工具清单、身份范围、支持限制、选定业务域和引擎，以及锁定的验收方法。不能实现的能力进入范围调整，不用提示词描述来掩盖缺失能力。</p>
+<h2 id="section-3">3. 任务确认单与证据衔接</h2>
+<h3>3.1 任务确认单字段约定</h3>
+<p>以下是文档字段约定，不要求创建实体类或数据库表。简单查询只填写适用项；编码和设计必须形成清晰基准。信息状态使用“事实来源已核验、人工已确认、待确认、不适用”，不能仅凭模型推断标记人工已确认。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>业务含义、约束与空值语义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>任务标识</td>
+<td>复用现有需求或工单编号；临时任务可使用文档编号，只要求本范围内可定位</td>
+</tr>
+<tr>
+<td>任务类型</td>
+<td>查询、建模设计、设计评审、SQL 编码或 SQL 评审；可包含多个类型</td>
+</tr>
+<tr>
+<td>基准版本</td>
+<td>当前确认单版本，变更关键口径时递增并保留变更摘要</td>
+</tr>
+<tr>
+<td>业务目标</td>
+<td>要解决的问题及结果用途；关键目标不明时不得直接正式编码</td>
+</tr>
+<tr>
+<td>业务域与环境</td>
+<td>资产归属及源环境；用于重名消歧与权限检查</td>
+</tr>
+<tr>
+<td>目标引擎</td>
+<td>引擎及所需兼容版本；查询场景可不适用，编码不得未知</td>
+</tr>
+<tr>
+<td>输出粒度</td>
+<td>每行代表什么及预期唯一键；设计和统计编码必须明确</td>
+</tr>
+<tr>
+<td>指标与过滤条件</td>
+<td>指标定义、状态筛选、退款等处理；记录来源和确认状态</td>
+</tr>
+<tr>
+<td>时间与单位</td>
+<td>时间字段、区间边界、必要时区、金额单位等；无此维度时标注不适用</td>
+</tr>
+<tr>
+<td>来源资产</td>
+<td>经消歧的表、字段、指标、字典唯一标识；不只保存展示名</td>
+</tr>
+<tr>
+<td>关联与去重</td>
+<td>关联键、预期基数、去重对象和策略；无关联场景标注不适用</td>
+</tr>
+<tr>
+<td>目标表与写入语义</td>
+<td>需要产出写入 SQL 时记录增量或覆盖方式、分区、重跑预期；只读查询标注不适用</td>
+</tr>
+<tr>
+<td>适用规范</td>
+<td>规范名称、版本、规则标识及适用引擎或业务域</td>
+</tr>
+<tr>
+<td>待确认事项</td>
+<td>具体缺口、影响哪些成果或步骤、需要谁确认；无缺口时明确填写无</td>
+</tr>
+<tr>
+<td>确认记录</td>
+<td>负责人、确认时间、确认内容与版本；沿用已有流程凭证</td>
+</tr>
+</tbody></table>
+<p>确认已有事实不要求用户重复审批每一条平台定义。人工重点确认任务意图、口径选择和平台没有提供的业务条件。</p>
+<h3>3.2 元数据证据清单</h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义与边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>证据标识</td>
+<td>在当前任务内唯一，用于成果引用</td>
+</tr>
+<tr>
+<td>对象标识及来源</td>
+<td>资产、字段、字典、指标或规范的稳定定位信息</td>
+</tr>
+<tr>
+<td>关键内容</td>
+<td>支撑结论的粒度、编码、公式、条件或规则摘录；避免保存全量无关结果</td>
+</tr>
+<tr>
+<td>查询或检索时间</td>
+<td>本次获取时间，不等同于源系统更新时间</td>
+</tr>
+<tr>
+<td>源版本或更新时间</td>
+<td>有则记录，无则标注源未提供；不能虚构版本</td>
+</tr>
+<tr>
+<td>范围与完整性</td>
+<td>治理覆盖、业务适用范围、分页或截断状态</td>
+</tr>
+<tr>
+<td>调用引用</td>
+<td>平台提供的调用编号；没有时保存必要参数与结果摘要，不宣称已有自动追踪</td>
+</tr>
+</tbody></table>
+<p>未提供源版本时，对关键内容保留必要快照与查询时间，可支撑任务复核，但不承诺源平台历史数据可以完整重放。业务授权与敏感内容处理仍遵循既有要求。</p>
+<h3>图 2：材料衔接——确认单是共同基准，证据支撑每项结论</h3>
+<div class="diagram" id="diagram-1"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="-8 -8 1389.671875 265.6875" style="max-width: 1389.671875px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="render-1"><style>#render-1{font-size:17px;fill:#333;}#render-1 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#render-1 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#render-1 .edge-thickness-normal{stroke-width:2px;}#render-1 .edge-thickness-thick{stroke-width:3.5px;}#render-1 .edge-pattern-solid{stroke-dasharray:0;}#render-1 .edge-pattern-dashed{stroke-dasharray:3;}#render-1 .edge-pattern-dotted{stroke-dasharray:2;}#render-1 .marker{fill:#64748b;stroke:#64748b;}#render-1 .marker.cross{stroke:#64748b;}#render-1 svg{font-size:17px;}#render-1 .label{color:#333;}#render-1 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-1 .cluster-label span,#render-1 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-1 .label text,#render-1 span,#render-1 p{fill:#333;color:#333;}#render-1 .node rect,#render-1 .node circle,#render-1 .node ellipse,#render-1 .node polygon,#render-1 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#render-1 .flowchart-label text{text-anchor:middle;}#render-1 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#render-1 .node .label{text-align:center;}#render-1 .node.clickable{cursor:pointer;}#render-1 .arrowheadPath{fill:#0b0b0b;}#render-1 .edgePath .path{stroke:#64748b;stroke-width:2.0px;}#render-1 .flowchart-link{stroke:#64748b;fill:none;}#render-1 .edgeLabel{background-color:#ffffff;text-align:center;}#render-1 .edgeLabel rect{opacity:0.5;background-color:#ffffff;fill:#ffffff;}#render-1 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#render-1 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#render-1 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-1 .cluster span,#render-1 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-1 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#render-1 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#render-1 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#render-1 .input&gt;*{fill:#eff6ff!important;stroke:#93c5fd!important;color:#1e3a8a!important;rx:9!important;ry:9!important;}#render-1 .input span{fill:#eff6ff!important;stroke:#93c5fd!important;color:#1e3a8a!important;rx:9!important;ry:9!important;}#render-1 .input tspan{fill:#1e3a8a!important;}#render-1 .baseline&gt;*{fill:#f5f3ff!important;stroke:#c4b5fd!important;color:#5b21b6!important;rx:9!important;ry:9!important;}#render-1 .baseline span{fill:#f5f3ff!important;stroke:#c4b5fd!important;color:#5b21b6!important;rx:9!important;ry:9!important;}#render-1 .baseline tspan{fill:#5b21b6!important;}#render-1 .result&gt;*{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:9!important;ry:9!important;}#render-1 .result span{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:9!important;ry:9!important;}#render-1 .result tspan{fill:#065f46!important;}</style><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="6" viewBox="0 0 10 10" class="marker flowchart" id="render-1_flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart" id="render-1_flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="render-1_flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="render-1_flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="render-1_flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="render-1_flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-R LE-C" id="L-R-C-0" d="M183.781,38.938L189.911,38.938C196.042,38.938,208.302,38.938,217.049,38.938C225.796,38.938,231.029,38.938,233.646,38.938L236.263,38.938"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-M LE-E" id="L-M-E-0" d="M199.563,146.813L203.063,146.813C206.563,146.813,213.563,146.813,223.929,146.813C234.296,146.813,248.029,146.813,254.896,146.813L261.763,146.813"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-O" id="L-C-O-0" d="M459.623,77.875L474.613,85.703C489.603,93.531,519.583,109.188,538.654,119.112C557.725,129.037,565.887,133.229,569.968,135.326L574.049,137.422"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-O" id="L-E-O-0" d="M503.063,176.918L510.813,178.895C518.563,180.872,534.063,184.827,544.433,186.554C554.804,188.282,560.045,187.783,562.666,187.533L565.286,187.284"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-O LE-V" id="L-O-V-0" d="M738.563,204.356L742.063,205.422C745.563,206.487,752.563,208.619,758.679,209.684C764.796,210.75,770.029,210.75,772.646,210.75L775.263,210.75"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-P" id="L-C-P-0" d="M528.563,21.491L532.063,21.065C535.563,20.64,542.563,19.789,563.563,19.363C584.563,18.938,619.563,18.938,654.563,18.938C689.563,18.938,724.563,18.938,768.988,18.938C813.414,18.938,867.266,18.938,921.117,18.938C974.969,18.938,1028.82,18.938,1067.256,24.393C1105.691,29.848,1128.71,40.758,1140.219,46.213L1151.729,51.668"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-P" id="L-E-P-0" d="M485.242,107.875L495.962,103.708C506.682,99.542,528.122,91.208,556.342,87.042C584.563,82.875,619.563,82.875,654.563,82.875C689.563,82.875,724.563,82.875,768.988,82.875C813.414,82.875,867.266,82.875,921.117,82.875C974.969,82.875,1028.82,82.875,1058.365,83.043C1087.909,83.211,1093.146,83.546,1095.764,83.714L1098.383,83.882"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-O LE-P" id="L-O-P-0" d="M730.362,139.844L735.229,137.344C740.096,134.844,749.829,129.844,781.622,127.344C813.414,124.844,867.266,124.844,921.117,124.844C974.969,124.844,1028.82,124.844,1058.381,124.304C1087.941,123.764,1093.21,122.684,1095.845,122.144L1098.48,121.604"></path><path marker-end="url(#render-1_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-V LE-P" id="L-V-P-0" d="M1061.672,210.75L1065.172,210.75C1068.672,210.75,1075.672,210.75,1095.879,198.126C1116.085,185.503,1149.499,160.255,1166.205,147.631L1182.912,135.008"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(99.78125, 38.9375)" data-id="R" data-node="true" id="flowchart-R-24" class="node default input flowchart-label"><rect height="46.4375" width="168" y="-23.21875" x="-84" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-76.5, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">用户需求与设计材料</span></div></foreignObject></g></g><g transform="translate(385.0625, 38.9375)" data-id="C" data-node="true" id="flowchart-C-25" class="node default baseline flowchart-label"><rect height="77.875" width="287" y="-38.9375" x="-143.5" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-136, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="272"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">任务确认单<br>目标、粒度、口径、环境、确认版本</span></div></foreignObject></g></g><g transform="translate(99.78125, 146.8125)" data-id="M" data-node="true" id="flowchart-M-26" class="node default input flowchart-label"><rect height="46.4375" width="199.5625" y="-23.21875" x="-99.78125" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-92.28125, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="184.5625"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">MCP 元数据 + 有效规范</span></div></foreignObject></g></g><g transform="translate(385.0625, 146.8125)" data-id="E" data-node="true" id="flowchart-E-27" class="node default baseline flowchart-label"><rect height="77.875" width="236" y="-38.9375" x="-118" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-110.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="221"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">证据清单<br>对象标识、内容、来源与时间</span></div></foreignObject></g></g><g transform="translate(654.5625, 178.78125)" data-id="O" data-node="true" id="flowchart-O-29" class="node default result flowchart-label"><rect height="77.875" width="168" y="-38.9375" x="-84" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-76.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">设计 / SQL 成果<br>引用基准版本和证据</span></div></foreignObject></g></g><g transform="translate(921.1171875, 210.75)" data-id="V" data-node="true" id="flowchart-V-33" class="node default result flowchart-label"><rect height="77.875" width="281.109375" y="-38.9375" x="-140.5546875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-133.0546875, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="266.109375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">验证记录<br>绑定 SQL 版本、引擎、样本与结果</span></div></foreignObject></g></g><g transform="translate(1238.671875, 92.875)" data-id="P" data-node="true" id="flowchart-P-35" class="node default result flowchart-label"><rect height="77.875" width="270" y="-38.9375" x="-135" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-127.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="255"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">评审报告<br>逐项问题、规则、证据、未覆盖项</span></div></foreignObject></g></g></g></g></g></svg></div>
+
+
+<p>代码修改后重新验证受影响内容；确认单、元数据口径或规范发生关键变化时，记录影响并重新设计、编码或评审，不沿用旧“通过”结论。</p>
+<h3>3.3 任务状态与恢复</h3>
+<p>状态仅用于成果记录和人工沟通，不承诺平台内已存在相应状态机。建议使用：处理中、待确认、待验证、待评审、已完成、已终止。</p>
+<ul>
+<li>待确认：记录具体问题；用户补充后继续，已有有效事实可复用，变更相关事实重新查询。</li>
+<li>待验证：SQL 草稿已生成，指定验证尚未完成，不标记可交付通过。</li>
+<li>待评审：材料与适用验证结果齐备，等待评审和人工确认。</li>
+<li>已完成：任务范围内要求完成；查询完成不等于开发交付完成。</li>
+<li>已终止：用户终止或依赖无法满足，保留原因与已有成果。</li>
+</ul>
+<p>长对话出现材料遗漏时，重新提供当前确认单、必要证据和最新代码，不依赖模型记住所有历史消息。新会话继续前检查权限和关键事实是否仍适用。</p>
+<h2 id="section-4">4. Agent 提示词与配置设计</h2>
+<h3>4.1 配置清单</h3>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Agent 名称</td>
+<td>数据建模师</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>从平台已有可用模型中选择；用相同测试集比较工具使用和业务结果，不预先承诺具体型号</td>
+</tr>
+<tr>
+<td>提示词</td>
+<td>角色、能力选择、共同事实约束、确认与成果规则；正文仅维护在 <code>.st</code> 文件</td>
+</tr>
+<tr>
+<td>SKILL</td>
+<td>四项技能，名称与提示词一致；加载与绑定方式按核验结果确定</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>仅绑定必要只读查询；验证工具按范围和权限接入，不绑定生产写入与发布</td>
+</tr>
+<tr>
+<td>知识库</td>
+<td>有效开发规范、业务说明与精选案例，记录适用域和版本</td>
+</tr>
+<tr>
+<td>任务入口</td>
+<td>自动识别为首选；显式“查询 / 设计 / 编码 / 评审”作为备用操作方式</td>
+</tr>
+</tbody></table>
+<p>可用于平台配置的提示词草案见<a href="templates/data-modeler-agent.st">模板文件</a>。该模板采用固定技能名，不预设 HiAgent 的模板引擎；实施人员使用平台实际支持的方式导入正文，并统一管理发布版本。</p>
+<h3>4.2 提示词与技能的规则归属</h3>
+<p>提示词维护所有任务共同遵守的规则；技能维护场景步骤；评审规则清单维护具体业务检查。三处不得分别定义互相冲突的同一口径。</p>
+<p>如果公共技能不能按需组合加载，实施人员维护一份公共步骤来源，再将它纳入各场景技能的发布内容。首期可人工同步和检查一致性，不建设模板生成系统。平台实际需要的技能文件格式在核验后决定，本文不预设上传包格式。</p>
+<h2 id="section-5">5. 四项 SKILL 的执行设计</h2>
+<h3>5.1 元数据查询与解读</h3>
+<p><strong>输入：</strong> 用户问题、资产名称或标识、业务域和环境（已知时）。<strong>输出：</strong> 查询对象、事实解释、证据、完整性和缺口。<strong>边界：</strong> 不正式建立映射，不查询未授权明细数据。</p>
+<p>步骤：</p>
+<ol>
+<li>判断要查的是资产、字段、字典、指标还是术语；只收集当前问题所需信息。</li>
+<li>已有稳定标识时直接详情查询；只有名称时检索候选。</li>
+<li>按业务域、环境、表粒度等消歧。唯一候选且依据充分时使用；有多个合理候选时展示差异并请用户选择。</li>
+<li>按需查详情及有效映射、口径。处理分页，不把第一页视为全量；无法获取完整结果时说明限制。</li>
+<li>解释字典编码、指标公式或资产含义，保留来源，不将名称相似视为等价。</li>
+<li>明确未治理、未找到、无权限、失败、冲突和结果不完整等情况。</li>
+</ol>
+<h3>5.2 数据建模与设计评审</h3>
+<p><strong>输入：</strong> 需求、可选已有设计、业务域与目标环境。<strong>输出：</strong> 确认单、模型建议或设计评审报告。<strong>边界：</strong> 不承诺没有证据支持的物理性能指标。</p>
+<p>步骤：理解目标与输出粒度 → 查询资产、指标及关系 → 补齐关键口径 → 形成或核对确认单 → 提出逻辑结构和必要目标字段建议 → 按规则检查关联、去重、时间、单位、字典与敏感使用 → 输出依据、问题及未覆盖项。</p>
+<p>设计新模型和检查已有模型使用相同基准，但输出分别标注“设计建议”或“设计评审”；不得将自己生成的建议自动标成已确认设计。</p>
+<h3>5.3 SQL 编码</h3>
+<p><strong>输入：</strong> 确认单、已有设计、目标引擎，可选原 SQL。<strong>输出：</strong> SQL 草稿、依据、自检记录、待验证事项。<strong>边界：</strong> 不自动运行或发布生产作业。</p>
+<p>步骤：核对基准版本 → 查询所需元数据 → 检查关联、去重、时间、单位与写入语义 → 查询适用规范 → 生成最小满足需求的 SQL → 按检查清单自检 → 按指定路径提交验证或明确人员待办 → 输出结果及状态。</p>
+<p>存在影响正确性的待确认项时，暂停相关代码生成；可输出已确定部分和待补充结构，但不得将带假设 SQL 表述为可交付成果。修改需求或代码后重新检查受影响项。</p>
+<h3>5.4 SQL 评审</h3>
+<p><strong>输入：</strong> 确认单、当前 SQL、适用规范、已有验证记录。<strong>输出：</strong> 带位置、依据和建议的问题清单，以及检查覆盖情况。<strong>边界：</strong> 不以无问题输出替代人员批准，不把模型阅读评审等同于实际执行测试。</p>
+<p>建议新会话使用同一个 Agent：重新提供评审材料 → 提取代码实际行为 → 独立查询关键事实 → 逐项比对基准和规则 → 引用验证记录但不盲信 → 分类记录问题和缺口 → 提交人工复核。</p>
+<p>必须区分“编码自检”和“作业评审”。若没有需求基准，可以进行代码局部检查，但业务符合性标记为信息不足。新会话降低历史解释的影响，不能证明评审完全独立。</p>
+<h2 id="section-6">6. MCP 能力与结果约定</h2>
+<h3>6.1 工具边界</h3>
+<p>以下是逻辑能力约定，不是已经存在的 API 名称或协议字段。优先映射到现有工具，确有不足才补适配。</p>
+<table>
+<thead>
+<tr>
+<th>逻辑能力</th>
+<th>必要输入及限制</th>
+<th>返回内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>资产检索</td>
+<td>关键词、业务域、环境、分页条件；避免无范围全量扫描</td>
+<td>候选标识、名称、类型、域、环境、必要粒度摘要、下一页和完整性</td>
+</tr>
+<tr>
+<td>资产详情</td>
+<td>经消歧的唯一标识；字段支持按需筛选</td>
+<td>字段类型、粒度、关键约束、来源版本或时间及明确缺口</td>
+</tr>
+<tr>
+<td>字段字典映射</td>
+<td>字段唯一标识，适用业务上下文</td>
+<td>已确认关系、字典标识和编码、范围、来源；未治理明确返回</td>
+</tr>
+<tr>
+<td>指标口径与术语</td>
+<td>标识或限定业务域的名称；重名先检索</td>
+<td>定义、公式、过滤、时间、单位及关联资产，缺失部分显式说明</td>
+</tr>
+<tr>
+<td>代码检查（按需接入）</td>
+<td>SQL、指定引擎、受限验证环境</td>
+<td>检查类型、代码版本、引擎、结果和错误位置；不能隐含执行生产 SQL</td>
+</tr>
+</tbody></table>
+<p>字段与字典查询可以组合，也可以分为现有多个工具；不强制为了图中的逻辑能力拆分服务。</p>
+<h3>6.2 通用结果语义</h3>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>约束</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>结果类别</td>
+<td>成功、未找到、未治理、歧义或冲突、无权限、暂时失败、不完整；与传输异常分别处理</td>
+</tr>
+<tr>
+<td>业务数据</td>
+<td>已找到事实；缺失字段明确为空或不存在，不用默认值冒充事实</td>
+</tr>
+<tr>
+<td>来源与对象标识</td>
+<td>结果可定位到权威来源和具体对象</td>
+</tr>
+<tr>
+<td>范围</td>
+<td>业务域、环境、治理覆盖与适用条件</td>
+</tr>
+<tr>
+<td>完整性</td>
+<td>当前页、下一页、结果截断等信息；不知道总数时不虚构总数</td>
+</tr>
+<tr>
+<td>时间与版本</td>
+<td>源版本或更新时间可缺省，查询时间与其分开记录</td>
+</tr>
+<tr>
+<td>错误或缺口</td>
+<td>用可读原因说明，不暴露凭据、堆栈敏感信息或未授权资产细节</td>
+</tr>
+<tr>
+<td>调用标识</td>
+<td>平台可提供时记录，用于诊断；不能作为必要已有能力假定</td>
+</tr>
+</tbody></table>
+<p>MCP 支持输入 Schema、可选输出 Schema 和结构化工具结果；是否被目标客户端正确处理需核验。存在 Schema 能力时用于约束结果；否则至少返回语义一致、可解析的结构。<a href="https://modelcontextprotocol.io/specification/2025-11-25/server/tools">MCP 工具规范</a></p>
+<h3>6.3 查询、异常与预算策略</h3>
+<ul>
+<li>名称检索只用于定位，确认后沿用唯一标识；业务域或环境变更后重新定位。</li>
+<li>分页与字段详情按任务需要读取，设置调用次数和响应规模上限；达到上限时输出部分覆盖，不声称检索完整。</li>
+<li>暂时失败的只读查询允许有限重试；无权限、未找到、未治理等业务结果不盲目重试。</li>
+<li>超时、重试次数、最大调用数、响应规模与任务时长由基线测量后配置并锁定。平台不支持自动预算时，由受控适配与操作流程承接；不宣称已自动强制。</li>
+<li>多源冲突展示来源和差异，关键结论暂停；源记录缺失不自动用案例或模型记忆替代。</li>
+<li>首期无自建缓存；平台已有缓存可复用并标注时效，关键版本变化后重新取证。</li>
+</ul>
+<h2 id="section-7">7. 编码与验证时序</h2>
+<h3>图 3：编码链路——人工确认与外部验证有明确位置</h3>
+<div class="diagram" id="diagram-2"><svg aria-roledescription="sequence" role="graphics-document document" viewBox="-50 -10 1129 1264" style="max-width: 1129px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="render-2"><rect class="rect" height="581" width="975" fill="rgb(245, 243, 255)" y="611" x="54"></rect><rect class="rect" height="526" width="670" fill="rgb(239, 246, 255)" y="75" x="64"></rect><g><line stroke="#999" stroke-width="0.5px" class="200" y2="2000" x2="923" y1="5" x1="923" id="actor4"></line><g id="root-4"><rect class="actor actor-top" ry="3" rx="3" name="V" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="848"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="923"><tspan dy="-8" x="923">验证负责人 /</tspan></text><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="923"><tspan dy="8" x="923">已有环境</tspan></text></g></g><g><line stroke="#999" stroke-width="0.5px" class="200" y2="2000" x2="723" y1="5" x1="723" id="actor3"></line><g id="root-3"><rect class="actor actor-top" ry="3" rx="3" name="B" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="648"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="723"><tspan dy="0" x="723">业务确认负责人</tspan></text></g></g><g><line stroke="#999" stroke-width="0.5px" class="200" y2="2000" x2="523" y1="5" x1="523" id="actor2"></line><g id="root-2"><rect class="actor actor-top" ry="3" rx="3" name="M" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="448"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="523"><tspan dy="0" x="523">MCP 与知识检索</tspan></text></g></g><g><line stroke="#999" stroke-width="0.5px" class="200" y2="2000" x2="299" y1="5" x1="299" id="actor1"></line><g id="root-1"><rect class="actor actor-top" ry="3" rx="3" name="A" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="224"></rect><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="32.5" x="299"><tspan dy="0" x="299">数据建模师 Agent</tspan></text></g></g><style>#render-2{font-size:16px;fill:#333;}#render-2 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#render-2 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#render-2 .edge-thickness-normal{stroke-width:2px;}#render-2 .edge-thickness-thick{stroke-width:3.5px;}#render-2 .edge-pattern-solid{stroke-dasharray:0;}#render-2 .edge-pattern-dashed{stroke-dasharray:3;}#render-2 .edge-pattern-dotted{stroke-dasharray:2;}#render-2 .marker{fill:#0b0b0b;stroke:#0b0b0b;}#render-2 .marker.cross{stroke:#0b0b0b;}#render-2 svg{font-size:16px;}#render-2 .actor{stroke:#93c5fd;fill:#eff6ff;}#render-2 text.actor&gt;tspan{fill:#1e3a8a;stroke:none;}#render-2 .actor-line{stroke:grey;}#render-2 .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#475569;}#render-2 .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#475569;}#render-2 #arrowhead path{fill:#475569;stroke:#475569;}#render-2 .sequenceNumber{fill:#f4f4f4;}#render-2 #sequencenumber{fill:#475569;}#render-2 #crosshead path{fill:#475569;stroke:#475569;}#render-2 .messageText{fill:#0f172a;stroke:none;}#render-2 .labelBox{stroke:#93c5fd;fill:#eff6ff;}#render-2 .labelText,#render-2 .labelText&gt;tspan{fill:#1e3a8a;stroke:none;}#render-2 .loopText,#render-2 .loopText&gt;tspan{fill:#1e3a8a;stroke:none;}#render-2 .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:#93c5fd;fill:#93c5fd;}#render-2 .note{stroke:#fdba74;fill:#fff7ed;}#render-2 .noteText,#render-2 .noteText&gt;tspan{fill:#333;stroke:none;}#render-2 .activation0{fill:hsl(-79.4117647059, 100%, 93.3333333333%);stroke:hsl(-79.4117647059, 100%, 83.3333333333%);}#render-2 .activation1{fill:hsl(-79.4117647059, 100%, 93.3333333333%);stroke:hsl(-79.4117647059, 100%, 83.3333333333%);}#render-2 .activation2{fill:hsl(-79.4117647059, 100%, 93.3333333333%);stroke:hsl(-79.4117647059, 100%, 83.3333333333%);}#render-2 .actorPopupMenu{position:absolute;}#render-2 .actorPopupMenuPanel{position:absolute;fill:#eff6ff;box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2);filter:drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));}#render-2 .actor-man line{stroke:#93c5fd;fill:#eff6ff;}#render-2 .actor-man circle,#render-2 line{stroke:#93c5fd;fill:#eff6ff;stroke-width:2px;}#render-2 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style><g></g><defs><symbol height="24" width="24" id="computer"><path d="M2 2v13h20v-13h-20zm18 11h-16v-9h16v9zm-10.228 6l.466-1h3.524l.467 1h-4.457zm14.228 3h-24l2-6h2.104l-1.33 4h18.45l-1.297-4h2.073l2 6zm-5-10h-14v-7h14v7z" transform="scale(.5)"></path></symbol></defs><defs><symbol clip-rule="evenodd" fill-rule="evenodd" id="database"><path d="M12.258.001l.256.004.255.005.253.008.251.01.249.012.247.015.246.016.242.019.241.02.239.023.236.024.233.027.231.028.229.031.225.032.223.034.22.036.217.038.214.04.211.041.208.043.205.045.201.046.198.048.194.05.191.051.187.053.183.054.18.056.175.057.172.059.168.06.163.061.16.063.155.064.15.066.074.033.073.033.071.034.07.034.069.035.068.035.067.035.066.035.064.036.064.036.062.036.06.036.06.037.058.037.058.037.055.038.055.038.053.038.052.038.051.039.05.039.048.039.047.039.045.04.044.04.043.04.041.04.04.041.039.041.037.041.036.041.034.041.033.042.032.042.03.042.029.042.027.042.026.043.024.043.023.043.021.043.02.043.018.044.017.043.015.044.013.044.012.044.011.045.009.044.007.045.006.045.004.045.002.045.001.045v17l-.001.045-.002.045-.004.045-.006.045-.007.045-.009.044-.011.045-.012.044-.013.044-.015.044-.017.043-.018.044-.02.043-.021.043-.023.043-.024.043-.026.043-.027.042-.029.042-.03.042-.032.042-.033.042-.034.041-.036.041-.037.041-.039.041-.04.041-.041.04-.043.04-.044.04-.045.04-.047.039-.048.039-.05.039-.051.039-.052.038-.053.038-.055.038-.055.038-.058.037-.058.037-.06.037-.06.036-.062.036-.064.036-.064.036-.066.035-.067.035-.068.035-.069.035-.07.034-.071.034-.073.033-.074.033-.15.066-.155.064-.16.063-.163.061-.168.06-.172.059-.175.057-.18.056-.183.054-.187.053-.191.051-.194.05-.198.048-.201.046-.205.045-.208.043-.211.041-.214.04-.217.038-.22.036-.223.034-.225.032-.229.031-.231.028-.233.027-.236.024-.239.023-.241.02-.242.019-.246.016-.247.015-.249.012-.251.01-.253.008-.255.005-.256.004-.258.001-.258-.001-.256-.004-.255-.005-.253-.008-.251-.01-.249-.012-.247-.015-.245-.016-.243-.019-.241-.02-.238-.023-.236-.024-.234-.027-.231-.028-.228-.031-.226-.032-.223-.034-.22-.036-.217-.038-.214-.04-.211-.041-.208-.043-.204-.045-.201-.046-.198-.048-.195-.05-.19-.051-.187-.053-.184-.054-.179-.056-.176-.057-.172-.059-.167-.06-.164-.061-.159-.063-.155-.064-.151-.066-.074-.033-.072-.033-.072-.034-.07-.034-.069-.035-.068-.035-.067-.035-.066-.035-.064-.036-.063-.036-.062-.036-.061-.036-.06-.037-.058-.037-.057-.037-.056-.038-.055-.038-.053-.038-.052-.038-.051-.039-.049-.039-.049-.039-.046-.039-.046-.04-.044-.04-.043-.04-.041-.04-.04-.041-.039-.041-.037-.041-.036-.041-.034-.041-.033-.042-.032-.042-.03-.042-.029-.042-.027-.042-.026-.043-.024-.043-.023-.043-.021-.043-.02-.043-.018-.044-.017-.043-.015-.044-.013-.044-.012-.044-.011-.045-.009-.044-.007-.045-.006-.045-.004-.045-.002-.045-.001-.045v-17l.001-.045.002-.045.004-.045.006-.045.007-.045.009-.044.011-.045.012-.044.013-.044.015-.044.017-.043.018-.044.02-.043.021-.043.023-.043.024-.043.026-.043.027-.042.029-.042.03-.042.032-.042.033-.042.034-.041.036-.041.037-.041.039-.041.04-.041.041-.04.043-.04.044-.04.046-.04.046-.039.049-.039.049-.039.051-.039.052-.038.053-.038.055-.038.056-.038.057-.037.058-.037.06-.037.061-.036.062-.036.063-.036.064-.036.066-.035.067-.035.068-.035.069-.035.07-.034.072-.034.072-.033.074-.033.151-.066.155-.064.159-.063.164-.061.167-.06.172-.059.176-.057.179-.056.184-.054.187-.053.19-.051.195-.05.198-.048.201-.046.204-.045.208-.043.211-.041.214-.04.217-.038.22-.036.223-.034.226-.032.228-.031.231-.028.234-.027.236-.024.238-.023.241-.02.243-.019.245-.016.247-.015.249-.012.251-.01.253-.008.255-.005.256-.004.258-.001.258.001zm-9.258 20.499v.01l.001.021.003.021.004.022.005.021.006.022.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.023.018.024.019.024.021.024.022.025.023.024.024.025.052.049.056.05.061.051.066.051.07.051.075.051.079.052.084.052.088.052.092.052.097.052.102.051.105.052.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.048.144.049.147.047.152.047.155.047.16.045.163.045.167.043.171.043.176.041.178.041.183.039.187.039.19.037.194.035.197.035.202.033.204.031.209.03.212.029.216.027.219.025.222.024.226.021.23.02.233.018.236.016.24.015.243.012.246.01.249.008.253.005.256.004.259.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.021.224-.024.22-.026.216-.027.212-.028.21-.031.205-.031.202-.034.198-.034.194-.036.191-.037.187-.039.183-.04.179-.04.175-.042.172-.043.168-.044.163-.045.16-.046.155-.046.152-.047.148-.048.143-.049.139-.049.136-.05.131-.05.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.053.083-.051.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.05.023-.024.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.023.01-.022.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.127l-.077.055-.08.053-.083.054-.085.053-.087.052-.09.052-.093.051-.095.05-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.045-.118.044-.12.043-.122.042-.124.042-.126.041-.128.04-.13.04-.132.038-.134.038-.135.037-.138.037-.139.035-.142.035-.143.034-.144.033-.147.032-.148.031-.15.03-.151.03-.153.029-.154.027-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.01-.179.008-.179.008-.181.006-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.006-.179-.008-.179-.008-.178-.01-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.027-.153-.029-.151-.03-.15-.03-.148-.031-.146-.032-.145-.033-.143-.034-.141-.035-.14-.035-.137-.037-.136-.037-.134-.038-.132-.038-.13-.04-.128-.04-.126-.041-.124-.042-.122-.042-.12-.044-.117-.043-.116-.045-.113-.045-.112-.046-.109-.047-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.05-.093-.052-.09-.051-.087-.052-.085-.053-.083-.054-.08-.054-.077-.054v4.127zm0-5.654v.011l.001.021.003.021.004.021.005.022.006.022.007.022.009.022.01.022.011.023.012.023.013.023.015.024.016.023.017.024.018.024.019.024.021.024.022.024.023.025.024.024.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.052.11.051.114.051.119.052.123.05.127.051.131.05.135.049.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.044.171.042.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.022.23.02.233.018.236.016.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.012.241-.015.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.048.139-.05.136-.049.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.051.051-.049.023-.025.023-.024.021-.025.02-.024.019-.024.018-.024.017-.024.015-.023.014-.023.013-.024.012-.022.01-.023.01-.023.008-.022.006-.022.006-.022.004-.021.004-.022.001-.021.001-.021v-4.139l-.077.054-.08.054-.083.054-.085.052-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.049-.105.048-.106.047-.109.047-.111.046-.114.045-.115.044-.118.044-.12.044-.122.042-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.035-.143.033-.144.033-.147.033-.148.031-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.025-.161.024-.162.023-.163.022-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.011-.178.009-.179.009-.179.007-.181.007-.182.005-.182.004-.184.003-.184.002h-.37l-.184-.002-.184-.003-.182-.004-.182-.005-.181-.007-.179-.007-.179-.009-.178-.009-.176-.011-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.022-.162-.023-.161-.024-.159-.025-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.031-.146-.033-.145-.033-.143-.033-.141-.035-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.04-.126-.041-.124-.042-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.047-.105-.048-.102-.049-.1-.049-.097-.05-.095-.051-.093-.051-.09-.051-.087-.053-.085-.052-.083-.054-.08-.054-.077-.054v4.139zm0-5.666v.011l.001.02.003.022.004.021.005.022.006.021.007.022.009.023.01.022.011.023.012.023.013.023.015.023.016.024.017.024.018.023.019.024.021.025.022.024.023.024.024.025.052.05.056.05.061.05.066.051.07.051.075.052.079.051.084.052.088.052.092.052.097.052.102.052.105.051.11.052.114.051.119.051.123.051.127.05.131.05.135.05.139.049.144.048.147.048.152.047.155.046.16.045.163.045.167.043.171.043.176.042.178.04.183.04.187.038.19.037.194.036.197.034.202.033.204.032.209.03.212.028.216.027.219.025.222.024.226.021.23.02.233.018.236.017.24.014.243.012.246.01.249.008.253.006.256.003.259.001.26-.001.257-.003.254-.006.25-.008.247-.01.244-.013.241-.014.237-.016.233-.018.231-.02.226-.022.224-.024.22-.025.216-.027.212-.029.21-.03.205-.032.202-.033.198-.035.194-.036.191-.037.187-.039.183-.039.179-.041.175-.042.172-.043.168-.044.163-.045.16-.045.155-.047.152-.047.148-.048.143-.049.139-.049.136-.049.131-.051.126-.05.123-.051.118-.052.114-.051.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.052.07-.051.065-.051.06-.051.056-.05.051-.049.023-.025.023-.025.021-.024.02-.024.019-.024.018-.024.017-.024.015-.023.014-.024.013-.023.012-.023.01-.022.01-.023.008-.022.006-.022.006-.022.004-.022.004-.021.001-.021.001-.021v-4.153l-.077.054-.08.054-.083.053-.085.053-.087.053-.09.051-.093.051-.095.051-.097.05-.1.049-.102.048-.105.048-.106.048-.109.046-.111.046-.114.046-.115.044-.118.044-.12.043-.122.043-.124.042-.126.041-.128.04-.13.039-.132.039-.134.038-.135.037-.138.036-.139.036-.142.034-.143.034-.144.033-.147.032-.148.032-.15.03-.151.03-.153.028-.154.028-.156.027-.158.026-.159.024-.161.024-.162.023-.163.023-.165.021-.166.02-.167.019-.169.018-.169.017-.171.016-.173.015-.173.014-.175.013-.175.012-.177.01-.178.01-.179.009-.179.007-.181.006-.182.006-.182.004-.184.003-.184.001-.185.001-.185-.001-.184-.001-.184-.003-.182-.004-.182-.006-.181-.006-.179-.007-.179-.009-.178-.01-.176-.01-.176-.012-.175-.013-.173-.014-.172-.015-.171-.016-.17-.017-.169-.018-.167-.019-.166-.02-.165-.021-.163-.023-.162-.023-.161-.024-.159-.024-.157-.026-.156-.027-.155-.028-.153-.028-.151-.03-.15-.03-.148-.032-.146-.032-.145-.033-.143-.034-.141-.034-.14-.036-.137-.036-.136-.037-.134-.038-.132-.039-.13-.039-.128-.041-.126-.041-.124-.041-.122-.043-.12-.043-.117-.044-.116-.044-.113-.046-.112-.046-.109-.046-.106-.048-.105-.048-.102-.048-.1-.05-.097-.049-.095-.051-.093-.051-.09-.052-.087-.052-.085-.053-.083-.053-.08-.054-.077-.054v4.153zm8.74-8.179l-.257.004-.254.005-.25.008-.247.011-.244.012-.241.014-.237.016-.233.018-.231.021-.226.022-.224.023-.22.026-.216.027-.212.028-.21.031-.205.032-.202.033-.198.034-.194.036-.191.038-.187.038-.183.04-.179.041-.175.042-.172.043-.168.043-.163.045-.16.046-.155.046-.152.048-.148.048-.143.048-.139.049-.136.05-.131.05-.126.051-.123.051-.118.051-.114.052-.11.052-.106.052-.101.052-.096.052-.092.052-.088.052-.083.052-.079.052-.074.051-.07.052-.065.051-.06.05-.056.05-.051.05-.023.025-.023.024-.021.024-.02.025-.019.024-.018.024-.017.023-.015.024-.014.023-.013.023-.012.023-.01.023-.01.022-.008.022-.006.023-.006.021-.004.022-.004.021-.001.021-.001.021.001.021.001.021.004.021.004.022.006.021.006.023.008.022.01.022.01.023.012.023.013.023.014.023.015.024.017.023.018.024.019.024.02.025.021.024.023.024.023.025.051.05.056.05.06.05.065.051.07.052.074.051.079.052.083.052.088.052.092.052.096.052.101.052.106.052.11.052.114.052.118.051.123.051.126.051.131.05.136.05.139.049.143.048.148.048.152.048.155.046.16.046.163.045.168.043.172.043.175.042.179.041.183.04.187.038.191.038.194.036.198.034.202.033.205.032.21.031.212.028.216.027.22.026.224.023.226.022.231.021.233.018.237.016.241.014.244.012.247.011.25.008.254.005.257.004.26.001.26-.001.257-.004.254-.005.25-.008.247-.011.244-.012.241-.014.237-.016.233-.018.231-.021.226-.022.224-.023.22-.026.216-.027.212-.028.21-.031.205-.032.202-.033.198-.034.194-.036.191-.038.187-.038.183-.04.179-.041.175-.042.172-.043.168-.043.163-.045.16-.046.155-.046.152-.048.148-.048.143-.048.139-.049.136-.05.131-.05.126-.051.123-.051.118-.051.114-.052.11-.052.106-.052.101-.052.096-.052.092-.052.088-.052.083-.052.079-.052.074-.051.07-.052.065-.051.06-.05.056-.05.051-.05.023-.025.023-.024.021-.024.02-.025.019-.024.018-.024.017-.023.015-.024.014-.023.013-.023.012-.023.01-.023.01-.022.008-.022.006-.023.006-.021.004-.022.004-.021.001-.021.001-.021-.001-.021-.001-.021-.004-.021-.004-.022-.006-.021-.006-.023-.008-.022-.01-.022-.01-.023-.012-.023-.013-.023-.014-.023-.015-.024-.017-.023-.018-.024-.019-.024-.02-.025-.021-.024-.023-.024-.023-.025-.051-.05-.056-.05-.06-.05-.065-.051-.07-.052-.074-.051-.079-.052-.083-.052-.088-.052-.092-.052-.096-.052-.101-.052-.106-.052-.11-.052-.114-.052-.118-.051-.123-.051-.126-.051-.131-.05-.136-.05-.139-.049-.143-.048-.148-.048-.152-.048-.155-.046-.16-.046-.163-.045-.168-.043-.172-.043-.175-.042-.179-.041-.183-.04-.187-.038-.191-.038-.194-.036-.198-.034-.202-.033-.205-.032-.21-.031-.212-.028-.216-.027-.22-.026-.224-.023-.226-.022-.231-.021-.233-.018-.237-.016-.241-.014-.244-.012-.247-.011-.25-.008-.254-.005-.257-.004-.26-.001-.26.001z" transform="scale(.5)"></path></symbol></defs><defs><symbol height="24" width="24" id="clock"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" transform="scale(.5)"></path></symbol></defs><defs><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="7.9" id="arrowhead"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker refY="4.5" refX="4" orient="auto" markerHeight="8" markerWidth="15" id="crosshead"><path style="stroke-dasharray: 0, 0;" d="M 1,2 L 6,7 M 6,2 L 1,7" stroke-width="1pt" stroke="#000000" fill="none"></path></marker></defs><defs><marker orient="auto" markerHeight="28" markerWidth="20" refY="7" refX="15.5" id="filled-head"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker orient="auto" markerHeight="40" markerWidth="60" refY="15" refX="15" id="sequencenumber"><circle r="6" cy="15" cx="15"></circle></marker></defs><g><line class="loopLine" y2="631" x2="1019" y1="631" x1="64"></line><line class="loopLine" y2="1182" x2="1019" y1="631" x1="1019"></line><line class="loopLine" y2="1182" x2="1019" y1="1182" x1="64"></line><line class="loopLine" y2="1182" x2="64" y1="631" x1="64"></line><polygon class="labelBox" points="64,631 114,631 114,644 105.6,651 64,651"></polygon><text style="font-size: 16px; font-weight: 400;" class="labelText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="644" x="89">opt</text><text style="font-size: 16px; font-weight: 400;" class="loopText" text-anchor="middle" y="649" x="566.5"><tspan x="566.5">[关键条件充分且确认范围满足]</tspan></text></g><g><rect class="note" ry="0" rx="0" height="42" width="898" stroke="#666" fill="#EDF2AE" y="1202" x="50"></rect><text style="font-size: 16px; font-weight: 400;" dy="1em" class="noteText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="1207" x="499"><tspan x="499">验证可自动接入，也可人工操作；本图不预设审批或测试 API</tspan></text></g><line stroke="#999" stroke-width="0.5px" class="200" y2="2000" x2="75" y1="80" x1="75" id="actor0"></line><g name="U" class="actor-man actor-top"><line y2="45" x2="75" y1="25" x1="75" id="actor-man-torso0"></line><line y2="33" x2="93" y1="33" x1="57" id="actor-man-arms0"></line><line y2="45" x2="75" y1="60" x1="57"></line><line y2="60" x2="91" y1="45" x1="75"></line><circle height="65" width="150" r="15" cy="10" cx="75"></circle><text style="text-anchor: middle; font-size: 16px; font-weight: 400;" class="actor" alignment-baseline="central" dominant-baseline="central" y="67.5" x="75"><tspan dy="0" x="75">使用人员</tspan></text></g><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="100" x="186">提交需求、设计及目标引擎</text><line style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="139" x2="295" y1="139" x1="76"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="143" x="76">1</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="154" x="300">使用编码和公共查询技-</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="176" x="300">能</text><path style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" d="M 300,215 C 360,205 360,245 300,235"></path><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="219" x="300">2</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="260" x="410">定位资产，查询粒度、映射、口径-</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="282" x="410">及规范</text><line style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="321" x2="519" y1="321" x1="300"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="325" x="300">3</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="336" x="413">返回事实、来源、完整性与缺口</text><line style="stroke-dasharray: 3, 3; fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine1" y2="375" x2="303" y1="375" x1="522"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="379" x="522">4</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="390" x="189">提交任务确认单及必要确认项</text><line style="stroke-dasharray: 3, 3; fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine1" y2="429" x2="79" y1="429" x1="298"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="433" x="298">5</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="444" x="398">在既有流程确认任务口径</text><line style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="483" x2="719" y1="483" x1="76"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="487" x="76">6</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="498" x="401">确认版本，或要求补充</text><line style="stroke-dasharray: 3, 3; fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine1" y2="537" x2="79" y1="537" x1="722"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="541" x="722">7</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="552" x="186">提供已确认材料或修改信息</text><line style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="591" x2="295" y1="591" x1="76"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="595" x="76">8</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="683" x="300">生成</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="705" x="300">SQL、自检并绑定基准-</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="727" x="300">与代码版本</text><path style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" d="M 300,766 C 360,756 360,796 300,786"></path><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="770" x="300">9</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="811" x="189">SQL 草稿及验证要求</text><line style="stroke-dasharray: 3, 3; fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine1" y2="850" x2="79" y1="850" x1="298"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="854" x="298">10</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="865" x="498">提交指定版本 SQL 与样本</text><line style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="904" x2="919" y1="904" x1="76"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="908" x="76">11</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="919" x="924">指定引擎解析或编译检-</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="941" x="924">查及业务样本测试</text><path style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" d="M 924,980 C 984,970 984,1010 924,1000"></path><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="984" x="924">12</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="1025" x="501">验证记录、失败与未验证事项</text><line style="stroke-dasharray: 3, 3; fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine1" y2="1064" x2="79" y1="1064" x1="922"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="1068" x="922">13</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="1079" x="186">回传结果，要求整理或修订</text><line style="fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine0" y2="1118" x2="295" y1="1118" x1="76"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="1122" x="76">14</text><text style="font-size: 16px; font-weight: 400;" dy="1em" class="messageText" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="1133" x="189">成果、验证状态与待处理问题</text><line style="stroke-dasharray: 3, 3; fill: none;" marker-start="url(#sequencenumber)" marker-end="url(#arrowhead)" stroke="none" stroke-width="2" class="messageLine1" y2="1172" x2="79" y1="1172" x1="298"></line><text class="sequenceNumber" text-anchor="middle" font-size="12px" font-family="sans-serif" y="1176" x="298">15</text></svg></div>
+
+
+<p>确认不充分、任务终止或验证失败时，不继续进入通过交付。此图只画主要路径；口径改变需重新查询相关事实，SQL 修改后须重新验证受影响内容。角色可由同一人员兼任，但记录中要明确其承担的责任。</p>
+<h2 id="section-8">8. 评审规则与报告</h2>
+<h3>8.1 检查项定义</h3>
+<p>每项规则记录：规则标识、来源与版本、适用域和引擎、需要的事实、判断条件、严重程度和证据要求。</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>判定依据</th>
+<th>常见问题</th>
+<th>信息不足时处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需求符合性</td>
+<td>确认单的目标和输出粒度</td>
+<td>输出维度错误、漏统计对象</td>
+<td>无确认单则无法评估业务符合性</td>
+</tr>
+<tr>
+<td>字段与字典</td>
+<td>有效映射及编码定义</td>
+<td>使用错误状态编码</td>
+<td>没有有效映射则暂停相关判断</td>
+</tr>
+<tr>
+<td>关联基数</td>
+<td>表粒度、键约束或明确关系</td>
+<td>多对多放大、连接遗漏</td>
+<td>粒度说明不等于唯一性证明；缺约束时标注风险待确认</td>
+</tr>
+<tr>
+<td>指标与去重</td>
+<td>指标定义、过滤、去重对象</td>
+<td>退款漏排、计数对象错误</td>
+<td>指标条件缺失则无法判断对应项</td>
+</tr>
+<tr>
+<td>时间与单位</td>
+<td>时间字段、边界、时区、单位</td>
+<td>时间口径或金额单位错误</td>
+<td>依赖条件缺失时不得自行假定</td>
+</tr>
+<tr>
+<td>空值与边界</td>
+<td>已有业务约定和引擎语义</td>
+<td>空值丢失、分母为零</td>
+<td>业务含义不明时请求确认</td>
+</tr>
+<tr>
+<td>写入与重跑</td>
+<td>已确认的目标分区、写入语义</td>
+<td>重跑重复写入、覆盖范围错误</td>
+<td>只读任务不适用；写入任务缺失则阻塞交付</td>
+</tr>
+<tr>
+<td>开发规范</td>
+<td>有效规则及适用范围</td>
+<td>不符合约定命名、过滤或结构</td>
+<td>未检索到规则标记未覆盖，不能认定合规</td>
+</tr>
+<tr>
+<td>敏感字段</td>
+<td>资产敏感级别和授权使用规则</td>
+<td>使用超出约定范围</td>
+<td>无依据则无法判断，不能推定字段不敏感</td>
+</tr>
+<tr>
+<td>引擎兼容</td>
+<td>目标引擎检查记录</td>
+<td>函数或语法不兼容</td>
+<td>没有外部检查时标明仅模型判断</td>
+</tr>
+<tr>
+<td>性能建议</td>
+<td>分区、计划或已有统计资料</td>
+<td>可证实的全扫或关联风险</td>
+<td>无计划与规模证据时只作建议，不承诺性能结论</td>
+</tr>
+</tbody></table>
+<h3>8.2 结果分类与严重程度</h3>
+<p>结果分类：已发现问题、在已检查范围内未发现问题、信息不足无法判断、本次未检查、不适用。每项均有覆盖记录，“无问题列表”不代表全项通过。</p>
+<p>严重程度按业务影响分为：阻塞项（口径或权限等关键错误，不能继续交付）、重要项（影响结果或关键质量，交付前修复）、一般项（规范或维护性问题）、建议项（证据支持的可选改进）。缺口不强行标成已证实代码错误。</p>
+<h3>8.3 报告结构</h3>
+<p>报告包含：任务与基准版本、代码版本、材料与检查范围、总体结论、逐项问题、验证引用、无法判断项、未检查项、修改建议和人工复核记录。问题位置使用当前代码行号或 SQL 片段定位；证据必须引用已取得内容。</p>
+<h3>图 4：评审过程——重新对照基准，输出覆盖与证据</h3>
+<div class="diagram" id="diagram-3"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="-8 -8 418 769.6875" style="max-width: 418px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="render-3"><style>#render-3{font-size:17px;fill:#333;}#render-3 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#render-3 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#render-3 .edge-thickness-normal{stroke-width:2px;}#render-3 .edge-thickness-thick{stroke-width:3.5px;}#render-3 .edge-pattern-solid{stroke-dasharray:0;}#render-3 .edge-pattern-dashed{stroke-dasharray:3;}#render-3 .edge-pattern-dotted{stroke-dasharray:2;}#render-3 .marker{fill:#64748b;stroke:#64748b;}#render-3 .marker.cross{stroke:#64748b;}#render-3 svg{font-size:17px;}#render-3 .label{color:#333;}#render-3 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-3 .cluster-label span,#render-3 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-3 .label text,#render-3 span,#render-3 p{fill:#333;color:#333;}#render-3 .node rect,#render-3 .node circle,#render-3 .node ellipse,#render-3 .node polygon,#render-3 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#render-3 .flowchart-label text{text-anchor:middle;}#render-3 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#render-3 .node .label{text-align:center;}#render-3 .node.clickable{cursor:pointer;}#render-3 .arrowheadPath{fill:#0b0b0b;}#render-3 .edgePath .path{stroke:#64748b;stroke-width:2.0px;}#render-3 .flowchart-link{stroke:#64748b;fill:none;}#render-3 .edgeLabel{background-color:#ffffff;text-align:center;}#render-3 .edgeLabel rect{opacity:0.5;background-color:#ffffff;fill:#ffffff;}#render-3 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#render-3 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#render-3 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-3 .cluster span,#render-3 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-3 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#render-3 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#render-3 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#render-3 .step&gt;*{fill:#eff6ff!important;stroke:#93c5fd!important;color:#1e3a8a!important;rx:9!important;ry:9!important;}#render-3 .step span{fill:#eff6ff!important;stroke:#93c5fd!important;color:#1e3a8a!important;rx:9!important;ry:9!important;}#render-3 .step tspan{fill:#1e3a8a!important;}#render-3 .rule&gt;*{fill:#f5f3ff!important;stroke:#c4b5fd!important;color:#5b21b6!important;rx:9!important;ry:9!important;}#render-3 .rule span{fill:#f5f3ff!important;stroke:#c4b5fd!important;color:#5b21b6!important;rx:9!important;ry:9!important;}#render-3 .rule tspan{fill:#5b21b6!important;}#render-3 .human&gt;*{fill:#fff7ed!important;stroke:#fdba74!important;color:#9a3412!important;rx:9!important;ry:9!important;}#render-3 .human span{fill:#fff7ed!important;stroke:#fdba74!important;color:#9a3412!important;rx:9!important;ry:9!important;}#render-3 .human tspan{fill:#9a3412!important;}#render-3 .out&gt;*{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:9!important;ry:9!important;}#render-3 .out span{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:9!important;ry:9!important;}#render-3 .out tspan{fill:#065f46!important;}</style><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="6" viewBox="0 0 10 10" class="marker flowchart" id="render-3_flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart" id="render-3_flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="render-3_flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="render-3_flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="render-3_flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="render-3_flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#render-3_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-B" id="L-A-B-0" d="M209.5,77.875L209.5,81.208C209.5,84.542,209.5,91.208,209.5,96.992C209.5,102.775,209.5,107.675,209.5,110.125L209.5,112.575"></path><path marker-end="url(#render-3_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-B LE-C" id="L-B-C-0" d="M209.5,195.75L209.5,199.083C209.5,202.417,209.5,209.083,209.5,214.867C209.5,220.65,209.5,225.55,209.5,228L209.5,230.45"></path><path marker-end="url(#render-3_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-C LE-D" id="L-C-D-0" d="M209.5,282.188L209.5,285.521C209.5,288.854,209.5,295.521,209.5,301.304C209.5,307.088,209.5,311.988,209.5,314.438L209.5,316.888"></path><path marker-end="url(#render-3_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-D LE-E" id="L-D-E-0" d="M209.5,400.063L209.5,403.396C209.5,406.729,209.5,413.396,209.5,419.179C209.5,424.963,209.5,429.863,209.5,432.313L209.5,434.763"></path><path marker-end="url(#render-3_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-E LE-F" id="L-E-F-0" d="M209.5,517.938L209.5,521.271C209.5,524.604,209.5,531.271,209.5,537.054C209.5,542.838,209.5,547.738,209.5,550.188L209.5,552.638"></path><path marker-end="url(#render-3_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F LE-G" id="L-F-G-0" d="M166.756,604.375L155.797,610.328C144.837,616.281,122.919,628.188,111.959,639.21C101,650.233,101,660.373,101,665.443L101,670.513"></path><path marker-end="url(#render-3_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-F LE-H" id="L-F-H-0" d="M252.244,604.375L263.203,610.328C274.163,616.281,296.081,628.188,307.041,639.21C318,650.233,318,660.373,318,665.443L318,670.513"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g transform="translate(101, 640.09375)" class="edgeLabel"><g transform="translate(-25.5, -15.71875)" class="label"><foreignObject height="31.4375" width="51"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">需整改</span></div></foreignObject></g></g><g transform="translate(318, 640.09375)" class="edgeLabel"><g transform="translate(-76.5, -15.71875)" class="label"><foreignObject height="31.4375" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">材料与检查满足要求</span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(209.5, 38.9375)" data-id="A" data-node="true" id="flowchart-A-42" class="node default step flowchart-label"><rect height="77.875" width="266.609375" y="-38.9375" x="-133.3046875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-125.8046875, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="251.609375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">重新提交评审材料<br>确认单 + SQL + 规范 + 验证记录</span></div></foreignObject></g></g><g transform="translate(209.5, 156.8125)" data-id="B" data-node="true" id="flowchart-B-43" class="node default step flowchart-label"><rect height="77.875" width="270" y="-38.9375" x="-135" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-127.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="255"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Agent 提取代码实际行为<br>不把生成时的解释当作正确性证据</span></div></foreignObject></g></g><g transform="translate(209.5, 258.96875)" data-id="C" data-node="true" id="flowchart-C-44" class="node default rule flowchart-label"><rect height="46.4375" width="236" y="-23.21875" x="-118" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-110.5, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="221"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">查询关键事实，逐项对照规则</span></div></foreignObject></g></g><g transform="translate(209.5, 361.125)" data-id="D" data-node="true" id="flowchart-D-45" class="node default rule flowchart-label"><rect height="77.875" width="338" y="-38.9375" x="-169" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-161.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="323"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">分类记录<br>问题、无问题、信息不足、未检查、不适用</span></div></foreignObject></g></g><g transform="translate(209.5, 479)" data-id="E" data-node="true" id="flowchart-E-46" class="node default out flowchart-label"><rect height="77.875" width="271.4375" y="-38.9375" x="-135.71875" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-128.21875, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="256.4375"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">生成评审报告<br>位置 + 影响 + 规则 + 证据 + 建议</span></div></foreignObject></g></g><g transform="translate(209.5, 581.15625)" data-id="F" data-node="true" id="flowchart-F-47" class="node default human flowchart-label"><rect height="46.4375" width="168" y="-23.21875" x="-84" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-76.5, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">人员复核并决定处理</span></div></foreignObject></g></g><g transform="translate(101, 714.75)" data-id="G" data-node="true" id="flowchart-G-48" class="node default human flowchart-label"><rect height="77.875" width="202" y="-38.9375" x="-101" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-93.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="187"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">修订口径或代码<br>重做受影响的验证与评审</span></div></foreignObject></g></g><g transform="translate(318, 714.75)" data-id="H" data-node="true" id="flowchart-H-49" class="node default out flowchart-label"><rect height="77.875" width="168" y="-38.9375" x="-84" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-76.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">纳入既有交付流程<br>保留确认与版本记录</span></div></foreignObject></g></g></g></g></g></svg></div>
+
+
+<p>发现设计或需求问题时修订确认单，再恢复下游工作。评审采用同一 Agent 新会话或完整重建输入，仍保留人员最终责任。</p>
+<h2 id="section-9">9. SQL 验证设计</h2>
+<h3>9.1 验证分级与交付要求</h3>
+<table>
+<thead>
+<tr>
+<th>验证层次</th>
+<th>执行方式</th>
+<th>能说明什么</th>
+<th>交付规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型自检</td>
+<td>Agent 按清单检查</td>
+<td>发现潜在逻辑问题，不是执行证明</td>
+<td>所有编码草稿记录</td>
+</tr>
+<tr>
+<td>语法或编译</td>
+<td>验证负责人在指定引擎或已有等价检查环境执行</td>
+<td>在已记录环境通过对应检查，不保证业务正确</td>
+<td>编码场景正式试点必须确定并完成适用检查</td>
+</tr>
+<tr>
+<td>业务样本</td>
+<td>受控测试环境与预先确认的预期结果</td>
+<td>在覆盖的样本中满足业务要求</td>
+<td>核心统计编码用例必须验证</td>
+</tr>
+<tr>
+<td>人工评审</td>
+<td>负责人查看基准、证据、SQL 与验证结果</td>
+<td>决定是否接受成果</td>
+<td>进入既有交付流程前完成</td>
+</tr>
+</tbody></table>
+<p>验证责任必选，MCP 自动化接入可选。生产执行不因测试路径可用而自动授权。无法验证时保持“待验证草稿”，不能计入编码交付通过案例。</p>
+<h3>9.2 最小业务样本设计</h3>
+<p>按任务选取正常记录、重复关联、退款或撤销、空值、区间边界、无匹配关联等样本。预期结果由业务与开发测试人员事先确认，不由待测 Agent 单独生成。</p>
+<p>例如，测试“净支付金额”时，可使用以下<strong>假设样例，不代表现有资产定义</strong>：已确认净额等于成功支付减成功退款。成功支付 100 元、成功退款 10 元，另有失败支付 50 元不计入；关联维表故意配置两条候选记录。预期净额为 90 元，若计算为 180 元则暴露关联放大。确认单还必须明确如何选取有效维表记录，否则该关联设计本身存在缺口。</p>
+<p>结果比较以业务结果和列语义为准，不要求 SQL 文本相同。不要求排序的结果忽略行顺序；金额精度和允许误差由业务规则明确；核对分组行数、金额和去重结果。样本测试通过不证明全量数据质量或生产性能。</p>
+<h3>9.3 验证记录</h3>
+<p>记录 SQL 版本或内容摘要、基准版本、引擎版本、执行环境、样本版本、预期与实际结果、检查类别、执行人和时间。不同 SQL 或基准版本的验证记录不得混用。失败结果反馈给 Agent 时保留必要错误信息，脱敏后再传入。</p>
+<h2 id="section-10">10. 权限、资料可信边界与日志</h2>
+<h3>10.1 身份与权限</h3>
+<ul>
+<li>明确实际调用是用户身份还是服务身份；用户授权范围由服务端判断，不能靠 Agent 提供的文字或自行填写用户标识来证明。</li>
+<li>服务身份采用已批准的最小只读范围；它不能自动代表每个用户原有权限。不能区分用户权限时，限制可用用户群和资产范围，或不开放相关功能。</li>
+<li>元数据查看权限不等于业务明细查询、测试数据访问或生产执行权限。验证环境另行授权。</li>
+<li>HiAgent、模型环境可接收的数据分类、部署和留存要求在接入前确认，优先复用已批准环境。</li>
+</ul>
+<h3>10.2 非可信资料的处理</h3>
+<p>资产备注、检索文档、用户代码及代码注释是资料，不得覆盖系统规则、要求扩大权限或伪造评审通过。提示词和技能同时说明这一边界；服务端授权、只读工具清单与执行环境限制承担实际防护，不将提示词视为完整安全措施。</p>
+<p>验收包含恶意注释、文档内“忽略规则”指令、越权资产请求等案例。出现泄露、越权或伪造通过时停止对应试点能力，修复后回归。</p>
+<h3>10.3 日志与证据</h3>
+<p>优先复用 HiAgent 与 MCP 已有日志，关键事件使用清晰中文业务语义：任务识别、技能使用、资产定位、口径确认、查询失败、代码生成、验证反馈、评审交付。</p>
+<p>记录必要任务标识、工具名称、耗时、结果类别和版本引用；不直接记录凭据、完整敏感样本或全量无关查询结果。日志用于诊断，证据用于业务复核，两者可关联但职责不同。留存期限与查看权限遵循现有规范，接入前确认。</p>
+<h2 id="section-11">11. 部署、配置版本与运行维护</h2>
+<h3>11.1 部署边界</h3>
+<p>HiAgent 承载 Agent、技能和绑定配置；资产平台与字典继续在原系统运行。若需要适配，作为受限工具能力部署在现有服务环境，只处理协议与结果投影，不新增治理程序。受控验证沿用开发测试环境。</p>
+<h3>图 5：部署边界——复用系统，按需适配，验证独立受控</h3>
+<div class="diagram" id="diagram-4"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="-7.5 -8 797.78125 606.5" style="max-width: 797.78125px;" xmlns="http://www.w3.org/2000/svg" width="100%" id="render-4"><style>#render-4{font-size:17px;fill:#333;}#render-4 .error-icon{fill:hsl(220.5882352941, 100%, 98.3333333333%);}#render-4 .error-text{fill:rgb(8.5000000002, 5.7500000001, 0);stroke:rgb(8.5000000002, 5.7500000001, 0);}#render-4 .edge-thickness-normal{stroke-width:2px;}#render-4 .edge-thickness-thick{stroke-width:3.5px;}#render-4 .edge-pattern-solid{stroke-dasharray:0;}#render-4 .edge-pattern-dashed{stroke-dasharray:3;}#render-4 .edge-pattern-dotted{stroke-dasharray:2;}#render-4 .marker{fill:#64748b;stroke:#64748b;}#render-4 .marker.cross{stroke:#64748b;}#render-4 svg{font-size:17px;}#render-4 .label{color:#333;}#render-4 .cluster-label text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-4 .cluster-label span,#render-4 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-4 .label text,#render-4 span,#render-4 p{fill:#333;color:#333;}#render-4 .node rect,#render-4 .node circle,#render-4 .node ellipse,#render-4 .node polygon,#render-4 .node path{fill:#fff4dd;stroke:hsl(40.5882352941, 60%, 83.3333333333%);stroke-width:1px;}#render-4 .flowchart-label text{text-anchor:middle;}#render-4 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#render-4 .node .label{text-align:center;}#render-4 .node.clickable{cursor:pointer;}#render-4 .arrowheadPath{fill:#0b0b0b;}#render-4 .edgePath .path{stroke:#64748b;stroke-width:2.0px;}#render-4 .flowchart-link{stroke:#64748b;fill:none;}#render-4 .edgeLabel{background-color:#ffffff;text-align:center;}#render-4 .edgeLabel rect{opacity:0.5;background-color:#ffffff;fill:#ffffff;}#render-4 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#render-4 .cluster rect{fill:hsl(220.5882352941, 100%, 98.3333333333%);stroke:hsl(220.5882352941, 60%, 88.3333333333%);stroke-width:1px;}#render-4 .cluster text{fill:rgb(8.5000000002, 5.7500000001, 0);}#render-4 .cluster span,#render-4 p{color:rgb(8.5000000002, 5.7500000001, 0);}#render-4 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:hsl(220.5882352941, 100%, 98.3333333333%);border:1px solid hsl(220.5882352941, 60%, 88.3333333333%);border-radius:2px;pointer-events:none;z-index:100;}#render-4 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#333;}#render-4 :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#render-4 .agent&gt;*{fill:#1e3a8a!important;stroke:#1e3a8a!important;color:#ffffff!important;stroke-width:2px!important;}#render-4 .agent span{fill:#1e3a8a!important;stroke:#1e3a8a!important;color:#ffffff!important;stroke-width:2px!important;}#render-4 .agent tspan{fill:#ffffff!important;}#render-4 .tool&gt;*{fill:#ecfeff!important;stroke:#67e8f9!important;color:#155e75!important;rx:9!important;ry:9!important;}#render-4 .tool span{fill:#ecfeff!important;stroke:#67e8f9!important;color:#155e75!important;rx:9!important;ry:9!important;}#render-4 .tool tspan{fill:#155e75!important;}#render-4 .record&gt;*{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:9!important;ry:9!important;}#render-4 .record span{fill:#ecfdf5!important;stroke:#6ee7b7!important;color:#065f46!important;rx:9!important;ry:9!important;}#render-4 .record tspan{fill:#065f46!important;}</style><g><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="6" viewBox="0 0 10 10" class="marker flowchart" id="render-4_flowchart-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart" id="render-4_flowchart-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart" id="render-4_flowchart-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart" id="render-4_flowchart-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart" id="render-4_flowchart-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart" id="render-4_flowchart-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#render-4_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-HI LE-SOURCE" id="L-HI-SOURCE-0" d="M515.548,147.875L526.772,153.995C537.995,160.115,560.443,172.354,571.667,183.71C582.891,195.067,582.891,205.54,582.891,210.776L582.891,216.013"></path><path marker-end="url(#render-4_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-HI LE-RECORD" id="L-HI-RECORD-0" d="M244.343,147.875L233.119,153.995C221.895,160.115,199.448,172.354,188.224,186.33C177,200.306,177,216.019,177,223.875L177,231.731"></path><path marker-end="url(#render-4_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-RECORD LE-TEST" id="L-RECORD-TEST-0" d="M140.434,353.469L134.945,362.208C129.456,370.948,118.478,388.427,116.363,402.538C114.248,416.65,120.995,427.393,124.369,432.765L127.743,438.137"></path><path marker-end="url(#render-4_flowchart-pointEnd)" style="fill:none;stroke-width:2px;stroke-dasharray:3;" class="edge-thickness-normal edge-pattern-dotted flowchart-link LS-TEST LE-RECORD" id="L-TEST-RECORD-0" d="M223.438,442.625L227.282,436.505C231.125,430.385,238.813,418.146,237.637,404.034C236.461,389.923,226.423,373.94,221.404,365.948L216.384,357.957"></path></g><g class="edgeLabels"><g transform="translate(582.890625, 184.59375)" class="edgeLabel"><g transform="translate(-51, -15.71875)" class="label"><foreignObject height="31.4375" width="102"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">受限只读查询</span></div></foreignObject></g></g><g transform="translate(177, 184.59375)" class="edgeLabel"><g transform="translate(-59.5, -15.71875)" class="label"><foreignObject height="31.4375" width="119"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">生成草稿和报告</span></div></foreignObject></g></g><g transform="translate(107.5, 405.90625)" class="edgeLabel"><g transform="translate(-68, -15.71875)" class="label"><foreignObject height="31.4375" width="136"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">人员提交指定版本</span></div></foreignObject></g></g><g transform="translate(246.5, 405.90625)" class="edgeLabel"><g transform="translate(-51, -15.71875)" class="label"><foreignObject height="31.4375" width="102"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel">回填验证记录</span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(-7.5, 229.03125)" class="root"><g class="clusters"><g id="RECORD" class="cluster default flowchart-label"><rect height="116.4375" width="354" y="8" x="8" ry="0" rx="0" style="fill:#f0fdf4;stroke:#86efac;"></rect><g transform="translate(108.5, 8)" class="cluster-label"><foreignObject height="31.4375" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">既有文档与交付环境</span></div></foreignObject></g></g></g><g class="edgePaths"></g><g class="edgeLabels"></g><g class="nodes"><g transform="translate(185, 66.21875)" data-id="F" data-node="true" id="flowchart-F-69" class="node default record flowchart-label"><rect height="46.4375" width="304" y="-23.21875" x="-152" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-144.5, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="289"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">确认单、证据、版本、验证与评审记录</span></div></foreignObject></g></g></g></g><g transform="translate(35, 434.625)" class="root"><g class="clusters"><g id="TEST" class="cluster default flowchart-label"><rect height="147.875" width="269" y="8" x="8" ry="0" rx="0" style="fill:#fff7ed;stroke:#fdba74;"></rect><g transform="translate(74.5, 8)" class="cluster-label"><foreignObject height="31.4375" width="136"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">受控开发测试环境</span></div></foreignObject></g></g></g><g class="edgePaths"></g><g class="edgeLabels"></g><g class="nodes"><g transform="translate(142.5, 81.9375)" data-id="V" data-node="true" id="flowchart-V-68" class="node default tool flowchart-label"><rect height="77.875" width="219" y="-38.9375" x="-109.5" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-102, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="204"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">语法 / 编译与样本验证<br>负责人执行或受限工具调用</span></div></foreignObject></g></g></g></g><g transform="translate(376.5, 213.3125)" class="root"><g class="clusters"><g id="SOURCE" class="cluster default flowchart-label"><rect height="147.875" width="397.78125" y="8" x="8" ry="0" rx="0" style="fill:#f0fdfa;stroke:#5eead4;"></rect><g transform="translate(147.390625, 8)" class="cluster-label"><foreignObject height="31.4375" width="119"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">已有元数据系统</span></div></foreignObject></g></g></g><g class="edgePaths"><path style="stroke-width: 0;fill:none;" class="edge-thickness-thick edge-pattern-solid flowchart-link LS-M LE-D" id="L-M-D-0" d="M159.953,81.938L164.12,81.938C168.286,81.938,176.62,81.938,184.953,81.938C193.286,81.938,201.62,81.938,205.786,81.938L209.953,81.938"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(96.4765625, 81.9375)" data-id="M" data-node="true" id="flowchart-M-64" class="node default tool flowchart-label"><rect height="46.4375" width="126.953125" y="-23.21875" x="-63.4765625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-55.9765625, -15.71875)" style="" class="label"><rect></rect><foreignObject height="31.4375" width="111.953125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">现有资产 MCP</span></div></foreignObject></g></g><g transform="translate(295.3671875, 81.9375)" data-id="D" data-node="true" id="flowchart-D-65" class="node default tool flowchart-label"><rect height="77.875" width="170.828125" y="-38.9375" x="-85.4140625" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-77.9140625, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="155.828125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">字典查询入口<br>现有能力 / 必要适配</span></div></foreignObject></g></g></g></g><g transform="translate(126.5859375, -8)" class="root"><g class="clusters"><g id="HI" class="cluster default flowchart-label"><rect height="147.875" width="491.71875" y="8" x="8" ry="0" rx="0" style="fill:#eff6ff;stroke:#93c5fd;"></rect><g transform="translate(202.6328125, 8)" class="cluster-label"><foreignObject height="31.4375" width="102.453125"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">HiAgent 环境</span></div></foreignObject></g></g></g><g class="edgePaths"><path marker-end="url(#render-4_flowchart-pointEnd)" style="fill:none;" class="edge-thickness-normal edge-pattern-solid flowchart-link LS-A LE-K" id="L-A-K-0" d="M256.719,81.938L260.885,81.938C265.052,81.938,273.385,81.938,280.835,81.938C288.285,81.938,294.852,81.938,298.135,81.938L301.419,81.938"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(144.859375, 81.9375)" data-id="A" data-node="true" id="flowchart-A-60" class="node default agent flowchart-label"><rect height="77.875" width="223.71875" y="-38.9375" x="-111.859375" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-104.359375, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="208.71875"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">数据建模师 Agent<br>提示词 + SKILL + 绑定配置</span></div></foreignObject></g></g><g transform="translate(390.71875, 81.9375)" data-id="K" data-node="true" id="flowchart-K-61" class="node default tool flowchart-label"><rect height="77.875" width="168" y="-38.9375" x="-84" ry="0" rx="0" style="" class="basic label-container"></rect><g transform="translate(-76.5, -31.4375)" style="" class="label"><rect></rect><foreignObject height="62.875" width="153"><div style="display: inline-block; white-space: nowrap;" xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">原生知识库<br>有效规范与精选案例</span></div></foreignObject></g></g></g></g></g></g></g></svg></div>
+
+
+<p>生产调度与发布仍在既有平台。图中提交与回填可以人工完成，不表示已有系统间自动同步接口。</p>
+<h3>11.2 最小发布与回退</h3>
+<p>发布清单记录模型与参数、提示词版本、四项技能版本、工具名称和 Schema 版本、知识库或规范版本、权限、运行预算、通过的回归报告。</p>
+<p>变更顺序：保存上一版 → 修改配置或必要适配 → 用固定样本回归 → 负责人确认 → 发布试点 → 观察关键指标。失败时恢复上一份已通过配置；平台不支持原生版本恢复时使用受控导出或归档配置重建。没有导出能力时，实施前确认可人工完整备份的配置项。</p>
+<p>模型、工具或规范变化都可能影响结果，不能只对 SKILL 变更做回归。首期不引入专用发布平台，使用已有配置与版本管理方式。</p>
+<h3>11.3 运维处理</h3>
+<p>监测失败率、耗时、工具调用量、缺口比例、技能选择错误和人工修改量。接口不可用时停止依赖步骤并给出失败原因，不继续凭记忆答复事实。恢复后按当前基准继续，必要时重新取证。</p>
+<p>源元数据关键变化、预算超限或明显质量退化时，由责任人评估暂停对应场景、调整配置或回退。具体阈值阶段 0 后按基线锁定；不预先虚构 SLA 或规模容量。</p>
+<h2 id="section-12">12. 试点评估与验收设计</h2>
+<h3>12.1 样本与方法</h3>
+<p>阶段 0 由业务、开发测试和验收负责人确认范围与预期结果。建议初始验收集 40 个案例：查询 10、设计及设计评审 8、编码 10、SQL 评审 8、异常恢复 4；数量为建议，实际在启动时锁定。权限与资料指令干扰案例另外列为必测项，不用平均分掩盖安全问题。</p>
+<p>调试案例与验收案例分离。验收前冻结样本、参考答案、规则、配置版本和评估方式；重复运行次数、随机性设置与结果统计方法提前记录，不能只选最好的一次。参考答案采用业务语义和结果，不强求唯一设计或唯一 SQL 文本。</p>
+<h3>12.2 评分与指标定义</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>计算或评估方式</th>
+<th>避免的误判</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>技能与工具使用正确性</td>
+<td>核对轨迹与任务要求；平台无法观测加载时标为证据不足</td>
+<td>回答正确不自动证明技能加载正确</td>
+</tr>
+<tr>
+<td>查询事实正确率</td>
+<td>正确事实项 / 应回答事实项；关键资产和口径错误单独列出</td>
+<td>流畅解释不等于正确</td>
+</tr>
+<tr>
+<td>编码业务通过率</td>
+<td>必要引擎检查与业务样本均通过的案例 / 可验收编码案例</td>
+<td>未验证草稿不得计为通过</td>
+</tr>
+<tr>
+<td>评审问题检出率</td>
+<td>检出的预设真实问题 / 预设真实问题</td>
+<td>没发现问题不等于无问题</td>
+</tr>
+<tr>
+<td>评审问题准确率</td>
+<td>人工确认的真实问题 / 所有报出的问题</td>
+<td>泛化风险提醒不当作已证实问题</td>
+</tr>
+<tr>
+<td>缺口处理正确率</td>
+<td>正确识别并按约定处理的缺口案例 / 缺口案例</td>
+<td>不能靠大量无必要追问得分</td>
+</tr>
+<tr>
+<td>可追溯性</td>
+<td>成果关联到基准、代码版本、事实和验证记录的完整性</td>
+<td>泛泛写来源名称不等于可定位</td>
+</tr>
+<tr>
+<td>人工效率</td>
+<td>同等任务质量下，人工总用时对比；包含确认、修改与验证时间</td>
+<td>不只统计模型生成时间</td>
+</tr>
+<tr>
+<td>时延和成本</td>
+<td>记录任务耗时、调用次数、平台可提供的模型成本；不可得项说明</td>
+<td>不将不可得成本写成零</td>
+</tr>
+</tbody></table>
+<p>比例目标和时延、成本上限在基线测量后、正式验收前由负责人锁定。文档不宣称已有数值达标。</p>
+<h3>12.3 硬性不通过条件</h3>
+<p>必测案例中出现越权或敏感泄露、伪造来源或验证通过、未经授权执行写入、待确认口径被标为人工已确认等情况，整改并回归后才能通过，不以总体平均分抵消。该要求约束验收结果，不承诺提示词能保证永不出错。</p>
+<h3>12.4 阶段完成条件</h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>必须形成的成果</th>
+<th>放行条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0：范围与核验</td>
+<td>能力核验、业务域与引擎、身份范围、样本方法、验证负责人</td>
+<td>关键依赖可用，备用路径明确，负责人确认</td>
+</tr>
+<tr>
+<td>1：公共查询</td>
+<td>查询技能、工具约定、证据模板及查询测试记录</td>
+<td>资产定位、映射解读、分页与缺口处理达到锁定标准</td>
+</tr>
+<tr>
+<td>2：设计与编码</td>
+<td>确认单、设计及编码技能、验证路径与样本记录</td>
+<td>选定场景可完成设计和有验证依据的代码交付</td>
+</tr>
+<tr>
+<td>3：评审与验收</td>
+<td>检查表、评审技能、盲测与人工复核报告、回退说明</td>
+<td>指标达标，硬性失败项已消除，负责人批准扩大使用</td>
+</tr>
+</tbody></table>
+<h2 id="section-13">13. 职责分工与待确认事项</h2>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>主要责任</th>
+<th>核心交付物</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>项目负责人</td>
+<td>范围、资源、验收目标与扩展决策</td>
+<td>决策记录</td>
+</tr>
+<tr>
+<td>业务口径负责人</td>
+<td>需求与口径选择、样本预期、缺口确认</td>
+<td>确认单和参考结果</td>
+</tr>
+<tr>
+<td>HiAgent 配置负责人</td>
+<td>平台核验、提示词与技能配置、绑定、回归和版本恢复</td>
+<td>配置清单与核验记录</td>
+</tr>
+<tr>
+<td>MCP 接入负责人</td>
+<td>工具映射、权限、结果投影、失败与分页处理</td>
+<td>接口能力表与联调记录</td>
+</tr>
+<tr>
+<td>开发测试负责人</td>
+<td>指定引擎验证、样本测试、代码修改与验证记录</td>
+<td>检查与测试结果</td>
+</tr>
+<tr>
+<td>评审与验收负责人</td>
+<td>规则、预设问题、盲测、问题复核和验收</td>
+<td>评审检查表及验收报告</td>
+</tr>
+<tr>
+<td>平台及安全负责人</td>
+<td>接入环境、身份、信息分类、日志与留存边界</td>
+<td>授权与配置确认</td>
+</tr>
+</tbody></table>
+<p>角色可兼任，职责不能缺失。启动前必须确认：业务域与引擎、目标平台版本、支持 SQL 范围、工具身份、敏感数据边界、验证环境和负责人、验收样本与方法。运行阈值及比例目标在测量基线后锁定。</p>
+<h2 id="section-14">14. 架构评审问题落实对照</h2>
+<table>
+<thead>
+<tr>
+<th>评审问题</th>
+<th>本设计落实位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>平台技能行为未证实</td>
+<td>第 2 节：H01—H08 核验及备用路径</td>
+</tr>
+<tr>
+<td>能力与交付边界过宽</td>
+<td>第 1 节及概要设计第 3 节：单域、单引擎、SQL 辅助交付</td>
+</tr>
+<tr>
+<td>业务信息散落在对话</td>
+<td>第 3 节：确认单、证据、版本衔接与恢复</td>
+</tr>
+<tr>
+<td>工具只有名称缺少查询策略</td>
+<td>第 5.1、6 节：检索消歧、标识、分页、结果与预算</td>
+</tr>
+<tr>
+<td>验证全部可选</td>
+<td>第 9 节：责任和必要验证明确，自动接入可选</td>
+</tr>
+<tr>
+<td>自检与评审混同</td>
+<td>第 5.4、8 节：重新对照基准，区分检查性质</td>
+</tr>
+<tr>
+<td>审计缺规则与覆盖状态</td>
+<td>第 8 节：规则清单、分类、问题证据</td>
+</tr>
+<tr>
+<td>权限、资料可信与版本只有原则</td>
+<td>第 10、11 节：执行边界、必测案例、最小发布回退</td>
+</tr>
+<tr>
+<td>验收后置且缺评价方法</td>
+<td>第 12 节：样本冻结、指标定义与阶段条件</td>
+</tr>
+</tbody></table>
+<h2 id="section-15">15. 参考与适用边界</h2>
+<ul>
+<li><a href="https://modelcontextprotocol.io/specification/2025-11-25/server/tools">MCP 工具规范</a>：用于参考工具描述、Schema、结构化返回等协议能力，不代表现有服务器已全部支持。</li>
+<li><a href="https://docs.volcengine.com/docs/agentkit/SkillsOverview?lang=zh">火山引擎 AgentKit 技能概述</a>：用于参考技能封装思想，属于 AgentKit 文档，不作为 HiAgent 操作能力证明。</li>
+</ul>
+<p>HiAgent 实际能力以目标环境核验为准。上述设计不引入新的治理系统、多智能体、任务中心或生产执行能力。</p>
+</main></body></html>
