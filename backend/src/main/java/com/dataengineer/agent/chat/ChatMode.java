@@ -4,6 +4,6 @@ package com.dataengineer.agent.chat;
 public enum ChatMode {
     /** ReAct 自主决定下一次知识库或数据库工具调用。 */
     REACT,
-    /** 先生成计划，再由执行 Agent 按计划调用工具。 */
+    /** 生成受限 JSON 计划后，由 Java 按阶段执行知识检索和数据库核验。 */
     PLAN_AND_EXECUTE
 }

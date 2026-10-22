@@ -13,7 +13,14 @@ Vue3 对话页 → Spring Boot SSE → Spring AI Alibaba Agent
 
 运行时加载 [V10 单一 data-asset-query SKILL](docs/hiagent/versions/v10/skills/data-asset-query/SKILL.md)，并按查询阶段读取四份参考，不把知识库片段当作资产事实。MySQL 的 `table_schema` 与 `data_asset_code_kb` 只包含当前已确认的事实字段；会话另存于 `agent_chat_session` 和 `agent_chat_message`。MyBatis 查询均定义在 Mapper XML，无 Wrapper、动态表名或任意 SQL 执行入口。
 
-ReAct 模式由 `ReactAgent` 自行选择检索和核验工具。PlanAndExecute 模式先由模型输出执行计划，再交给执行 Agent 使用同一套工具；两个模式使用同样的知识库先行门禁。计划和回答分别作为 `plan`、`delta` SSE 事件输出。
+两种模式有独立的代码路径，入口 [ChatService](backend/src/main/java/com/dataengineer/agent/chat/ChatService.java) 按 `ChatMode` 分派：
+
+| 模式 | 执行代码 | 流程 |
+| --- | --- | --- |
+| ReAct | [ReactModeExecutor](backend/src/main/java/com/dataengineer/agent/chat/ReactModeExecutor.java) | Spring AI Alibaba `ReactAgent` 在模型与工具之间循环，自行选择下一步；工具层强制阶段参考、知识库命中和数据库核验门禁。 |
+| PlanAndExecute | [PlanAndExecuteExecutor](backend/src/main/java/com/dataengineer/agent/chat/PlanAndExecuteExecutor.java) | 模型输出受限 JSON 计划；Java 校验步骤、按顺序执行“读 SKILL 参考→HiAgent 检索→候选提取→MySQL 核验”，最后模型根据数据库证据流式总结。此模式不调用 `ReactAgent`。 |
+
+计划模式是一次有界的“规划→执行→总结”，目前没有自动重规划。计划和阶段进度分别以 `plan`、`stage` SSE 事件推送，回答以 `delta` 流式推送。两种模式共享同一个 [AssetTools](backend/src/main/java/com/dataengineer/agent/chat/AssetTools.java) 门禁。模型的规划和候选提取为非流式调用，因此首个计划事件会在规划完成后出现；答案文本是流式的。
 
 ## 本地启动
 

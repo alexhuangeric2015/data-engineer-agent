@@ -71,6 +71,11 @@ public class AssetTools {
         return json(Map.of("source", "HiAgent 知识库，仅用于定位", "hits", hits));
     }
 
+    /** 为确定性计划执行器提供本轮真实命中，不暴露为模型工具。 */
+    public List<KnowledgeHit> locatedHits(AssetKind kind) {
+        return kind == AssetKind.TABLE ? tableHits : dictionaryHits;
+    }
+
     /** 对知识库片段中出现的表名进行 MySQL 精确核验。 */
     @Tool(description = "用 MySQL table_schema 核验已由知识库命中的表英文名或中文名，返回表及字段原始事实。")
     public String verifyTable(String name) {

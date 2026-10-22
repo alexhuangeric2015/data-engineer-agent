@@ -17,11 +17,10 @@ public class SkillPromptLoader {
     private static final java.util.Set<String> REFERENCES = java.util.Set.of(
             "table-schema-kb.md", "table-schema-db.md", "dictionary-kb.md", "dictionary-db.md");
 
-    /** 将最新 SKILL 与模板参数组合为本轮系统提示词。 */
-    public String executionPrompt(ChatMode mode, String plan) {
+    /** 将最新 SKILL 与 ReAct 模板组合为本轮系统提示词。 */
+    public String reactPrompt() {
         String skill = read(SKILL_ROOT + "SKILL.md");
-        String template = read(mode == ChatMode.REACT ? "prompts/react.st" : "prompts/execute.st");
-        return template.replace("{skill}", skill).replace("{plan}", plan == null ? "" : plan);
+        return read("prompts/react.st").replace("{skill}", skill);
     }
 
     /** 只返回 V10 技能包中明确列出的阶段参考。 */
@@ -34,7 +33,21 @@ public class SkillPromptLoader {
 
     /** 为 PlanAndExecute 生成仅用于规划的提示词。 */
     public String planningPrompt(String question) {
-        return read("prompts/plan.st").replace("{question}", question);
+        return read("prompts/plan.st").replace("{skill}", read(SKILL_ROOT + "SKILL.md"))
+                .replace("{question}", question);
+    }
+
+    /** 从 HiAgent 原片段提取待核验名称；模型只可提出候选。 */
+    public String candidatePrompt(AssetKind kind, String question, String evidence, String hits) {
+        return read("prompts/candidates.st").replace("{kind}", kind.name())
+                .replace("{question}", question).replace("{evidence}", evidence)
+                .replace("{hits}", hits);
+    }
+
+    /** 将数据库结果整理为用户回答；正文规则仅在 .st 中定义。 */
+    public String summaryPrompt(String question, String plan, String evidence) {
+        return read("prompts/summary.st").replace("{question}", question)
+                .replace("{plan}", plan).replace("{evidence}", evidence);
     }
 
     /** 组装续问语境，规则文字仅存于 .st。 */

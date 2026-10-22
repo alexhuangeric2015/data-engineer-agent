@@ -22,10 +22,11 @@ function newChat() {
   messages.value = []
 }
 
-// SSE 协议事件分别更新会话、计划、增量文本和错误提示。
+// SSE 协议事件分别更新会话、计划、阶段进度、增量文本和错误提示。
 function handleEvent(event, assistant) {
   if (event.sessionId) sessionId.value = event.sessionId
   if (event.type === 'plan') assistant.plan = event.text
+  if (event.type === 'stage') assistant.stages.push(event.text)
   if (event.type === 'delta') assistant.content += event.text
   if (event.type === 'error') assistant.error = event.text || '请求失败'
 }
@@ -37,7 +38,7 @@ async function submit() {
   question.value = ''
   busy.value = true
   messages.value.push({ role: 'user', content: text })
-  const assistant = { role: 'assistant', content: '', plan: '', error: '' }
+  const assistant = { role: 'assistant', content: '', plan: '', stages: [], error: '' }
   messages.value.push(assistant)
   try {
     const response = await fetch('/api/chat/stream', {
@@ -99,6 +100,7 @@ async function submit() {
           <div class="avatar">{{ message.role === 'user' ? '我' : '✦' }}</div>
           <div class="message-body"><div class="message-name">{{ message.role === 'user' ? '你' : '数据资产助手' }}</div>
             <details v-if="message.plan" class="plan"><summary>查看执行计划</summary><div>{{ message.plan }}</div></details>
+            <ol v-if="message.stages?.length" class="stages"><li v-for="(stage, stageIndex) in message.stages" :key="stageIndex">{{ stage }}</li></ol>
             <div v-if="message.role === 'assistant'" class="content markdown" v-html="renderMarkdown(message.content || (busy && index === messages.length - 1 ? '正在检索与核验…' : ''))"></div>
             <div v-else class="content">{{ message.content }}</div>
             <div v-if="message.error" class="error">{{ message.error }}</div>
