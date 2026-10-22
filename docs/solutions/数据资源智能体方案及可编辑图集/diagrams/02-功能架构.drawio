@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="drawio" version="26.0.0" compressed="false">
+  <diagram id="page-02" name="02-功能架构">
+    <mxGraphModel dx="1320" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1320" pageHeight="900" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="02  功能架构" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=32;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#0F172A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="25" width="1240" height="50" />
+        </mxCell>
+        <mxCell id="subtitle" value="六类能力共享确认、核验、展示及运行约束，按任务阶段复用" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=20;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#64748B;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="85" width="1240" height="35" />
+        </mxCell>
+        <mxCell id="dialog" value="01  对话处理" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="160" width="380" height="220" />
+        </mxCell>
+        <mxCell id="dialog-body" value="问题理解与对象识别&lt;br&gt;候选确认与序号续接&lt;br&gt;对象切换与显式刷新" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=23;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#334155;fontStyle=0;" vertex="1" parent="dialog">
+          <mxGeometry as="geometry" x="25" y="65" width="330" height="130" />
+        </mxCell>
+        <mxCell id="schema" value="02  结构查询" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="470" y="160" width="380" height="220" />
+        </mxCell>
+        <mxCell id="schema-body" value="表资产定位&lt;br&gt;表内字段与类型查询&lt;br&gt;业务描述与关键标识" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=23;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#334155;fontStyle=0;" vertex="1" parent="schema">
+          <mxGeometry as="geometry" x="25" y="65" width="330" height="130" />
+        </mxCell>
+        <mxCell id="dict" value="03  字典查询" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="900" y="160" width="380" height="220" />
+        </mxCell>
+        <mxCell id="dict-body" value="字典类型定位&lt;br&gt;码值与含义互查&lt;br&gt;完整码值明细" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=23;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#334155;fontStyle=0;" vertex="1" parent="dict">
+          <mxGeometry as="geometry" x="25" y="65" width="330" height="130" />
+        </mxCell>
+        <mxCell id="mapping" value="04  关联查询" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="410" width="380" height="220" />
+        </mxCell>
+        <mxCell id="mapping-body" value="表 → 字段&lt;br&gt;字段 → 字典类型&lt;br&gt;字典类型 → 码值" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=23;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#334155;fontStyle=0;" vertex="1" parent="mapping">
+          <mxGeometry as="geometry" x="25" y="65" width="330" height="130" />
+        </mxCell>
+        <mxCell id="result" value="05  结果服务" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="470" y="410" width="380" height="220" />
+        </mxCell>
+        <mxCell id="result-body" value="来源及范围说明&lt;br&gt;数量与完整性核对&lt;br&gt;异常提示与提问建议" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=23;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#334155;fontStyle=0;" vertex="1" parent="result">
+          <mxGeometry as="geometry" x="25" y="65" width="330" height="130" />
+        </mxCell>
+        <mxCell id="ops" value="06  数据运维" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="900" y="410" width="380" height="220" />
+        </mxCell>
+        <mxCell id="ops-body" value="治理资料加工与校验&lt;br&gt;每日更新与批次管理&lt;br&gt;发布回退与运行审计" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=23;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#334155;fontStyle=0;" vertex="1" parent="ops">
+          <mxGeometry as="geometry" x="25" y="65" width="330" height="130" />
+        </mxCell>
+        <mxCell id="shared" value="共享规则  /  对象有歧义先确认  ·  事实经过数据库核验  ·  原始码值不改写  ·  查询有限退出" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=22;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="680" width="1240" height="80" />
+        </mxCell>
+        <mxCell id="boundary" value="阅读方式：本图表示功能分工；具体调用先后顺序见在线查询流程与每日更新流程。" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;align=left;spacingLeft=18;fontSize=19;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="790" width="1240" height="55" />
+        </mxCell>
+        <mxCell id="legend-agent" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#0F172A;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="865" width="20" height="20" />
+        </mxCell>
+        <mxCell id="legend-text-agent" value="入口与智能体" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=17;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#475569;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="70" y="860" width="220" height="30" />
+        </mxCell>
+        <mxCell id="legend-action" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#0F172A;fillColor=#D1FAE5;strokeColor=#059669;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="320" y="865" width="20" height="20" />
+        </mxCell>
+        <mxCell id="legend-text-action" value="处理与查询" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=17;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#475569;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="350" y="860" width="220" height="30" />
+        </mxCell>
+        <mxCell id="legend-rule" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="600" y="865" width="20" height="20" />
+        </mxCell>
+        <mxCell id="legend-text-rule" value="共享规则" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=17;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#475569;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="860" width="220" height="30" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

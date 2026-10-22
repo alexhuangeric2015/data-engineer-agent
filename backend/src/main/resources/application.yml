@@ -1,0 +1,24 @@
+server:
+  port: ${SERVER_PORT:8080}
+spring:
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3306/data_engineer_agent?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai}
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:}
+  ai:
+    dashscope:
+      api-key: ${AI_DASHSCOPE_API_KEY:}
+      chat:
+        options:
+          model: ${AI_MODEL:qwen-plus}
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+app:
+  hiagent:
+    endpoint: ${HIAGENT_TOP_ENDPOINT:}
+    region: ${HIAGENT_TOP_REGION:}
+    access-key: ${VOLC_ACCESSKEY:}
+    secret-key: ${VOLC_SECRETKEY:}
+    workspace-id: ${HIAGENT_WORKSPACE_ID:}
+    table-kb-id: ${HIAGENT_TABLE_KB_ID:}
+    dictionary-kb-id: ${HIAGENT_DICTIONARY_KB_ID:}

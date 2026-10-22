@@ -1,0 +1,115 @@
+{
+  "schema_version": "ecc.agent-architecture-audit.report.v1",
+  "executive_verdict": "V6 文档/设计复审通过；本地文档与七个 SQL 形状检查通过；内网运行验收待测。",
+  "scope": {
+    "target_name": "HiAgent 数据建模师 V6",
+    "model_stack": "HiAgent 实际模型与工具配置未知；未连接内网",
+    "layers": [
+      "prompt",
+      "tool_selection",
+      "tool_execution_contract",
+      "tool_interpretation",
+      "answer_shaping",
+      "loop_design",
+      "history_handoff"
+    ]
+  },
+  "findings": [],
+  "closed_findings": [
+    {
+      "original_id": "H01",
+      "title": "定位失败与成员未匹配分别处理",
+      "evidence_refs": [
+        "docs/hiagent/versions/v6/agent-prompt/数据建模师.md:48"
+      ],
+      "resolution": "零行依身份/成员目的分流；成员补查一次，不换父对象；结束分支不在自检阶段重启。",
+      "status": "文档整改通过"
+    },
+    {
+      "original_id": "H02",
+      "title": "六组回传、集中计数及原目标完成条件",
+      "evidence_refs": [
+        "docs/hiagent/versions/v6/agent-prompt/数据建模师.md:55"
+      ],
+      "resolution": "主控维护任务/状态/证据/三种范围/完整性/调用与缺口，技能回传；原目标与选择映射保存。",
+      "status": "文档整改通过"
+    },
+    {
+      "original_id": "H03",
+      "title": "原名核验范围与候选子集分开",
+      "evidence_refs": [
+        "docs/hiagent/versions/v6/skills/table-schema-query-db/SKILL.md:55"
+      ],
+      "resolution": "原精确中文名进入身份谓词；完整计数只覆盖实际 WHERE，表与类型同名反例已执行。",
+      "status": "文档整改通过"
+    },
+    {
+      "original_id": "M01",
+      "title": "指定项、配对与反查的执行合同",
+      "evidence_refs": [
+        "docs/hiagent/versions/v6/skills/dictionary-query-db/SKILL.md:55"
+      ],
+      "resolution": "直接提取并执行成组模板；谓词/投影核对在完整性前，错误条件数据不作目标证据。",
+      "status": "文档整改通过"
+    },
+    {
+      "original_id": "M02",
+      "title": "按缺口收敛及分层友好展示",
+      "evidence_refs": [
+        "docs/hiagent/versions/v6/agent-prompt/数据建模师.md:92"
+      ],
+      "resolution": "候选序号续接、缺属性不停顿、技术失败不改名、查值选择不证明引用；一次只问一个决定。",
+      "status": "文档整改通过"
+    },
+    {
+      "original_id": "M03",
+      "title": "可重复验收方法与逐题判据",
+      "evidence_refs": [
+        "docs/hiagent/versions/v6/README.md:74"
+      ],
+      "resolution": "27 项测试；关键场景三次独立执行；轨迹/事实/语言分别判定。方法整改完成，真实内网验收仍待执行。",
+      "status": "验收方法已完善，真实行为待测"
+    },
+    {
+      "original_id": "L01",
+      "title": "主控规则权威与技能步骤组织",
+      "evidence_refs": [
+        "docs/hiagent/versions/v6/agent-prompt/数据建模师.md:14"
+      ],
+      "resolution": "数值调用预算只在主提示词定义；四技能按调用条件、步骤、完成回传、领域参考组织。",
+      "status": "文档整改通过"
+    }
+  ],
+  "ordered_fix_plan": [
+    {
+      "order": 1,
+      "goal": "执行 README 内网重复验收并保存真实轨迹",
+      "why_now": "文字约束不能证明模型遵循",
+      "expected_effect": "据实际结果判断循环、越级、准确和友好性"
+    },
+    {
+      "order": 2,
+      "goal": "依据真实平台能力核对限行、分页及硬执行门禁",
+      "why_now": "注入层与工具能力尚无证据",
+      "expected_effect": "区分文本修正和平台配置，并落实可用确定性约束"
+    }
+  ],
+  "review_result": {
+    "document_design": "pass",
+    "local_contract_sql": "pass",
+    "hiagent_runtime": "not_run",
+    "independent_reviewer": false,
+    "unresolved_document_blockers": 0
+  },
+  "review_skills": [
+    "ecc:agent-architecture-audit",
+    "mattpocock-skills:writing-for-agents"
+  ],
+  "evidence_boundary": "无真实模型/HiAgent 执行、第三方评分、生产数据改动或性能测量。",
+  "local_verification": {
+    "protected_files_sha256_unchanged": 43,
+    "sql_shapes_executed": 7,
+    "acceptance_cases_prepared": 28,
+    "model_runtime_tests_executed": 0
+  }
+}

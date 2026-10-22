@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataengineer.agent.chat.ChatHistoryMapper">
+  <insert id="insertSession">INSERT INTO agent_chat_session(id, mode) VALUES(#{id}, #{mode})</insert>
+  <insert id="insertMessage">INSERT INTO agent_chat_message(session_id, role, content) VALUES(#{sessionId}, #{role}, #{content})</insert>
+  <select id="listMessages" resultType="map">
+    SELECT role, content FROM agent_chat_message WHERE session_id = #{sessionId} ORDER BY id
+  </select>
+</mapper>

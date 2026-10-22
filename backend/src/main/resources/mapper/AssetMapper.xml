@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataengineer.agent.asset.AssetMapper">
+  <select id="findTable" resultType="map">
+    SELECT table_name_en, table_name_cn, column_name, column_cn_name, column_type,
+           is_key, is_related, related_column_en, related_column_cn, biz_desc
+    FROM table_schema
+    WHERE BINARY table_name_en = BINARY #{name} OR BINARY table_name_cn = BINARY #{name}
+    ORDER BY table_name_en, column_name, id
+  </select>
+  <select id="findDictionary" resultType="map">
+    SELECT code_table_en_name, code_table_cn_name, code_value, code_desc
+    FROM data_asset_code_kb
+    WHERE BINARY code_table_en_name = BINARY #{name} OR BINARY code_table_cn_name = BINARY #{name}
+    ORDER BY code_table_en_name, code_value, code_desc, id
+  </select>
+  <select id="dictionaryStats" resultType="map">
+    SELECT COUNT(*) AS total_rows, COUNT(DISTINCT code_value) AS distinct_nonnull_codes,
+           SUM(CASE WHEN code_value IS NULL THEN 1 ELSE 0 END) AS null_code_rows
+    FROM data_asset_code_kb
+    WHERE BINARY code_table_en_name = BINARY #{name} OR BINARY code_table_cn_name = BINARY #{name}
+  </select>
+</mapper>

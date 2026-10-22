@@ -1,0 +1,186 @@
+{
+  "schema_version": "ecc.agent-architecture-audit.report.v1",
+  "review_date": "2026-10-14",
+  "executive_verdict": {
+    "overall_health": "needs_revision_runtime_unverified",
+    "primary_failure_mode": "阶段语义与回传范围不够明确，真实执行约束尚未验证",
+    "most_urgent_fix": "区分定位未核验、成员未匹配及结果不完整的允许动作"
+  },
+  "scope": {
+    "target_name": "HiAgent 数据建模师 V5 主提示词与四个 SKILL",
+    "model_stack": [
+      "HiAgent 实际模型与参数未提供"
+    ],
+    "layers_to_audit": [
+      "1 系统提示词",
+      "6 工具选择",
+      "7 工具执行的文档契约",
+      "8 工具解释",
+      "9 答案组织",
+      "2/12 当前任务复用规则"
+    ]
+  },
+  "findings": [
+    {
+      "id": "H01",
+      "severity": "high",
+      "title": "未命中的终止与同范围补查条件没有区分",
+      "mechanism": "通用未命中结束条件与已确认父对象内的字段/码值补查规则共存，缺少统一结果分类。",
+      "source_layer": "1 系统提示词 / 8 工具结果解释",
+      "root_cause": "停止条件未绑定查询阶段和结果目的。",
+      "evidence_refs": [
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:28",
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:32",
+        "docs/hiagent/versions/v5/skills/table-schema-query-db/SKILL.md:29"
+      ],
+      "confidence": 0.99,
+      "recommended_fix": "区分定位未核验、已确认范围内成员未匹配和结果不完整；每个状态只允许明确的继续、等待或终止动作。"
+    },
+    {
+      "id": "H02",
+      "severity": "high",
+      "title": "缺少统一回传、任务状态和计数约定",
+      "mechanism": "各 SKILL 返回不同状态列表，原目标、已确认对象、允许下一步、已用调用及分页恢复记录没有统一最小格式。",
+      "source_layer": "1 系统提示词 / 6 工具选择 / 12 状态复用规则",
+      "root_cause": "主流程依靠分散自然语言推断工作进展。",
+      "evidence_refs": [
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:20",
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:49",
+        "docs/hiagent/versions/v5/skills/table-schema-query-kb/SKILL.md:17",
+        "docs/hiagent/versions/v5/skills/table-schema-query-db/SKILL.md:70"
+      ],
+      "confidence": 0.98,
+      "recommended_fix": "主提示词统一持有请求目标、阶段对象、状态、证据范围、完整性、计数与缺口；SKILL 按固定字段交还结果。该约定不是虚构的 HiAgent 参数 API。"
+    },
+    {
+      "id": "H03",
+      "severity": "high",
+      "title": "候选子集完整不能证明用户名称唯一或集合完整",
+      "mechanism": "只核验 KB 召回英文标识时，同条件计数只能证明该子集；原中文名可能还有未召回对象。",
+      "source_layer": "8 工具结果解释 / 9 答案组织",
+      "root_cause": "用户范围、召回范围、实际查询范围没有独立记录。",
+      "evidence_refs": [
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:26",
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:34",
+        "docs/hiagent/versions/v5/skills/table-schema-query-kb/SKILL.md:16",
+        "docs/hiagent/versions/v5/skills/table-schema-query-db/SKILL.md:37"
+      ],
+      "confidence": 0.99,
+      "recommended_fix": "唯一性与全量结论必须对应用户原始精确范围；候选子集只作候选。保持 KB 在先，DB 按已知精确标识核对范围。"
+    },
+    {
+      "id": "M01",
+      "severity": "medium",
+      "title": "单项精确请求缺少执行谓词核对",
+      "mechanism": "通用模板默认读取整表字段或整类码值，精准条件依赖模型自行改写。",
+      "source_layer": "7 工具执行请求 / 8 结果解释",
+      "root_cause": "工具请求未明确最小目的、过滤、配对、投影及取数方式。",
+      "evidence_refs": [
+        "docs/hiagent/versions/v5/skills/table-schema-query-db/SKILL.md:46",
+        "docs/hiagent/versions/v5/skills/dictionary-query-db/SKILL.md:46",
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:51"
+      ],
+      "confidence": 0.94,
+      "recommended_fix": "规范查询请求；实际 SQL 可见时先核对谓词和范围，再核对 LIMIT、计数和分页，不恢复逐业务问题模板。"
+    },
+    {
+      "id": "M02",
+      "severity": "medium",
+      "title": "友好性和收敛规则缺少通用动作对应",
+      "mechanism": "最早补一项信息尚未规定如何选择用户容易提供的信息、何时给选项、何时无需追问。",
+      "source_layer": "9 答案组织",
+      "root_cause": "输出原则没有形成按缺口类型可判定的响应条件。",
+      "evidence_refs": [
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:57",
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:68"
+      ],
+      "confidence": 0.96,
+      "recommended_fix": "按多候选、无候选、证据冲突、非必要属性缺失、部分数据、工具错误区分澄清；保持已确认信息、只请求一个必要决定。"
+    },
+    {
+      "id": "M03",
+      "severity": "medium",
+      "title": "真实行为验收尚未闭环",
+      "mechanism": "当前检查是文本和 SQLite 查询；配对过滤由检查脚本改写，不能证明 NL2SQL 或模型执行相同动作。",
+      "source_layer": "行为验收 / 6、7、8、9 层待验证",
+      "root_cause": "缺少逐题执行记录、明确判定字段和重复试验口径。",
+      "evidence_refs": [
+        "docs/hiagent/versions/v5/check_contracts.py:18",
+        "docs/hiagent/versions/v5/check_contracts.py:85",
+        "docs/hiagent/versions/v5/README.md:72",
+        "docs/hiagent/versions/v5/README.md:82"
+      ],
+      "confidence": 0.99,
+      "recommended_fix": "记录实际阶段、调用顺序/次数、谓词、终止原因、事实和输出完整性；关键路径重复测试，业务实例只留测试材料。"
+    },
+    {
+      "id": "L01",
+      "severity": "low",
+      "title": "主控规则重复分布于多个文件",
+      "mechanism": "预算和退出规则在主提示词、各 KB/DB 文档重复，维护时可能产生漂移；当前数字一致。",
+      "source_layer": "1 系统提示词 / 指令文档结构",
+      "root_cause": "权威规则与领域门槛没有完全分离。",
+      "evidence_refs": [
+        "docs/hiagent/versions/v5/agent-prompt/数据建模师.md:49",
+        "docs/hiagent/versions/v5/skills/table-schema-query-kb/SKILL.md:14",
+        "docs/hiagent/versions/v5/skills/table-schema-query-db/SKILL.md:72",
+        "docs/hiagent/versions/v5/skills/dictionary-query-db/SKILL.md:70"
+      ],
+      "confidence": 0.97,
+      "recommended_fix": "主提示词统一控制，SKILL 接收剩余额度并保留必要门槛；步骤、完成标准和参考规则分层，不假设平台能加载新的共享文件。"
+    }
+  ],
+  "ordered_fix_plan": [
+    {
+      "order": 1,
+      "goal": "核对平台硬限制和实际轨迹",
+      "why_now": "程序级门禁与提示词约束应分开",
+      "expected_effect": "查清哪些边界可由现有平台真实执行；不臆造能力"
+    },
+    {
+      "order": 2,
+      "goal": "统一零行及停止状态",
+      "why_now": "消除最高优先级的动作冲突",
+      "expected_effect": "定位失败结束，已确认范围内成员缺失可有限补查"
+    },
+    {
+      "order": 3,
+      "goal": "建立轻量回传与任务记录",
+      "why_now": "防止原目标、对象、计数和下一动作丢失",
+      "expected_effect": "支持多目标、候选确认及有限恢复"
+    },
+    {
+      "order": 4,
+      "goal": "核对精确范围和执行谓词",
+      "why_now": "候选子集不能代替用户查询范围",
+      "expected_effect": "提高唯一性、成员查询与完整性判定可靠性"
+    },
+    {
+      "order": 5,
+      "goal": "完善澄清与收拢文本",
+      "why_now": "减少用户负担和分散指令",
+      "expected_effect": "按通用缺口给具体下一步，保持单一主控权威"
+    },
+    {
+      "order": 6,
+      "goal": "完成真实行为验收",
+      "why_now": "本地检查不证明平台运行效果",
+      "expected_effect": "用内网轨迹和正确结果判断准确性、退出与友好性"
+    }
+  ],
+  "evidence_limits": [
+    "V3 历史反馈不能当 V5 实际故障轨迹",
+    "未访问 HiAgent 或本仓库 Java 运行代码",
+    "工具隐藏重试、记忆、渲染及 LIMIT 注入层未知",
+    "confidence 是文本发现的主观证据确信度，不是故障概率或实测得分"
+  ],
+  "checks": {
+    "existing_v5_contracts": "passed",
+    "candidate_scope_counterexample": "passed_in_memory_SQLite",
+    "live_hiagent_behavior": "not_run"
+  },
+  "skills_used": [
+    "ecc:agent-architecture-audit",
+    "mattpocock-skills:writing-for-agents"
+  ]
+}

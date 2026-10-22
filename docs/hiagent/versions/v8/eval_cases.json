@@ -1,0 +1,6062 @@
+{
+  "schema_version": "hiagent.offline-eval-fixtures.v1",
+  "purpose": "V8原样明细与SQL数量页脚测试；不是HiAgent接口或索引",
+  "platform_execution": "not_run",
+  "schema": {
+    "table_schema": [
+      "table_name_en",
+      "table_name_cn",
+      "column_name",
+      "column_cn_name",
+      "column_type",
+      "is_key",
+      "is_related",
+      "related_column_en",
+      "related_column_cn",
+      "biz_desc"
+    ],
+    "data_asset_code_kb": [
+      "code_table_en_name",
+      "code_table_cn_name",
+      "code_value",
+      "code_desc"
+    ]
+  },
+  "snapshots": {
+    "initial": {
+      "table_schema": [
+        {
+          "table_name_en": "T_FIELD",
+          "table_name_cn": "样本账目表",
+          "column_name": "KIND",
+          "column_cn_name": "类别",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": "DICT_FIELD",
+          "related_column_cn": null,
+          "biz_desc": null
+        },
+        {
+          "table_name_en": "T_FIELD",
+          "table_name_cn": "样本账目表",
+          "column_name": "OTHER",
+          "column_cn_name": "其他字段",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": null,
+          "related_column_cn": null,
+          "biz_desc": null
+        },
+        {
+          "table_name_en": "T_PAIR_A",
+          "table_name_cn": "样本配对甲表",
+          "column_name": "KIND",
+          "column_cn_name": "类别甲",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": "DICT_PAIR_A",
+          "related_column_cn": "样本配对甲",
+          "biz_desc": null
+        },
+        {
+          "table_name_en": "T_PAIR_B",
+          "table_name_cn": "样本配对乙表",
+          "column_name": "KIND",
+          "column_cn_name": "类别乙",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": "DICT_PAIR_B",
+          "related_column_cn": "样本配对乙",
+          "biz_desc": null
+        }
+      ],
+      "data_asset_code_kb": [
+        {
+          "code_table_en_name": "DICT_FIELD",
+          "code_table_cn_name": "字段样本字典",
+          "code_value": "01",
+          "code_desc": "甲"
+        },
+        {
+          "code_table_en_name": "DICT_FIELD",
+          "code_table_cn_name": "字段样本字典",
+          "code_value": "02",
+          "code_desc": "乙"
+        },
+        {
+          "code_table_en_name": "DICT_V1",
+          "code_table_cn_name": "样本分类甲",
+          "code_value": "A",
+          "code_desc": "甲成员"
+        },
+        {
+          "code_table_en_name": "DICT_V2",
+          "code_table_cn_name": "样本分类乙",
+          "code_value": "B",
+          "code_desc": "乙成员"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_A",
+          "code_table_cn_name": "样本配对甲",
+          "code_value": "010",
+          "code_desc": "甲010原含义"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_A",
+          "code_table_cn_name": "样本配对甲",
+          "code_value": "020",
+          "code_desc": "甲020含义"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_B",
+          "code_table_cn_name": "样本配对乙",
+          "code_value": "010",
+          "code_desc": "乙010含义"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_B",
+          "code_table_cn_name": "样本配对乙",
+          "code_value": "020",
+          "code_desc": "乙020含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "000",
+          "code_desc": "码值000含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "001",
+          "code_desc": "码值001含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "002",
+          "code_desc": "码值002含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "003",
+          "code_desc": "码值003含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "004",
+          "code_desc": "码值004含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "005",
+          "code_desc": "码值005含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "006",
+          "code_desc": "码值006含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "007",
+          "code_desc": "码值007含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "008",
+          "code_desc": "码值008含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "009",
+          "code_desc": "码值009含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "010",
+          "code_desc": "码值010含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "011",
+          "code_desc": "码值011含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "012",
+          "code_desc": "码值012含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "013",
+          "code_desc": "码值013含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "014",
+          "code_desc": "码值014含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "015",
+          "code_desc": "码值015含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "016",
+          "code_desc": "码值016含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "017",
+          "code_desc": "码值017含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "018",
+          "code_desc": "码值018含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "019",
+          "code_desc": "码值019含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "020",
+          "code_desc": "码值020含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "021",
+          "code_desc": "码值021含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "022",
+          "code_desc": "码值022含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "023",
+          "code_desc": "码值023含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "024",
+          "code_desc": "码值024含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "025",
+          "code_desc": "码值025含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "026",
+          "code_desc": "码值026含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "027",
+          "code_desc": "码值027含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "028",
+          "code_desc": "码值028含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "029",
+          "code_desc": "码值029含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "030",
+          "code_desc": "码值030含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "031",
+          "code_desc": "码值031含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "032",
+          "code_desc": "码值032含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "033",
+          "code_desc": "码值033含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "034",
+          "code_desc": "码值034含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "035",
+          "code_desc": "码值035含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "036",
+          "code_desc": "码值036含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "037",
+          "code_desc": "码值037含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "038",
+          "code_desc": "码值038含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "039",
+          "code_desc": "码值039含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "040",
+          "code_desc": "码值040含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "041",
+          "code_desc": "码值041含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "042",
+          "code_desc": "码值042含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "043",
+          "code_desc": "码值043含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "044",
+          "code_desc": "码值044含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "045",
+          "code_desc": "码值045含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "046",
+          "code_desc": "码值046含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "047",
+          "code_desc": "码值047含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "048",
+          "code_desc": "码值048含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "049",
+          "code_desc": "码值049含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "050",
+          "code_desc": "码值050含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "051",
+          "code_desc": "码值051含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "052",
+          "code_desc": "码值052含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "053",
+          "code_desc": "码值053含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "054",
+          "code_desc": "码值054含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "055",
+          "code_desc": "码值055含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "056",
+          "code_desc": "码值056含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "057",
+          "code_desc": "码值057含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "058",
+          "code_desc": "码值058含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "059",
+          "code_desc": "码值059含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "060",
+          "code_desc": "码值060含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "061",
+          "code_desc": "码值061含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "062",
+          "code_desc": "码值062含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "063",
+          "code_desc": "码值063含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "064",
+          "code_desc": "码值064含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "065",
+          "code_desc": "码值065含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "066",
+          "code_desc": "码值066含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "067",
+          "code_desc": "码值067含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "068",
+          "code_desc": "码值068含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "069",
+          "code_desc": "码值069含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "070",
+          "code_desc": "码值070含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "071",
+          "code_desc": "码值071含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "072",
+          "code_desc": "码值072含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "073",
+          "code_desc": "码值073含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "074",
+          "code_desc": "码值074含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "075",
+          "code_desc": "码值075含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "076",
+          "code_desc": "码值076含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "077",
+          "code_desc": "码值077含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "078",
+          "code_desc": "码值078含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "079",
+          "code_desc": "码值079含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "080",
+          "code_desc": "码值080含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "081",
+          "code_desc": "码值081含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "082",
+          "code_desc": "码值082含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "083",
+          "code_desc": "码值083含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "084",
+          "code_desc": "码值084含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "085",
+          "code_desc": "码值085含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "086",
+          "code_desc": "码值086含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "087",
+          "code_desc": "码值087含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "088",
+          "code_desc": "码值088含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "089",
+          "code_desc": "码值089含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "090",
+          "code_desc": "码值090含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "091",
+          "code_desc": "码值091含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "092",
+          "code_desc": "码值092含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "093",
+          "code_desc": "码值093含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "094",
+          "code_desc": "码值094含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "095",
+          "code_desc": "码值095含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "096",
+          "code_desc": "码值096含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "097",
+          "code_desc": "码值097含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "098",
+          "code_desc": "码值098含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "099",
+          "code_desc": "码值099含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "100",
+          "code_desc": "码值100含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "101",
+          "code_desc": "码值101含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "102",
+          "code_desc": "码值102含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "103",
+          "code_desc": "码值103含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "104",
+          "code_desc": "码值104含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "105",
+          "code_desc": "码值105含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "106",
+          "code_desc": "码值106含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "107",
+          "code_desc": "码值107含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "108",
+          "code_desc": "码值108含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "109",
+          "code_desc": "码值109含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "110",
+          "code_desc": "码值110含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "111",
+          "code_desc": "码值111含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "112",
+          "code_desc": "码值112含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "113",
+          "code_desc": "码值113含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "114",
+          "code_desc": "码值114含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "115",
+          "code_desc": "码值115含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "116",
+          "code_desc": "码值116含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "117",
+          "code_desc": "码值117含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "118",
+          "code_desc": "码值118含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "119",
+          "code_desc": "码值119含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "120",
+          "code_desc": "码值120含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "121",
+          "code_desc": "码值121含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "122",
+          "code_desc": "码值122含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "123",
+          "code_desc": "码值123含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "124",
+          "code_desc": "码值124含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "125",
+          "code_desc": "码值125含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "126",
+          "code_desc": "码值126含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "127",
+          "code_desc": "码值127含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "128",
+          "code_desc": "码值128含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "129",
+          "code_desc": "码值129含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "130",
+          "code_desc": "码值130含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "131",
+          "code_desc": "码值131含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "132",
+          "code_desc": "码值132含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "133",
+          "code_desc": "码值133含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "134",
+          "code_desc": "码值134含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "135",
+          "code_desc": "码值135含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "136",
+          "code_desc": "码值136含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "137",
+          "code_desc": "码值137含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "138",
+          "code_desc": "码值138含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "139",
+          "code_desc": "码值139含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "140",
+          "code_desc": "码值140含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "141",
+          "code_desc": "码值141含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "142",
+          "code_desc": "码值142含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "143",
+          "code_desc": "码值143含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "144",
+          "code_desc": "码值144含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "145",
+          "code_desc": "码值145含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "146",
+          "code_desc": "码值146含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "147",
+          "code_desc": "码值147含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "148",
+          "code_desc": "码值148含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "149",
+          "code_desc": "码值149含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "150",
+          "code_desc": "码值150含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "151",
+          "code_desc": "码值151含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "152",
+          "code_desc": "码值152含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "153",
+          "code_desc": "码值153含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "154",
+          "code_desc": "码值154含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "155",
+          "code_desc": "码值155含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "156",
+          "code_desc": "码值156含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "157",
+          "code_desc": "码值157含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "158",
+          "code_desc": "码值158含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "159",
+          "code_desc": "码值159含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "160",
+          "code_desc": "码值160含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "161",
+          "code_desc": "码值161含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "162",
+          "code_desc": "码值162含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "163",
+          "code_desc": "码值163含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "164",
+          "code_desc": "码值164含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "165",
+          "code_desc": "码值165含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "166",
+          "code_desc": "码值166含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "167",
+          "code_desc": "码值167含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "168",
+          "code_desc": "码值168含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "169",
+          "code_desc": "码值169含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "170",
+          "code_desc": "码值170含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "171",
+          "code_desc": "码值171含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "172",
+          "code_desc": "码值172含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "173",
+          "code_desc": "码值173含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "174",
+          "code_desc": "码值174含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "175",
+          "code_desc": "码值175含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "176",
+          "code_desc": "码值176含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "177",
+          "code_desc": "码值177含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "178",
+          "code_desc": "码值178含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "179",
+          "code_desc": "码值179含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "180",
+          "code_desc": "码值180含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "181",
+          "code_desc": "码值181含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "182",
+          "code_desc": "码值182含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "183",
+          "code_desc": "码值183含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "184",
+          "code_desc": "码值184含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "185",
+          "code_desc": "码值185含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "186",
+          "code_desc": "码值186含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "187",
+          "code_desc": "码值187含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "188",
+          "code_desc": "码值188含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "189",
+          "code_desc": "码值189含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "190",
+          "code_desc": "码值190含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "191",
+          "code_desc": "码值191含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "192",
+          "code_desc": "码值192含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "193",
+          "code_desc": "码值193含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "194",
+          "code_desc": "码值194含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "195",
+          "code_desc": "码值195含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "196",
+          "code_desc": "码值196含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "197",
+          "code_desc": "码值197含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "198",
+          "code_desc": "码值198含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "199",
+          "code_desc": "码值199含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "200",
+          "code_desc": "码值200含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "201",
+          "code_desc": "码值201含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "202",
+          "code_desc": "码值202含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "203",
+          "code_desc": "码值203含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "204",
+          "code_desc": "码值204含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "205",
+          "code_desc": "码值205含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "206",
+          "code_desc": "码值206含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "207",
+          "code_desc": "码值207含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "208",
+          "code_desc": "码值208含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "209",
+          "code_desc": "码值209含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "210",
+          "code_desc": "码值210含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "211",
+          "code_desc": "码值211含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "212",
+          "code_desc": "码值212含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "213",
+          "code_desc": "码值213含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "214",
+          "code_desc": "码值214含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "215",
+          "code_desc": "码值215含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "216",
+          "code_desc": "码值216含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "217",
+          "code_desc": "码值217含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "218",
+          "code_desc": "码值218含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "219",
+          "code_desc": "码值219含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "220",
+          "code_desc": "码值220含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "221",
+          "code_desc": "码值221含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "222",
+          "code_desc": "码值222含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "223",
+          "code_desc": "码值223含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "224",
+          "code_desc": "码值224含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "225",
+          "code_desc": "码值225含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "226",
+          "code_desc": "码值226含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "227",
+          "code_desc": "码值227含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "228",
+          "code_desc": "码值228含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "229",
+          "code_desc": "码值229含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "230",
+          "code_desc": "码值230含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "231",
+          "code_desc": "码值231含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "232",
+          "code_desc": "码值232含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "233",
+          "code_desc": "码值233含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "234",
+          "code_desc": "码值234含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "235",
+          "code_desc": "码值235含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "236",
+          "code_desc": "码值236含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "237",
+          "code_desc": "码值237含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "238",
+          "code_desc": "码值238含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "239",
+          "code_desc": "码值239含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "240",
+          "code_desc": "码值240含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "241",
+          "code_desc": "码值241含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "242",
+          "code_desc": "码值242含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "243",
+          "code_desc": "码值243含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "244",
+          "code_desc": "码值244含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "245",
+          "code_desc": "码值245含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "246",
+          "code_desc": "码值246含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "247",
+          "code_desc": "码值247含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "248",
+          "code_desc": "码值248含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "249",
+          "code_desc": "码值249含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "250",
+          "code_desc": "码值250含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "251",
+          "code_desc": "码值251含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "252",
+          "code_desc": "码值252含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "253",
+          "code_desc": "码值253含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "254",
+          "code_desc": "码值254含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "255",
+          "code_desc": "码值255含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "256",
+          "code_desc": "码值256含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "257",
+          "code_desc": "码值257含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "258",
+          "code_desc": "码值258含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "259",
+          "code_desc": "码值259含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "260",
+          "code_desc": "码值260含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "261",
+          "code_desc": "码值261含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "262",
+          "code_desc": "码值262含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "263",
+          "code_desc": "码值263含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "264",
+          "code_desc": "码值264含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "265",
+          "code_desc": "码值265含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "266",
+          "code_desc": "码值266含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "267",
+          "code_desc": "码值267含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "268",
+          "code_desc": "码值268含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "269",
+          "code_desc": "码值269含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "270",
+          "code_desc": "码值270含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "271",
+          "code_desc": "码值271含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "272",
+          "code_desc": "码值272含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "273",
+          "code_desc": "码值273含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "274",
+          "code_desc": "码值274含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "275",
+          "code_desc": "码值275含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "276",
+          "code_desc": "码值276含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "277",
+          "code_desc": "码值277含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "278",
+          "code_desc": "码值278含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "279",
+          "code_desc": "码值279含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "280",
+          "code_desc": "码值280含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "281",
+          "code_desc": "码值281含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "282",
+          "code_desc": "码值282含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "283",
+          "code_desc": "码值283含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "284",
+          "code_desc": "码值284含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "285",
+          "code_desc": "码值285含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "286",
+          "code_desc": "码值286含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "287",
+          "code_desc": "码值287含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "288",
+          "code_desc": "码值288含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "289",
+          "code_desc": "码值289含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "290",
+          "code_desc": "码值290含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "291",
+          "code_desc": "码值291含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "292",
+          "code_desc": "码值292含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "293",
+          "code_desc": "码值293含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "294",
+          "code_desc": "码值294含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "295",
+          "code_desc": "码值295含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "296",
+          "code_desc": "码值296含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "297",
+          "code_desc": "码值297含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "298",
+          "code_desc": "码值298含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "299",
+          "code_desc": "码值299含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "300",
+          "code_desc": "码值300含义"
+        }
+      ]
+    },
+    "refreshed": {
+      "table_schema": [
+        {
+          "table_name_en": "T_FIELD",
+          "table_name_cn": "样本账目表",
+          "column_name": "KIND",
+          "column_cn_name": "类别",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": "DICT_FIELD",
+          "related_column_cn": null,
+          "biz_desc": null
+        },
+        {
+          "table_name_en": "T_FIELD",
+          "table_name_cn": "样本账目表",
+          "column_name": "OTHER",
+          "column_cn_name": "其他字段",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": null,
+          "related_column_cn": null,
+          "biz_desc": null
+        },
+        {
+          "table_name_en": "T_PAIR_A",
+          "table_name_cn": "样本配对甲表",
+          "column_name": "KIND",
+          "column_cn_name": "类别甲",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": "DICT_PAIR_A",
+          "related_column_cn": "样本配对甲",
+          "biz_desc": null
+        },
+        {
+          "table_name_en": "T_PAIR_B",
+          "table_name_cn": "样本配对乙表",
+          "column_name": "KIND",
+          "column_cn_name": "类别乙",
+          "column_type": "char",
+          "is_key": null,
+          "is_related": null,
+          "related_column_en": "DICT_PAIR_B",
+          "related_column_cn": "样本配对乙",
+          "biz_desc": null
+        }
+      ],
+      "data_asset_code_kb": [
+        {
+          "code_table_en_name": "DICT_FIELD",
+          "code_table_cn_name": "字段样本字典",
+          "code_value": "01",
+          "code_desc": "甲"
+        },
+        {
+          "code_table_en_name": "DICT_FIELD",
+          "code_table_cn_name": "字段样本字典",
+          "code_value": "02",
+          "code_desc": "乙"
+        },
+        {
+          "code_table_en_name": "DICT_V1",
+          "code_table_cn_name": "样本分类甲",
+          "code_value": "A",
+          "code_desc": "甲成员"
+        },
+        {
+          "code_table_en_name": "DICT_V2",
+          "code_table_cn_name": "样本分类乙",
+          "code_value": "B",
+          "code_desc": "乙成员"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_A",
+          "code_table_cn_name": "样本配对甲",
+          "code_value": "010",
+          "code_desc": "甲010刷新含义"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_A",
+          "code_table_cn_name": "样本配对甲",
+          "code_value": "020",
+          "code_desc": "甲020含义"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_B",
+          "code_table_cn_name": "样本配对乙",
+          "code_value": "010",
+          "code_desc": "乙010含义"
+        },
+        {
+          "code_table_en_name": "DICT_PAIR_B",
+          "code_table_cn_name": "样本配对乙",
+          "code_value": "020",
+          "code_desc": "乙020含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "000",
+          "code_desc": "码值000含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "001",
+          "code_desc": "码值001含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "002",
+          "code_desc": "码值002含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "003",
+          "code_desc": "码值003含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "004",
+          "code_desc": "码值004含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "005",
+          "code_desc": "码值005含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "006",
+          "code_desc": "码值006含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "007",
+          "code_desc": "码值007含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "008",
+          "code_desc": "码值008含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "009",
+          "code_desc": "码值009含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "010",
+          "code_desc": "码值010含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "011",
+          "code_desc": "码值011含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "012",
+          "code_desc": "码值012含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "013",
+          "code_desc": "码值013含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "014",
+          "code_desc": "码值014含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "015",
+          "code_desc": "码值015含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "016",
+          "code_desc": "码值016含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "017",
+          "code_desc": "码值017含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "018",
+          "code_desc": "码值018含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "019",
+          "code_desc": "码值019含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "020",
+          "code_desc": "码值020含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "021",
+          "code_desc": "码值021含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "022",
+          "code_desc": "码值022含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "023",
+          "code_desc": "码值023含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "024",
+          "code_desc": "码值024含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "025",
+          "code_desc": "码值025含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "026",
+          "code_desc": "码值026含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "027",
+          "code_desc": "码值027含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "028",
+          "code_desc": "码值028含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "029",
+          "code_desc": "码值029含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "030",
+          "code_desc": "码值030含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "031",
+          "code_desc": "码值031含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "032",
+          "code_desc": "码值032含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "033",
+          "code_desc": "码值033含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "034",
+          "code_desc": "码值034含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "035",
+          "code_desc": "码值035含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "036",
+          "code_desc": "码值036含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "037",
+          "code_desc": "码值037含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "038",
+          "code_desc": "码值038含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "039",
+          "code_desc": "码值039含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "040",
+          "code_desc": "码值040含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "041",
+          "code_desc": "码值041含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "042",
+          "code_desc": "码值042含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "043",
+          "code_desc": "码值043含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "044",
+          "code_desc": "码值044含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "045",
+          "code_desc": "码值045含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "046",
+          "code_desc": "码值046含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "047",
+          "code_desc": "码值047含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "048",
+          "code_desc": "码值048含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "049",
+          "code_desc": "码值049含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "050",
+          "code_desc": "码值050含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "051",
+          "code_desc": "码值051含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "052",
+          "code_desc": "码值052含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "053",
+          "code_desc": "码值053含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "054",
+          "code_desc": "码值054含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "055",
+          "code_desc": "码值055含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "056",
+          "code_desc": "码值056含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "057",
+          "code_desc": "码值057含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "058",
+          "code_desc": "码值058含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "059",
+          "code_desc": "码值059含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "060",
+          "code_desc": "码值060含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "061",
+          "code_desc": "码值061含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "062",
+          "code_desc": "码值062含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "063",
+          "code_desc": "码值063含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "064",
+          "code_desc": "码值064含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "065",
+          "code_desc": "码值065含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "066",
+          "code_desc": "码值066含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "067",
+          "code_desc": "码值067含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "068",
+          "code_desc": "码值068含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "069",
+          "code_desc": "码值069含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "070",
+          "code_desc": "码值070含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "071",
+          "code_desc": "码值071含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "072",
+          "code_desc": "码值072含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "073",
+          "code_desc": "码值073含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "074",
+          "code_desc": "码值074含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "075",
+          "code_desc": "码值075含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "076",
+          "code_desc": "码值076含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "077",
+          "code_desc": "码值077含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "078",
+          "code_desc": "码值078含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "079",
+          "code_desc": "码值079含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "080",
+          "code_desc": "码值080含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "081",
+          "code_desc": "码值081含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "082",
+          "code_desc": "码值082含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "083",
+          "code_desc": "码值083含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "084",
+          "code_desc": "码值084含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "085",
+          "code_desc": "码值085含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "086",
+          "code_desc": "码值086含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "087",
+          "code_desc": "码值087含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "088",
+          "code_desc": "码值088含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "089",
+          "code_desc": "码值089含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "090",
+          "code_desc": "码值090含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "091",
+          "code_desc": "码值091含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "092",
+          "code_desc": "码值092含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "093",
+          "code_desc": "码值093含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "094",
+          "code_desc": "码值094含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "095",
+          "code_desc": "码值095含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "096",
+          "code_desc": "码值096含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "097",
+          "code_desc": "码值097含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "098",
+          "code_desc": "码值098含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "099",
+          "code_desc": "码值099含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "100",
+          "code_desc": "码值100含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "101",
+          "code_desc": "码值101含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "102",
+          "code_desc": "码值102含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "103",
+          "code_desc": "码值103含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "104",
+          "code_desc": "码值104含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "105",
+          "code_desc": "码值105含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "106",
+          "code_desc": "码值106含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "107",
+          "code_desc": "码值107含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "108",
+          "code_desc": "码值108含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "109",
+          "code_desc": "码值109含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "110",
+          "code_desc": "码值110含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "111",
+          "code_desc": "码值111含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "112",
+          "code_desc": "码值112含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "113",
+          "code_desc": "码值113含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "114",
+          "code_desc": "码值114含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "115",
+          "code_desc": "码值115含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "116",
+          "code_desc": "码值116含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "117",
+          "code_desc": "码值117含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "118",
+          "code_desc": "码值118含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "119",
+          "code_desc": "码值119含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "120",
+          "code_desc": "码值120含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "121",
+          "code_desc": "码值121含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "122",
+          "code_desc": "码值122含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "123",
+          "code_desc": "码值123含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "124",
+          "code_desc": "码值124含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "125",
+          "code_desc": "码值125含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "126",
+          "code_desc": "码值126含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "127",
+          "code_desc": "码值127含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "128",
+          "code_desc": "码值128含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "129",
+          "code_desc": "码值129含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "130",
+          "code_desc": "码值130含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "131",
+          "code_desc": "码值131含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "132",
+          "code_desc": "码值132含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "133",
+          "code_desc": "码值133含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "134",
+          "code_desc": "码值134含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "135",
+          "code_desc": "码值135含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "136",
+          "code_desc": "码值136含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "137",
+          "code_desc": "码值137含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "138",
+          "code_desc": "码值138含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "139",
+          "code_desc": "码值139含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "140",
+          "code_desc": "码值140含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "141",
+          "code_desc": "码值141含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "142",
+          "code_desc": "码值142含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "143",
+          "code_desc": "码值143含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "144",
+          "code_desc": "码值144含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "145",
+          "code_desc": "码值145含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "146",
+          "code_desc": "码值146含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "147",
+          "code_desc": "码值147含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "148",
+          "code_desc": "码值148含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "149",
+          "code_desc": "码值149含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "150",
+          "code_desc": "码值150含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "151",
+          "code_desc": "码值151含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "152",
+          "code_desc": "码值152含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "153",
+          "code_desc": "码值153含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "154",
+          "code_desc": "码值154含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "155",
+          "code_desc": "码值155含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "156",
+          "code_desc": "码值156含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "157",
+          "code_desc": "码值157含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "158",
+          "code_desc": "码值158含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "159",
+          "code_desc": "码值159含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "160",
+          "code_desc": "码值160含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "161",
+          "code_desc": "码值161含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "162",
+          "code_desc": "码值162含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "163",
+          "code_desc": "码值163含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "164",
+          "code_desc": "码值164含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "165",
+          "code_desc": "码值165含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "166",
+          "code_desc": "码值166含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "167",
+          "code_desc": "码值167含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "168",
+          "code_desc": "码值168含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "169",
+          "code_desc": "码值169含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "170",
+          "code_desc": "码值170含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "171",
+          "code_desc": "码值171含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "172",
+          "code_desc": "码值172含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "173",
+          "code_desc": "码值173含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "174",
+          "code_desc": "码值174含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "175",
+          "code_desc": "码值175含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "176",
+          "code_desc": "码值176含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "177",
+          "code_desc": "码值177含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "178",
+          "code_desc": "码值178含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "179",
+          "code_desc": "码值179含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "180",
+          "code_desc": "码值180含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "181",
+          "code_desc": "码值181含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "182",
+          "code_desc": "码值182含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "183",
+          "code_desc": "码值183含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "184",
+          "code_desc": "码值184含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "185",
+          "code_desc": "码值185含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "186",
+          "code_desc": "码值186含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "187",
+          "code_desc": "码值187含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "188",
+          "code_desc": "码值188含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "189",
+          "code_desc": "码值189含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "190",
+          "code_desc": "码值190含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "191",
+          "code_desc": "码值191含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "192",
+          "code_desc": "码值192含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "193",
+          "code_desc": "码值193含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "194",
+          "code_desc": "码值194含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "195",
+          "code_desc": "码值195含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "196",
+          "code_desc": "码值196含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "197",
+          "code_desc": "码值197含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "198",
+          "code_desc": "码值198含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "199",
+          "code_desc": "码值199含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "200",
+          "code_desc": "码值200含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "201",
+          "code_desc": "码值201含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "202",
+          "code_desc": "码值202含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "203",
+          "code_desc": "码值203含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "204",
+          "code_desc": "码值204含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "205",
+          "code_desc": "码值205含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "206",
+          "code_desc": "码值206含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "207",
+          "code_desc": "码值207含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "208",
+          "code_desc": "码值208含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "209",
+          "code_desc": "码值209含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "210",
+          "code_desc": "码值210含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "211",
+          "code_desc": "码值211含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "212",
+          "code_desc": "码值212含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "213",
+          "code_desc": "码值213含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "214",
+          "code_desc": "码值214含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "215",
+          "code_desc": "码值215含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "216",
+          "code_desc": "码值216含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "217",
+          "code_desc": "码值217含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "218",
+          "code_desc": "码值218含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "219",
+          "code_desc": "码值219含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "220",
+          "code_desc": "码值220含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "221",
+          "code_desc": "码值221含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "222",
+          "code_desc": "码值222含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "223",
+          "code_desc": "码值223含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "224",
+          "code_desc": "码值224含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "225",
+          "code_desc": "码值225含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "226",
+          "code_desc": "码值226含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "227",
+          "code_desc": "码值227含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "228",
+          "code_desc": "码值228含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "229",
+          "code_desc": "码值229含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "230",
+          "code_desc": "码值230含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "231",
+          "code_desc": "码值231含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "232",
+          "code_desc": "码值232含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "233",
+          "code_desc": "码值233含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "234",
+          "code_desc": "码值234含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "235",
+          "code_desc": "码值235含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "236",
+          "code_desc": "码值236含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "237",
+          "code_desc": "码值237含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "238",
+          "code_desc": "码值238含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "239",
+          "code_desc": "码值239含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "240",
+          "code_desc": "码值240含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "241",
+          "code_desc": "码值241含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "242",
+          "code_desc": "码值242含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "243",
+          "code_desc": "码值243含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "244",
+          "code_desc": "码值244含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "245",
+          "code_desc": "码值245含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "246",
+          "code_desc": "码值246含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "247",
+          "code_desc": "码值247含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "248",
+          "code_desc": "码值248含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "249",
+          "code_desc": "码值249含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "250",
+          "code_desc": "码值250含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "251",
+          "code_desc": "码值251含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "252",
+          "code_desc": "码值252含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "253",
+          "code_desc": "码值253含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "254",
+          "code_desc": "码值254含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "255",
+          "code_desc": "码值255含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "256",
+          "code_desc": "码值256含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "257",
+          "code_desc": "码值257含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "258",
+          "code_desc": "码值258含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "259",
+          "code_desc": "码值259含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "260",
+          "code_desc": "码值260含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "261",
+          "code_desc": "码值261含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "262",
+          "code_desc": "码值262含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "263",
+          "code_desc": "码值263含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "264",
+          "code_desc": "码值264含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "265",
+          "code_desc": "码值265含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "266",
+          "code_desc": "码值266含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "267",
+          "code_desc": "码值267含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "268",
+          "code_desc": "码值268含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "269",
+          "code_desc": "码值269含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "270",
+          "code_desc": "码值270含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "271",
+          "code_desc": "码值271含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "272",
+          "code_desc": "码值272含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "273",
+          "code_desc": "码值273含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "274",
+          "code_desc": "码值274含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "275",
+          "code_desc": "码值275含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "276",
+          "code_desc": "码值276含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "277",
+          "code_desc": "码值277含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "278",
+          "code_desc": "码值278含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "279",
+          "code_desc": "码值279含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "280",
+          "code_desc": "码值280含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "281",
+          "code_desc": "码值281含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "282",
+          "code_desc": "码值282含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "283",
+          "code_desc": "码值283含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "284",
+          "code_desc": "码值284含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "285",
+          "code_desc": "码值285含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "286",
+          "code_desc": "码值286含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "287",
+          "code_desc": "码值287含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "288",
+          "code_desc": "码值288含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "289",
+          "code_desc": "码值289含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "290",
+          "code_desc": "码值290含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "291",
+          "code_desc": "码值291含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "292",
+          "code_desc": "码值292含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "293",
+          "code_desc": "码值293含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "294",
+          "code_desc": "码值294含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "295",
+          "code_desc": "码值295含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "296",
+          "code_desc": "码值296含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "297",
+          "code_desc": "码值297含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "298",
+          "code_desc": "码值298含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "299",
+          "code_desc": "码值299含义"
+        },
+        {
+          "code_table_en_name": "DICT_LARGE",
+          "code_table_cn_name": "大列表样本",
+          "code_value": "300",
+          "code_desc": "码值300含义"
+        }
+      ]
+    }
+  },
+  "kb_seed_notes": [
+    {
+      "source": "structure_test_kb",
+      "snippet": "T_FIELD（样本账目表）：KIND（类别），代码名称英文 DICT_FIELD，代码名称中文未提供；OTHER（其他字段）。"
+    },
+    {
+      "source": "dictionary_test_kb",
+      "snippet": "DICT_FIELD（字段样本字典）；DICT_V1（样本分类甲）；DICT_V2（样本分类乙）；DICT_LARGE（大列表样本）；DICT_PAIR_A（样本配对甲）；DICT_PAIR_B（样本配对乙）。"
+    }
+  ],
+  "cases": [
+    {
+      "id": "E1",
+      "name": "字段英文映射枚举",
+      "turns": [
+        "样本账目表的类别字段有哪些码值？"
+      ],
+      "snapshot": "initial",
+      "kb_condition": "结构 KB 定位 T_FIELD/KIND；字典 KB 定位 DICT_FIELD；无相关中文映射。",
+      "expected": {
+        "table": "T_FIELD",
+        "field": "KIND",
+        "mapping_en": "DICT_FIELD",
+        "mapping_cn": null,
+        "values": [
+          [
+            "DICT_FIELD",
+            "01",
+            "甲"
+          ],
+          [
+            "DICT_FIELD",
+            "02",
+            "乙"
+          ]
+        ]
+      },
+      "judges": [
+        "新阶段 KB 在 DB 前，父对象确认后进入下游",
+        "精确有效英文映射不因缺中文而强迫确认",
+        "两码值及含义完整展示，来源正确",
+        "码值原记录按SQL顺序逐行，无自行分类/合并/改写；每表页脚SQL总记录数/非NULL去重码值数与本次匹配、取得、展示范围准确。"
+      ]
+    },
+    {
+      "id": "E2",
+      "name": "无相关定位",
+      "turns": [
+        "未收录样本表的分类有哪些取值？"
+      ],
+      "snapshot": "initial",
+      "kb_condition": "未收录样本表没有相关可核验标识；允许无关召回，不能当匹配。",
+      "expected": {
+        "db_calls": 0,
+        "state": "定位终止",
+        "clarification_items": 1,
+        "asset_claims": []
+      },
+      "judges": [
+        "仅结构 KB；不 DB 探索或查字典",
+        "明确未定位表，不宣称数据库不存在",
+        "只问一个标准名称/别名/用途线索"
+      ]
+    },
+    {
+      "id": "E3",
+      "name": "近似候选与选择续接",
+      "turns": [
+        "样本分类有哪些取值？",
+        "选择样本分类乙（若展示序号为 2，也可回复 2）。"
+      ],
+      "snapshot": "initial",
+      "kb_condition": "字典 KB 召回 DICT_V1 和 DICT_V2；用户原名没有逐字精确类型。",
+      "expected": {
+        "candidates": [
+          "DICT_V1",
+          "DICT_V2"
+        ],
+        "selected": "DICT_V2",
+        "values": [
+          [
+            "DICT_V2",
+            "B",
+            "乙成员"
+          ]
+        ]
+      },
+      "judges": [
+        "首轮仅 DB 身份候选，不自动选近似",
+        "选择前没有全量成员查询",
+        "第二轮沿用候选对应和枚举目标，不重复 KB/成功身份，不问是否列码值",
+        "码值原记录按SQL顺序逐行，无自行分类/合并/改写；每表页脚SQL总记录数/非NULL去重码值数与本次匹配、取得、展示范围准确。"
+      ]
+    },
+    {
+      "id": "E4",
+      "name": "完整性和无进展",
+      "turns": [
+        "DICT_LARGE 的全部码值及含义是什么？"
+      ],
+      "snapshot": "initial",
+      "kb_condition": "字典 KB 精确定位 DICT_LARGE。",
+      "expected": {
+        "total_raw": 301,
+        "full_values": [
+          [
+            "DICT_LARGE",
+            "000",
+            "码值000含义"
+          ],
+          [
+            "DICT_LARGE",
+            "001",
+            "码值001含义"
+          ],
+          [
+            "DICT_LARGE",
+            "002",
+            "码值002含义"
+          ],
+          [
+            "DICT_LARGE",
+            "003",
+            "码值003含义"
+          ],
+          [
+            "DICT_LARGE",
+            "004",
+            "码值004含义"
+          ],
+          [
+            "DICT_LARGE",
+            "005",
+            "码值005含义"
+          ],
+          [
+            "DICT_LARGE",
+            "006",
+            "码值006含义"
+          ],
+          [
+            "DICT_LARGE",
+            "007",
+            "码值007含义"
+          ],
+          [
+            "DICT_LARGE",
+            "008",
+            "码值008含义"
+          ],
+          [
+            "DICT_LARGE",
+            "009",
+            "码值009含义"
+          ],
+          [
+            "DICT_LARGE",
+            "010",
+            "码值010含义"
+          ],
+          [
+            "DICT_LARGE",
+            "011",
+            "码值011含义"
+          ],
+          [
+            "DICT_LARGE",
+            "012",
+            "码值012含义"
+          ],
+          [
+            "DICT_LARGE",
+            "013",
+            "码值013含义"
+          ],
+          [
+            "DICT_LARGE",
+            "014",
+            "码值014含义"
+          ],
+          [
+            "DICT_LARGE",
+            "015",
+            "码值015含义"
+          ],
+          [
+            "DICT_LARGE",
+            "016",
+            "码值016含义"
+          ],
+          [
+            "DICT_LARGE",
+            "017",
+            "码值017含义"
+          ],
+          [
+            "DICT_LARGE",
+            "018",
+            "码值018含义"
+          ],
+          [
+            "DICT_LARGE",
+            "019",
+            "码值019含义"
+          ],
+          [
+            "DICT_LARGE",
+            "020",
+            "码值020含义"
+          ],
+          [
+            "DICT_LARGE",
+            "021",
+            "码值021含义"
+          ],
+          [
+            "DICT_LARGE",
+            "022",
+            "码值022含义"
+          ],
+          [
+            "DICT_LARGE",
+            "023",
+            "码值023含义"
+          ],
+          [
+            "DICT_LARGE",
+            "024",
+            "码值024含义"
+          ],
+          [
+            "DICT_LARGE",
+            "025",
+            "码值025含义"
+          ],
+          [
+            "DICT_LARGE",
+            "026",
+            "码值026含义"
+          ],
+          [
+            "DICT_LARGE",
+            "027",
+            "码值027含义"
+          ],
+          [
+            "DICT_LARGE",
+            "028",
+            "码值028含义"
+          ],
+          [
+            "DICT_LARGE",
+            "029",
+            "码值029含义"
+          ],
+          [
+            "DICT_LARGE",
+            "030",
+            "码值030含义"
+          ],
+          [
+            "DICT_LARGE",
+            "031",
+            "码值031含义"
+          ],
+          [
+            "DICT_LARGE",
+            "032",
+            "码值032含义"
+          ],
+          [
+            "DICT_LARGE",
+            "033",
+            "码值033含义"
+          ],
+          [
+            "DICT_LARGE",
+            "034",
+            "码值034含义"
+          ],
+          [
+            "DICT_LARGE",
+            "035",
+            "码值035含义"
+          ],
+          [
+            "DICT_LARGE",
+            "036",
+            "码值036含义"
+          ],
+          [
+            "DICT_LARGE",
+            "037",
+            "码值037含义"
+          ],
+          [
+            "DICT_LARGE",
+            "038",
+            "码值038含义"
+          ],
+          [
+            "DICT_LARGE",
+            "039",
+            "码值039含义"
+          ],
+          [
+            "DICT_LARGE",
+            "040",
+            "码值040含义"
+          ],
+          [
+            "DICT_LARGE",
+            "041",
+            "码值041含义"
+          ],
+          [
+            "DICT_LARGE",
+            "042",
+            "码值042含义"
+          ],
+          [
+            "DICT_LARGE",
+            "043",
+            "码值043含义"
+          ],
+          [
+            "DICT_LARGE",
+            "044",
+            "码值044含义"
+          ],
+          [
+            "DICT_LARGE",
+            "045",
+            "码值045含义"
+          ],
+          [
+            "DICT_LARGE",
+            "046",
+            "码值046含义"
+          ],
+          [
+            "DICT_LARGE",
+            "047",
+            "码值047含义"
+          ],
+          [
+            "DICT_LARGE",
+            "048",
+            "码值048含义"
+          ],
+          [
+            "DICT_LARGE",
+            "049",
+            "码值049含义"
+          ],
+          [
+            "DICT_LARGE",
+            "050",
+            "码值050含义"
+          ],
+          [
+            "DICT_LARGE",
+            "051",
+            "码值051含义"
+          ],
+          [
+            "DICT_LARGE",
+            "052",
+            "码值052含义"
+          ],
+          [
+            "DICT_LARGE",
+            "053",
+            "码值053含义"
+          ],
+          [
+            "DICT_LARGE",
+            "054",
+            "码值054含义"
+          ],
+          [
+            "DICT_LARGE",
+            "055",
+            "码值055含义"
+          ],
+          [
+            "DICT_LARGE",
+            "056",
+            "码值056含义"
+          ],
+          [
+            "DICT_LARGE",
+            "057",
+            "码值057含义"
+          ],
+          [
+            "DICT_LARGE",
+            "058",
+            "码值058含义"
+          ],
+          [
+            "DICT_LARGE",
+            "059",
+            "码值059含义"
+          ],
+          [
+            "DICT_LARGE",
+            "060",
+            "码值060含义"
+          ],
+          [
+            "DICT_LARGE",
+            "061",
+            "码值061含义"
+          ],
+          [
+            "DICT_LARGE",
+            "062",
+            "码值062含义"
+          ],
+          [
+            "DICT_LARGE",
+            "063",
+            "码值063含义"
+          ],
+          [
+            "DICT_LARGE",
+            "064",
+            "码值064含义"
+          ],
+          [
+            "DICT_LARGE",
+            "065",
+            "码值065含义"
+          ],
+          [
+            "DICT_LARGE",
+            "066",
+            "码值066含义"
+          ],
+          [
+            "DICT_LARGE",
+            "067",
+            "码值067含义"
+          ],
+          [
+            "DICT_LARGE",
+            "068",
+            "码值068含义"
+          ],
+          [
+            "DICT_LARGE",
+            "069",
+            "码值069含义"
+          ],
+          [
+            "DICT_LARGE",
+            "070",
+            "码值070含义"
+          ],
+          [
+            "DICT_LARGE",
+            "071",
+            "码值071含义"
+          ],
+          [
+            "DICT_LARGE",
+            "072",
+            "码值072含义"
+          ],
+          [
+            "DICT_LARGE",
+            "073",
+            "码值073含义"
+          ],
+          [
+            "DICT_LARGE",
+            "074",
+            "码值074含义"
+          ],
+          [
+            "DICT_LARGE",
+            "075",
+            "码值075含义"
+          ],
+          [
+            "DICT_LARGE",
+            "076",
+            "码值076含义"
+          ],
+          [
+            "DICT_LARGE",
+            "077",
+            "码值077含义"
+          ],
+          [
+            "DICT_LARGE",
+            "078",
+            "码值078含义"
+          ],
+          [
+            "DICT_LARGE",
+            "079",
+            "码值079含义"
+          ],
+          [
+            "DICT_LARGE",
+            "080",
+            "码值080含义"
+          ],
+          [
+            "DICT_LARGE",
+            "081",
+            "码值081含义"
+          ],
+          [
+            "DICT_LARGE",
+            "082",
+            "码值082含义"
+          ],
+          [
+            "DICT_LARGE",
+            "083",
+            "码值083含义"
+          ],
+          [
+            "DICT_LARGE",
+            "084",
+            "码值084含义"
+          ],
+          [
+            "DICT_LARGE",
+            "085",
+            "码值085含义"
+          ],
+          [
+            "DICT_LARGE",
+            "086",
+            "码值086含义"
+          ],
+          [
+            "DICT_LARGE",
+            "087",
+            "码值087含义"
+          ],
+          [
+            "DICT_LARGE",
+            "088",
+            "码值088含义"
+          ],
+          [
+            "DICT_LARGE",
+            "089",
+            "码值089含义"
+          ],
+          [
+            "DICT_LARGE",
+            "090",
+            "码值090含义"
+          ],
+          [
+            "DICT_LARGE",
+            "091",
+            "码值091含义"
+          ],
+          [
+            "DICT_LARGE",
+            "092",
+            "码值092含义"
+          ],
+          [
+            "DICT_LARGE",
+            "093",
+            "码值093含义"
+          ],
+          [
+            "DICT_LARGE",
+            "094",
+            "码值094含义"
+          ],
+          [
+            "DICT_LARGE",
+            "095",
+            "码值095含义"
+          ],
+          [
+            "DICT_LARGE",
+            "096",
+            "码值096含义"
+          ],
+          [
+            "DICT_LARGE",
+            "097",
+            "码值097含义"
+          ],
+          [
+            "DICT_LARGE",
+            "098",
+            "码值098含义"
+          ],
+          [
+            "DICT_LARGE",
+            "099",
+            "码值099含义"
+          ],
+          [
+            "DICT_LARGE",
+            "100",
+            "码值100含义"
+          ],
+          [
+            "DICT_LARGE",
+            "101",
+            "码值101含义"
+          ],
+          [
+            "DICT_LARGE",
+            "102",
+            "码值102含义"
+          ],
+          [
+            "DICT_LARGE",
+            "103",
+            "码值103含义"
+          ],
+          [
+            "DICT_LARGE",
+            "104",
+            "码值104含义"
+          ],
+          [
+            "DICT_LARGE",
+            "105",
+            "码值105含义"
+          ],
+          [
+            "DICT_LARGE",
+            "106",
+            "码值106含义"
+          ],
+          [
+            "DICT_LARGE",
+            "107",
+            "码值107含义"
+          ],
+          [
+            "DICT_LARGE",
+            "108",
+            "码值108含义"
+          ],
+          [
+            "DICT_LARGE",
+            "109",
+            "码值109含义"
+          ],
+          [
+            "DICT_LARGE",
+            "110",
+            "码值110含义"
+          ],
+          [
+            "DICT_LARGE",
+            "111",
+            "码值111含义"
+          ],
+          [
+            "DICT_LARGE",
+            "112",
+            "码值112含义"
+          ],
+          [
+            "DICT_LARGE",
+            "113",
+            "码值113含义"
+          ],
+          [
+            "DICT_LARGE",
+            "114",
+            "码值114含义"
+          ],
+          [
+            "DICT_LARGE",
+            "115",
+            "码值115含义"
+          ],
+          [
+            "DICT_LARGE",
+            "116",
+            "码值116含义"
+          ],
+          [
+            "DICT_LARGE",
+            "117",
+            "码值117含义"
+          ],
+          [
+            "DICT_LARGE",
+            "118",
+            "码值118含义"
+          ],
+          [
+            "DICT_LARGE",
+            "119",
+            "码值119含义"
+          ],
+          [
+            "DICT_LARGE",
+            "120",
+            "码值120含义"
+          ],
+          [
+            "DICT_LARGE",
+            "121",
+            "码值121含义"
+          ],
+          [
+            "DICT_LARGE",
+            "122",
+            "码值122含义"
+          ],
+          [
+            "DICT_LARGE",
+            "123",
+            "码值123含义"
+          ],
+          [
+            "DICT_LARGE",
+            "124",
+            "码值124含义"
+          ],
+          [
+            "DICT_LARGE",
+            "125",
+            "码值125含义"
+          ],
+          [
+            "DICT_LARGE",
+            "126",
+            "码值126含义"
+          ],
+          [
+            "DICT_LARGE",
+            "127",
+            "码值127含义"
+          ],
+          [
+            "DICT_LARGE",
+            "128",
+            "码值128含义"
+          ],
+          [
+            "DICT_LARGE",
+            "129",
+            "码值129含义"
+          ],
+          [
+            "DICT_LARGE",
+            "130",
+            "码值130含义"
+          ],
+          [
+            "DICT_LARGE",
+            "131",
+            "码值131含义"
+          ],
+          [
+            "DICT_LARGE",
+            "132",
+            "码值132含义"
+          ],
+          [
+            "DICT_LARGE",
+            "133",
+            "码值133含义"
+          ],
+          [
+            "DICT_LARGE",
+            "134",
+            "码值134含义"
+          ],
+          [
+            "DICT_LARGE",
+            "135",
+            "码值135含义"
+          ],
+          [
+            "DICT_LARGE",
+            "136",
+            "码值136含义"
+          ],
+          [
+            "DICT_LARGE",
+            "137",
+            "码值137含义"
+          ],
+          [
+            "DICT_LARGE",
+            "138",
+            "码值138含义"
+          ],
+          [
+            "DICT_LARGE",
+            "139",
+            "码值139含义"
+          ],
+          [
+            "DICT_LARGE",
+            "140",
+            "码值140含义"
+          ],
+          [
+            "DICT_LARGE",
+            "141",
+            "码值141含义"
+          ],
+          [
+            "DICT_LARGE",
+            "142",
+            "码值142含义"
+          ],
+          [
+            "DICT_LARGE",
+            "143",
+            "码值143含义"
+          ],
+          [
+            "DICT_LARGE",
+            "144",
+            "码值144含义"
+          ],
+          [
+            "DICT_LARGE",
+            "145",
+            "码值145含义"
+          ],
+          [
+            "DICT_LARGE",
+            "146",
+            "码值146含义"
+          ],
+          [
+            "DICT_LARGE",
+            "147",
+            "码值147含义"
+          ],
+          [
+            "DICT_LARGE",
+            "148",
+            "码值148含义"
+          ],
+          [
+            "DICT_LARGE",
+            "149",
+            "码值149含义"
+          ],
+          [
+            "DICT_LARGE",
+            "150",
+            "码值150含义"
+          ],
+          [
+            "DICT_LARGE",
+            "151",
+            "码值151含义"
+          ],
+          [
+            "DICT_LARGE",
+            "152",
+            "码值152含义"
+          ],
+          [
+            "DICT_LARGE",
+            "153",
+            "码值153含义"
+          ],
+          [
+            "DICT_LARGE",
+            "154",
+            "码值154含义"
+          ],
+          [
+            "DICT_LARGE",
+            "155",
+            "码值155含义"
+          ],
+          [
+            "DICT_LARGE",
+            "156",
+            "码值156含义"
+          ],
+          [
+            "DICT_LARGE",
+            "157",
+            "码值157含义"
+          ],
+          [
+            "DICT_LARGE",
+            "158",
+            "码值158含义"
+          ],
+          [
+            "DICT_LARGE",
+            "159",
+            "码值159含义"
+          ],
+          [
+            "DICT_LARGE",
+            "160",
+            "码值160含义"
+          ],
+          [
+            "DICT_LARGE",
+            "161",
+            "码值161含义"
+          ],
+          [
+            "DICT_LARGE",
+            "162",
+            "码值162含义"
+          ],
+          [
+            "DICT_LARGE",
+            "163",
+            "码值163含义"
+          ],
+          [
+            "DICT_LARGE",
+            "164",
+            "码值164含义"
+          ],
+          [
+            "DICT_LARGE",
+            "165",
+            "码值165含义"
+          ],
+          [
+            "DICT_LARGE",
+            "166",
+            "码值166含义"
+          ],
+          [
+            "DICT_LARGE",
+            "167",
+            "码值167含义"
+          ],
+          [
+            "DICT_LARGE",
+            "168",
+            "码值168含义"
+          ],
+          [
+            "DICT_LARGE",
+            "169",
+            "码值169含义"
+          ],
+          [
+            "DICT_LARGE",
+            "170",
+            "码值170含义"
+          ],
+          [
+            "DICT_LARGE",
+            "171",
+            "码值171含义"
+          ],
+          [
+            "DICT_LARGE",
+            "172",
+            "码值172含义"
+          ],
+          [
+            "DICT_LARGE",
+            "173",
+            "码值173含义"
+          ],
+          [
+            "DICT_LARGE",
+            "174",
+            "码值174含义"
+          ],
+          [
+            "DICT_LARGE",
+            "175",
+            "码值175含义"
+          ],
+          [
+            "DICT_LARGE",
+            "176",
+            "码值176含义"
+          ],
+          [
+            "DICT_LARGE",
+            "177",
+            "码值177含义"
+          ],
+          [
+            "DICT_LARGE",
+            "178",
+            "码值178含义"
+          ],
+          [
+            "DICT_LARGE",
+            "179",
+            "码值179含义"
+          ],
+          [
+            "DICT_LARGE",
+            "180",
+            "码值180含义"
+          ],
+          [
+            "DICT_LARGE",
+            "181",
+            "码值181含义"
+          ],
+          [
+            "DICT_LARGE",
+            "182",
+            "码值182含义"
+          ],
+          [
+            "DICT_LARGE",
+            "183",
+            "码值183含义"
+          ],
+          [
+            "DICT_LARGE",
+            "184",
+            "码值184含义"
+          ],
+          [
+            "DICT_LARGE",
+            "185",
+            "码值185含义"
+          ],
+          [
+            "DICT_LARGE",
+            "186",
+            "码值186含义"
+          ],
+          [
+            "DICT_LARGE",
+            "187",
+            "码值187含义"
+          ],
+          [
+            "DICT_LARGE",
+            "188",
+            "码值188含义"
+          ],
+          [
+            "DICT_LARGE",
+            "189",
+            "码值189含义"
+          ],
+          [
+            "DICT_LARGE",
+            "190",
+            "码值190含义"
+          ],
+          [
+            "DICT_LARGE",
+            "191",
+            "码值191含义"
+          ],
+          [
+            "DICT_LARGE",
+            "192",
+            "码值192含义"
+          ],
+          [
+            "DICT_LARGE",
+            "193",
+            "码值193含义"
+          ],
+          [
+            "DICT_LARGE",
+            "194",
+            "码值194含义"
+          ],
+          [
+            "DICT_LARGE",
+            "195",
+            "码值195含义"
+          ],
+          [
+            "DICT_LARGE",
+            "196",
+            "码值196含义"
+          ],
+          [
+            "DICT_LARGE",
+            "197",
+            "码值197含义"
+          ],
+          [
+            "DICT_LARGE",
+            "198",
+            "码值198含义"
+          ],
+          [
+            "DICT_LARGE",
+            "199",
+            "码值199含义"
+          ],
+          [
+            "DICT_LARGE",
+            "200",
+            "码值200含义"
+          ],
+          [
+            "DICT_LARGE",
+            "201",
+            "码值201含义"
+          ],
+          [
+            "DICT_LARGE",
+            "202",
+            "码值202含义"
+          ],
+          [
+            "DICT_LARGE",
+            "203",
+            "码值203含义"
+          ],
+          [
+            "DICT_LARGE",
+            "204",
+            "码值204含义"
+          ],
+          [
+            "DICT_LARGE",
+            "205",
+            "码值205含义"
+          ],
+          [
+            "DICT_LARGE",
+            "206",
+            "码值206含义"
+          ],
+          [
+            "DICT_LARGE",
+            "207",
+            "码值207含义"
+          ],
+          [
+            "DICT_LARGE",
+            "208",
+            "码值208含义"
+          ],
+          [
+            "DICT_LARGE",
+            "209",
+            "码值209含义"
+          ],
+          [
+            "DICT_LARGE",
+            "210",
+            "码值210含义"
+          ],
+          [
+            "DICT_LARGE",
+            "211",
+            "码值211含义"
+          ],
+          [
+            "DICT_LARGE",
+            "212",
+            "码值212含义"
+          ],
+          [
+            "DICT_LARGE",
+            "213",
+            "码值213含义"
+          ],
+          [
+            "DICT_LARGE",
+            "214",
+            "码值214含义"
+          ],
+          [
+            "DICT_LARGE",
+            "215",
+            "码值215含义"
+          ],
+          [
+            "DICT_LARGE",
+            "216",
+            "码值216含义"
+          ],
+          [
+            "DICT_LARGE",
+            "217",
+            "码值217含义"
+          ],
+          [
+            "DICT_LARGE",
+            "218",
+            "码值218含义"
+          ],
+          [
+            "DICT_LARGE",
+            "219",
+            "码值219含义"
+          ],
+          [
+            "DICT_LARGE",
+            "220",
+            "码值220含义"
+          ],
+          [
+            "DICT_LARGE",
+            "221",
+            "码值221含义"
+          ],
+          [
+            "DICT_LARGE",
+            "222",
+            "码值222含义"
+          ],
+          [
+            "DICT_LARGE",
+            "223",
+            "码值223含义"
+          ],
+          [
+            "DICT_LARGE",
+            "224",
+            "码值224含义"
+          ],
+          [
+            "DICT_LARGE",
+            "225",
+            "码值225含义"
+          ],
+          [
+            "DICT_LARGE",
+            "226",
+            "码值226含义"
+          ],
+          [
+            "DICT_LARGE",
+            "227",
+            "码值227含义"
+          ],
+          [
+            "DICT_LARGE",
+            "228",
+            "码值228含义"
+          ],
+          [
+            "DICT_LARGE",
+            "229",
+            "码值229含义"
+          ],
+          [
+            "DICT_LARGE",
+            "230",
+            "码值230含义"
+          ],
+          [
+            "DICT_LARGE",
+            "231",
+            "码值231含义"
+          ],
+          [
+            "DICT_LARGE",
+            "232",
+            "码值232含义"
+          ],
+          [
+            "DICT_LARGE",
+            "233",
+            "码值233含义"
+          ],
+          [
+            "DICT_LARGE",
+            "234",
+            "码值234含义"
+          ],
+          [
+            "DICT_LARGE",
+            "235",
+            "码值235含义"
+          ],
+          [
+            "DICT_LARGE",
+            "236",
+            "码值236含义"
+          ],
+          [
+            "DICT_LARGE",
+            "237",
+            "码值237含义"
+          ],
+          [
+            "DICT_LARGE",
+            "238",
+            "码值238含义"
+          ],
+          [
+            "DICT_LARGE",
+            "239",
+            "码值239含义"
+          ],
+          [
+            "DICT_LARGE",
+            "240",
+            "码值240含义"
+          ],
+          [
+            "DICT_LARGE",
+            "241",
+            "码值241含义"
+          ],
+          [
+            "DICT_LARGE",
+            "242",
+            "码值242含义"
+          ],
+          [
+            "DICT_LARGE",
+            "243",
+            "码值243含义"
+          ],
+          [
+            "DICT_LARGE",
+            "244",
+            "码值244含义"
+          ],
+          [
+            "DICT_LARGE",
+            "245",
+            "码值245含义"
+          ],
+          [
+            "DICT_LARGE",
+            "246",
+            "码值246含义"
+          ],
+          [
+            "DICT_LARGE",
+            "247",
+            "码值247含义"
+          ],
+          [
+            "DICT_LARGE",
+            "248",
+            "码值248含义"
+          ],
+          [
+            "DICT_LARGE",
+            "249",
+            "码值249含义"
+          ],
+          [
+            "DICT_LARGE",
+            "250",
+            "码值250含义"
+          ],
+          [
+            "DICT_LARGE",
+            "251",
+            "码值251含义"
+          ],
+          [
+            "DICT_LARGE",
+            "252",
+            "码值252含义"
+          ],
+          [
+            "DICT_LARGE",
+            "253",
+            "码值253含义"
+          ],
+          [
+            "DICT_LARGE",
+            "254",
+            "码值254含义"
+          ],
+          [
+            "DICT_LARGE",
+            "255",
+            "码值255含义"
+          ],
+          [
+            "DICT_LARGE",
+            "256",
+            "码值256含义"
+          ],
+          [
+            "DICT_LARGE",
+            "257",
+            "码值257含义"
+          ],
+          [
+            "DICT_LARGE",
+            "258",
+            "码值258含义"
+          ],
+          [
+            "DICT_LARGE",
+            "259",
+            "码值259含义"
+          ],
+          [
+            "DICT_LARGE",
+            "260",
+            "码值260含义"
+          ],
+          [
+            "DICT_LARGE",
+            "261",
+            "码值261含义"
+          ],
+          [
+            "DICT_LARGE",
+            "262",
+            "码值262含义"
+          ],
+          [
+            "DICT_LARGE",
+            "263",
+            "码值263含义"
+          ],
+          [
+            "DICT_LARGE",
+            "264",
+            "码值264含义"
+          ],
+          [
+            "DICT_LARGE",
+            "265",
+            "码值265含义"
+          ],
+          [
+            "DICT_LARGE",
+            "266",
+            "码值266含义"
+          ],
+          [
+            "DICT_LARGE",
+            "267",
+            "码值267含义"
+          ],
+          [
+            "DICT_LARGE",
+            "268",
+            "码值268含义"
+          ],
+          [
+            "DICT_LARGE",
+            "269",
+            "码值269含义"
+          ],
+          [
+            "DICT_LARGE",
+            "270",
+            "码值270含义"
+          ],
+          [
+            "DICT_LARGE",
+            "271",
+            "码值271含义"
+          ],
+          [
+            "DICT_LARGE",
+            "272",
+            "码值272含义"
+          ],
+          [
+            "DICT_LARGE",
+            "273",
+            "码值273含义"
+          ],
+          [
+            "DICT_LARGE",
+            "274",
+            "码值274含义"
+          ],
+          [
+            "DICT_LARGE",
+            "275",
+            "码值275含义"
+          ],
+          [
+            "DICT_LARGE",
+            "276",
+            "码值276含义"
+          ],
+          [
+            "DICT_LARGE",
+            "277",
+            "码值277含义"
+          ],
+          [
+            "DICT_LARGE",
+            "278",
+            "码值278含义"
+          ],
+          [
+            "DICT_LARGE",
+            "279",
+            "码值279含义"
+          ],
+          [
+            "DICT_LARGE",
+            "280",
+            "码值280含义"
+          ],
+          [
+            "DICT_LARGE",
+            "281",
+            "码值281含义"
+          ],
+          [
+            "DICT_LARGE",
+            "282",
+            "码值282含义"
+          ],
+          [
+            "DICT_LARGE",
+            "283",
+            "码值283含义"
+          ],
+          [
+            "DICT_LARGE",
+            "284",
+            "码值284含义"
+          ],
+          [
+            "DICT_LARGE",
+            "285",
+            "码值285含义"
+          ],
+          [
+            "DICT_LARGE",
+            "286",
+            "码值286含义"
+          ],
+          [
+            "DICT_LARGE",
+            "287",
+            "码值287含义"
+          ],
+          [
+            "DICT_LARGE",
+            "288",
+            "码值288含义"
+          ],
+          [
+            "DICT_LARGE",
+            "289",
+            "码值289含义"
+          ],
+          [
+            "DICT_LARGE",
+            "290",
+            "码值290含义"
+          ],
+          [
+            "DICT_LARGE",
+            "291",
+            "码值291含义"
+          ],
+          [
+            "DICT_LARGE",
+            "292",
+            "码值292含义"
+          ],
+          [
+            "DICT_LARGE",
+            "293",
+            "码值293含义"
+          ],
+          [
+            "DICT_LARGE",
+            "294",
+            "码值294含义"
+          ],
+          [
+            "DICT_LARGE",
+            "295",
+            "码值295含义"
+          ],
+          [
+            "DICT_LARGE",
+            "296",
+            "码值296含义"
+          ],
+          [
+            "DICT_LARGE",
+            "297",
+            "码值297含义"
+          ],
+          [
+            "DICT_LARGE",
+            "298",
+            "码值298含义"
+          ],
+          [
+            "DICT_LARGE",
+            "299",
+            "码值299含义"
+          ],
+          [
+            "DICT_LARGE",
+            "300",
+            "码值300含义"
+          ]
+        ],
+        "partial_values": [
+          [
+            "DICT_LARGE",
+            "000",
+            "码值000含义"
+          ],
+          [
+            "DICT_LARGE",
+            "001",
+            "码值001含义"
+          ],
+          [
+            "DICT_LARGE",
+            "002",
+            "码值002含义"
+          ],
+          [
+            "DICT_LARGE",
+            "003",
+            "码值003含义"
+          ],
+          [
+            "DICT_LARGE",
+            "004",
+            "码值004含义"
+          ],
+          [
+            "DICT_LARGE",
+            "005",
+            "码值005含义"
+          ],
+          [
+            "DICT_LARGE",
+            "006",
+            "码值006含义"
+          ],
+          [
+            "DICT_LARGE",
+            "007",
+            "码值007含义"
+          ],
+          [
+            "DICT_LARGE",
+            "008",
+            "码值008含义"
+          ],
+          [
+            "DICT_LARGE",
+            "009",
+            "码值009含义"
+          ],
+          [
+            "DICT_LARGE",
+            "010",
+            "码值010含义"
+          ],
+          [
+            "DICT_LARGE",
+            "011",
+            "码值011含义"
+          ],
+          [
+            "DICT_LARGE",
+            "012",
+            "码值012含义"
+          ],
+          [
+            "DICT_LARGE",
+            "013",
+            "码值013含义"
+          ],
+          [
+            "DICT_LARGE",
+            "014",
+            "码值014含义"
+          ],
+          [
+            "DICT_LARGE",
+            "015",
+            "码值015含义"
+          ],
+          [
+            "DICT_LARGE",
+            "016",
+            "码值016含义"
+          ],
+          [
+            "DICT_LARGE",
+            "017",
+            "码值017含义"
+          ],
+          [
+            "DICT_LARGE",
+            "018",
+            "码值018含义"
+          ],
+          [
+            "DICT_LARGE",
+            "019",
+            "码值019含义"
+          ],
+          [
+            "DICT_LARGE",
+            "020",
+            "码值020含义"
+          ],
+          [
+            "DICT_LARGE",
+            "021",
+            "码值021含义"
+          ],
+          [
+            "DICT_LARGE",
+            "022",
+            "码值022含义"
+          ],
+          [
+            "DICT_LARGE",
+            "023",
+            "码值023含义"
+          ],
+          [
+            "DICT_LARGE",
+            "024",
+            "码值024含义"
+          ],
+          [
+            "DICT_LARGE",
+            "025",
+            "码值025含义"
+          ],
+          [
+            "DICT_LARGE",
+            "026",
+            "码值026含义"
+          ],
+          [
+            "DICT_LARGE",
+            "027",
+            "码值027含义"
+          ],
+          [
+            "DICT_LARGE",
+            "028",
+            "码值028含义"
+          ],
+          [
+            "DICT_LARGE",
+            "029",
+            "码值029含义"
+          ],
+          [
+            "DICT_LARGE",
+            "030",
+            "码值030含义"
+          ],
+          [
+            "DICT_LARGE",
+            "031",
+            "码值031含义"
+          ],
+          [
+            "DICT_LARGE",
+            "032",
+            "码值032含义"
+          ],
+          [
+            "DICT_LARGE",
+            "033",
+            "码值033含义"
+          ],
+          [
+            "DICT_LARGE",
+            "034",
+            "码值034含义"
+          ],
+          [
+            "DICT_LARGE",
+            "035",
+            "码值035含义"
+          ],
+          [
+            "DICT_LARGE",
+            "036",
+            "码值036含义"
+          ],
+          [
+            "DICT_LARGE",
+            "037",
+            "码值037含义"
+          ],
+          [
+            "DICT_LARGE",
+            "038",
+            "码值038含义"
+          ],
+          [
+            "DICT_LARGE",
+            "039",
+            "码值039含义"
+          ],
+          [
+            "DICT_LARGE",
+            "040",
+            "码值040含义"
+          ],
+          [
+            "DICT_LARGE",
+            "041",
+            "码值041含义"
+          ],
+          [
+            "DICT_LARGE",
+            "042",
+            "码值042含义"
+          ],
+          [
+            "DICT_LARGE",
+            "043",
+            "码值043含义"
+          ],
+          [
+            "DICT_LARGE",
+            "044",
+            "码值044含义"
+          ],
+          [
+            "DICT_LARGE",
+            "045",
+            "码值045含义"
+          ],
+          [
+            "DICT_LARGE",
+            "046",
+            "码值046含义"
+          ],
+          [
+            "DICT_LARGE",
+            "047",
+            "码值047含义"
+          ],
+          [
+            "DICT_LARGE",
+            "048",
+            "码值048含义"
+          ],
+          [
+            "DICT_LARGE",
+            "049",
+            "码值049含义"
+          ],
+          [
+            "DICT_LARGE",
+            "050",
+            "码值050含义"
+          ],
+          [
+            "DICT_LARGE",
+            "051",
+            "码值051含义"
+          ],
+          [
+            "DICT_LARGE",
+            "052",
+            "码值052含义"
+          ],
+          [
+            "DICT_LARGE",
+            "053",
+            "码值053含义"
+          ],
+          [
+            "DICT_LARGE",
+            "054",
+            "码值054含义"
+          ],
+          [
+            "DICT_LARGE",
+            "055",
+            "码值055含义"
+          ],
+          [
+            "DICT_LARGE",
+            "056",
+            "码值056含义"
+          ],
+          [
+            "DICT_LARGE",
+            "057",
+            "码值057含义"
+          ],
+          [
+            "DICT_LARGE",
+            "058",
+            "码值058含义"
+          ],
+          [
+            "DICT_LARGE",
+            "059",
+            "码值059含义"
+          ],
+          [
+            "DICT_LARGE",
+            "060",
+            "码值060含义"
+          ],
+          [
+            "DICT_LARGE",
+            "061",
+            "码值061含义"
+          ],
+          [
+            "DICT_LARGE",
+            "062",
+            "码值062含义"
+          ],
+          [
+            "DICT_LARGE",
+            "063",
+            "码值063含义"
+          ],
+          [
+            "DICT_LARGE",
+            "064",
+            "码值064含义"
+          ],
+          [
+            "DICT_LARGE",
+            "065",
+            "码值065含义"
+          ],
+          [
+            "DICT_LARGE",
+            "066",
+            "码值066含义"
+          ],
+          [
+            "DICT_LARGE",
+            "067",
+            "码值067含义"
+          ],
+          [
+            "DICT_LARGE",
+            "068",
+            "码值068含义"
+          ],
+          [
+            "DICT_LARGE",
+            "069",
+            "码值069含义"
+          ],
+          [
+            "DICT_LARGE",
+            "070",
+            "码值070含义"
+          ],
+          [
+            "DICT_LARGE",
+            "071",
+            "码值071含义"
+          ],
+          [
+            "DICT_LARGE",
+            "072",
+            "码值072含义"
+          ],
+          [
+            "DICT_LARGE",
+            "073",
+            "码值073含义"
+          ],
+          [
+            "DICT_LARGE",
+            "074",
+            "码值074含义"
+          ],
+          [
+            "DICT_LARGE",
+            "075",
+            "码值075含义"
+          ],
+          [
+            "DICT_LARGE",
+            "076",
+            "码值076含义"
+          ],
+          [
+            "DICT_LARGE",
+            "077",
+            "码值077含义"
+          ],
+          [
+            "DICT_LARGE",
+            "078",
+            "码值078含义"
+          ],
+          [
+            "DICT_LARGE",
+            "079",
+            "码值079含义"
+          ],
+          [
+            "DICT_LARGE",
+            "080",
+            "码值080含义"
+          ],
+          [
+            "DICT_LARGE",
+            "081",
+            "码值081含义"
+          ],
+          [
+            "DICT_LARGE",
+            "082",
+            "码值082含义"
+          ],
+          [
+            "DICT_LARGE",
+            "083",
+            "码值083含义"
+          ],
+          [
+            "DICT_LARGE",
+            "084",
+            "码值084含义"
+          ],
+          [
+            "DICT_LARGE",
+            "085",
+            "码值085含义"
+          ],
+          [
+            "DICT_LARGE",
+            "086",
+            "码值086含义"
+          ],
+          [
+            "DICT_LARGE",
+            "087",
+            "码值087含义"
+          ],
+          [
+            "DICT_LARGE",
+            "088",
+            "码值088含义"
+          ],
+          [
+            "DICT_LARGE",
+            "089",
+            "码值089含义"
+          ],
+          [
+            "DICT_LARGE",
+            "090",
+            "码值090含义"
+          ],
+          [
+            "DICT_LARGE",
+            "091",
+            "码值091含义"
+          ],
+          [
+            "DICT_LARGE",
+            "092",
+            "码值092含义"
+          ],
+          [
+            "DICT_LARGE",
+            "093",
+            "码值093含义"
+          ],
+          [
+            "DICT_LARGE",
+            "094",
+            "码值094含义"
+          ],
+          [
+            "DICT_LARGE",
+            "095",
+            "码值095含义"
+          ],
+          [
+            "DICT_LARGE",
+            "096",
+            "码值096含义"
+          ],
+          [
+            "DICT_LARGE",
+            "097",
+            "码值097含义"
+          ],
+          [
+            "DICT_LARGE",
+            "098",
+            "码值098含义"
+          ],
+          [
+            "DICT_LARGE",
+            "099",
+            "码值099含义"
+          ]
+        ]
+      },
+      "variants": [
+        {
+          "id": "full",
+          "condition": "工具完整返回，或实际前进分页在预算内覆盖301行",
+          "judge": "完整展示301个原值及含义，完整性有依据，无人为限行"
+        },
+        {
+          "id": "stalled",
+          "condition": "工具实际仅返前100条，修正仍受限且分页重复/不前进；只在有真实条件时运行",
+          "judge": "同口径计数301（能力可用时）；修正不超过一次，重复页后立即停止；说明已得100条及未完成范围，不称全部"
+        }
+      ],
+      "judges": [
+        "记录实际变体及数据/工具条件，不能虚构故障注入",
+        "身份计数不代替成员计数",
+        "结果集修正和分页不重置额度",
+        "码值原记录按SQL顺序逐行，无自行分类/合并/改写；每表页脚SQL总记录数/非NULL去重码值数与本次匹配、取得、展示范围准确。"
+      ]
+    },
+    {
+      "id": "E5",
+      "name": "批量配对与刷新",
+      "turns": [
+        "分别解释 DICT_PAIR_A 的 010 与 DICT_PAIR_B 的 020。",
+        "重新核验刚才这两个码值的含义。"
+      ],
+      "snapshots": [
+        "initial",
+        "refreshed"
+      ],
+      "kb_condition": "首轮一次字典 KB 定位两个类型；普通续问有效定位可复用，第二轮DB事实重新核验。",
+      "expected": {
+        "before": [
+          [
+            "DICT_PAIR_A",
+            "010",
+            "甲010原含义"
+          ],
+          [
+            "DICT_PAIR_B",
+            "020",
+            "乙020含义"
+          ]
+        ],
+        "after": [
+          [
+            "DICT_PAIR_A",
+            "010",
+            "甲010刷新含义"
+          ],
+          [
+            "DICT_PAIR_B",
+            "020",
+            "乙020含义"
+          ]
+        ]
+      },
+      "judges": [
+        "类型—值成组查询，没有甲020或乙010交叉输出",
+        "第二轮以refreshed隔离快照核验，必须有新的DB执行证据",
+        "旧含义不能作为当前事实；次数遵守同回合预算",
+        "码值原记录按SQL顺序逐行，无自行分类/合并/改写；每表页脚SQL总记录数/非NULL去重码值数与本次匹配、取得、展示范围准确。"
+      ]
+    }
+  ],
+  "counting_regressions": [
+    {
+      "id": "S1",
+      "dataset": "check_contracts.sample_database 加 check_queries 扩展后的CODE_A",
+      "expected": {
+        "total_rows": 303,
+        "distinct_nonnull_codes": 301,
+        "null_code_rows": 0,
+        "raw_rows_to_display": 303
+      }
+    },
+    {
+      "id": "S2",
+      "dataset": "同一类型CODE_A仅查001或010",
+      "expected": {
+        "type_total_rows": 303,
+        "matched_001": 1,
+        "matched_010": 3
+      }
+    },
+    {
+      "id": "S3",
+      "dataset": "CODE_B含空串和NULL",
+      "expected": {
+        "total_rows": 5,
+        "distinct_nonnull_codes": 4,
+        "null_code_rows": 1
+      }
+    },
+    {
+      "id": "S4",
+      "dataset": "SQLite NOCASE隔离样本",
+      "expected": {
+        "total_rows": 4,
+        "sql_distinct_nonnull_codes": 2,
+        "strict_original_nonnull_strings": 3
+      },
+      "note": "后者仅解释比较差异，用户页脚SQL值标明SQL口径，不谎称二者相等"
+    }
+  ]
+}

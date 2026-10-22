@@ -1,0 +1,28 @@
+{
+  "version": "v8",
+  "runtime_sha256": "3ea19f0953b60b5d43dce23ae04961a47fd3691b7fc4bc4164833f9b8bfa93da",
+  "runtime_files": {
+    "agent-prompt/数据建模师.md": "acb87fbef4c04443e43d10d8827eef53ef80f6a7eb1ea2a2c35a1ee814a2501b",
+    "skills/dictionary-query-db/SKILL.md": "c851131161b15b2693587aaff3580544845c9d3cde193bec4de77d1588d92d16",
+    "skills/dictionary-query-kb/SKILL.md": "9aad3e9772909fa4ba6a44ebb89c4306d0d5915242c8575bc66f1f9f4ffd3f35",
+    "skills/table-schema-query-db/SKILL.md": "d24b9c1696e7d600e5084b4579e121468465b41f4f842304f8a5fdfba2dfef4a",
+    "skills/table-schema-query-kb/SKILL.md": "d40f019f136fe7dcc96c24bf6d8587b811c34d39756d46a121992015ad2dfc52"
+  },
+  "fixed_tasks_sha256": "5bd714c94a2e22174960d18de85ce33fbf169e4c3b3572354e7bddda6aa1e4d1",
+  "snapshot_sha256": {
+    "initial": "71b009c6ad6cfa75cb0721fb13cc9969b43af36bff106ab8ac8768a3d09d5930",
+    "refreshed": "fbc92c0eaea28335f02608cf54297960917b22667cad95ed98ac84b95e63619e"
+  },
+  "delivery_files": {
+    "README.md": "56b6bc5a5df17a5030b0930c231f2ab68101097c7f9104dd76c052685095f1ec",
+    "agent-prompt/数据建模师.md": "acb87fbef4c04443e43d10d8827eef53ef80f6a7eb1ea2a2c35a1ee814a2501b",
+    "check_contracts.py": "ea78f71cdcbbe05ea38c88a9738ec7e95afef2bf55b1ffc2f3d00d898dd65d40",
+    "eval_cases.json": "5bd714c94a2e22174960d18de85ce33fbf169e4c3b3572354e7bddda6aa1e4d1",
+    "eval_results.csv": "efa9d152ea8a9742ebbfb34590c71ce9cad95536b61a1500405d6382e82bdcc2",
+    "skills/dictionary-query-db/SKILL.md": "c851131161b15b2693587aaff3580544845c9d3cde193bec4de77d1588d92d16",
+    "skills/dictionary-query-kb/SKILL.md": "9aad3e9772909fa4ba6a44ebb89c4306d0d5915242c8575bc66f1f9f4ffd3f35",
+    "skills/table-schema-query-db/SKILL.md": "d24b9c1696e7d600e5084b4579e121468465b41f4f842304f8a5fdfba2dfef4a",
+    "skills/table-schema-query-kb/SKILL.md": "d40f019f136fe7dcc96c24bf6d8587b811c34d39756d46a121992015ad2dfc52"
+  },
+  "runtime_eval": "not_run; SQL/数据检查不是模型运行评测"
+}

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="drawio" version="26.0.0" compressed="false">
+  <diagram id="page-06" name="06-数据逻辑关系">
+    <mxGraphModel dx="1320" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1320" pageHeight="900" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="06  数据逻辑关系" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=32;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#0F172A;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="25" width="1240" height="50" />
+        </mxCell>
+        <mxCell id="subtitle" value="字段归属表，码值归属字典类型；代码名称用于逻辑映射并须实际核验" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=20;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#64748B;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="85" width="1240" height="35" />
+        </mxCell>
+        <mxCell id="table-schema" value="table_schema  /  表字段元数据" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#FEF3C7;strokeColor=#B45309;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="160" width="480" height="590" />
+        </mxCell>
+        <mxCell id="schema-table_name_en" value="table_name_en　｜　表英文标识" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="60" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-table_name_cn" value="table_name_cn　｜　表中文名称" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="110" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-column_name" value="column_name　｜　字段英文名" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="160" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-column_cn_name" value="column_cn_name　｜　字段中文名" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="210" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-column_type" value="column_type　｜　数据类型" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="260" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-is_key" value="is_key　｜　关键标识" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="310" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-is_related" value="is_related　｜　代码映射标识" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="360" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-related_column_en" value="related_column_en　｜　代码英文名称" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="410" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-related_column_cn" value="related_column_cn　｜　代码中文名称" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="460" width="460" height="50" />
+        </mxCell>
+        <mxCell id="schema-biz_desc" value="biz_desc　｜　业务描述" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="table-schema">
+          <mxGeometry as="geometry" x="10" y="510" width="460" height="50" />
+        </mxCell>
+        <mxCell id="dictionary" value="data_asset_code_kb  /  字典码值" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#0F172A;fillColor=#FEF3C7;strokeColor=#B45309;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;swimlane;startSize=45;container=1;collapsible=0;pointerEvents=0;horizontal=1;align=left;spacingLeft=18;fontStyle=1;fillColor=#FFFFFF;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="800" y="160" width="480" height="330" />
+        </mxCell>
+        <mxCell id="dict-code_table_en_name" value="code_table_en_name&lt;br&gt;字典类型英文名" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=20;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="dictionary">
+          <mxGeometry as="geometry" x="10" y="60" width="460" height="60" />
+        </mxCell>
+        <mxCell id="dict-code_table_cn_name" value="code_table_cn_name&lt;br&gt;字典类型中文名" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=20;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="dictionary">
+          <mxGeometry as="geometry" x="10" y="120" width="460" height="60" />
+        </mxCell>
+        <mxCell id="dict-code_value" value="code_value&lt;br&gt;原始码值" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=20;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="dictionary">
+          <mxGeometry as="geometry" x="10" y="180" width="460" height="60" />
+        </mxCell>
+        <mxCell id="dict-code_desc" value="code_desc&lt;br&gt;码值描述" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=20;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;align=left;spacingLeft=14;strokeWidth=0.5;" vertex="1" parent="dictionary">
+          <mxGeometry as="geometry" x="10" y="240" width="460" height="60" />
+        </mxCell>
+        <mxCell id="mapping" value="逻辑映射&lt;br&gt;&lt;br&gt;英文名称核验&lt;br&gt;中文名称核对&lt;br&gt;冲突需确认" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=22;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="570" y="510" width="180" height="210" />
+        </mxCell>
+        <mxCell id="map-input" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;endSize=9;strokeWidth=2;strokeColor=#7C3AED;fontColor=#475569;fontFamily=Arial;fontSize=18;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;" edge="1" parent="1" source="schema-related_column_en" target="mapping">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="550" y="595" />
+              <mxPoint x="550" y="615" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="map-output" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;endSize=9;strokeWidth=2;strokeColor=#7C3AED;fontColor=#475569;fontFamily=Arial;fontSize=18;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;dashPattern=6 4;" edge="1" parent="1" source="mapping" target="dict-code_table_en_name">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="770" y="562.5" />
+              <mxPoint x="770" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dict-note" value="类型与码值边界&lt;br&gt;&lt;br&gt;代码按字符串原样保留&lt;br&gt;前导零、空串与 NULL 不混同&lt;br&gt;重复及同码异义不静默删除" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=22;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="800" y="550" width="480" height="180" />
+        </mxCell>
+        <mxCell id="boundary" value="模型说明：本图为逻辑字段契约；不推断物理 PK / FK、字段类型长度、唯一约束或跨系统外键。" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=19;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;align=left;spacingLeft=18;fontSize=19;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="790" width="1240" height="55" />
+        </mxCell>
+        <mxCell id="legend-store" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#0F172A;fillColor=#FEF3C7;strokeColor=#B45309;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="865" width="20" height="20" />
+        </mxCell>
+        <mxCell id="legend-text-store" value="知识与数据" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=17;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#475569;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="70" y="860" width="220" height="30" />
+        </mxCell>
+        <mxCell id="legend-rule" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#0F172A;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="320" y="865" width="20" height="20" />
+        </mxCell>
+        <mxCell id="legend-text-rule" value="共享规则" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=17;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#475569;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="350" y="860" width="220" height="30" />
+        </mxCell>
+        <mxCell id="legend-neutral" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="600" y="865" width="20" height="20" />
+        </mxCell>
+        <mxCell id="legend-text-neutral" value="说明与支撑" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=17;fontColor=#0F172A;fillColor=#F3F4F6;strokeColor=#94A3B8;strokeWidth=1.5;spacing=10;align=center;verticalAlign=middle;text;fillColor=none;strokeColor=none;align=left;spacing=0;fontColor=#475569;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="630" y="860" width="220" height="30" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

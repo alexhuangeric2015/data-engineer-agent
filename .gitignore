@@ -1,12 +1,10 @@
 .env
-.venv/
-__pycache__/
-.pytest_cache/
-.coverage
-htmlcov/
-*.py[cod]
 .idea/
 .DS_Store
 dist/
 build/
+.local/
+backend/target/
+frontend/node_modules/
+frontend/dist/
 
