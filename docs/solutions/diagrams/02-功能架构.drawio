@@ -1,63 +1,66 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mxfile host="drawio" compressed="false">
   <diagram id="page-02" name="02-功能架构">
-    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1640" pageHeight="1160" background="#FFFFFF" math="0" shadow="0">
+    <mxGraphModel grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1640" pageHeight="1430" background="#FFFFFF" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title" value="02-功能架构" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=36;fontColor=#0F172A;fillColor=none;strokeColor=none;strokeWidth=1.5;spacing=0;align=left;verticalAlign=middle;text;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry as="geometry" x="40" y="30" width="1500" height="55" />
         </mxCell>
-        <mxCell id="subtitle" value="围绕查询服务、对话与结果、数据内容管理组织能力，主提示词与 SKILL 作为本期建设载体" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=22;fontColor=#64748B;fillColor=none;strokeColor=none;strokeWidth=1.5;spacing=0;align=left;verticalAlign=middle;text;fontStyle=0;" vertex="1" parent="1">
+        <mxCell id="subtitle" value="Agent服务承载多个 Agent，数据资产Agent展开查询能力；复用 HiAgent 平台能力，程序管理知识库内容" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=22;fontColor=#64748B;fillColor=none;strokeColor=none;strokeWidth=1.5;spacing=0;align=left;verticalAlign=middle;text;fontStyle=0;" vertex="1" parent="1">
           <mxGeometry as="geometry" x="40" y="100" width="1500" height="40" />
         </mxCell>
-        <mxCell id="entry" value="数据资源智能查询入口" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=28;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;fontStyle=1;" vertex="1" parent="1">
+        <mxCell id="entry" value="智能体应用服务入口" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=28;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry as="geometry" x="40" y="170" width="1560" height="70" />
         </mxCell>
-        <mxCell id="query-functions" value="&lt;font style=&quot;font-size:27px&quot;&gt;查询服务&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=27;fontColor=#1E293B;fillColor=#FFFFFF;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;swimlane;startSize=60;container=1;collapsible=0;pointerEvents=0;horizontal=1;spacingLeft=22;fontStyle=1;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="40" y="290" width="580" height="610" />
+        <mxCell id="query-functions" value="&lt;font style=&quot;font-size:27px&quot;&gt;Agent服务&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=27;fontColor=#1E293B;fillColor=#FFFFFF;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;swimlane;startSize=60;container=1;collapsible=0;pointerEvents=0;horizontal=1;spacingLeft=22;fontStyle=1;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="290" width="580" height="880" />
         </mxCell>
-        <mxCell id="interaction-functions" value="&lt;font style=&quot;font-size:27px&quot;&gt;对话与结果&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=27;fontColor=#1E293B;fillColor=#FFFFFF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;swimlane;startSize=60;container=1;collapsible=0;pointerEvents=0;horizontal=1;spacingLeft=22;fontStyle=1;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="660" y="290" width="420" height="610" />
+        <mxCell id="interaction-functions" value="&lt;font style=&quot;font-size:27px&quot;&gt;HiAgent能力复用&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=27;fontColor=#1E293B;fillColor=#FFFFFF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;swimlane;startSize=60;container=1;collapsible=0;pointerEvents=0;horizontal=1;spacingLeft=22;fontStyle=1;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="660" y="290" width="420" height="880" />
         </mxCell>
-        <mxCell id="content-functions" value="&lt;font style=&quot;font-size:27px&quot;&gt;数据内容管理&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=27;fontColor=#1E293B;fillColor=#FFFFFF;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;swimlane;startSize=60;container=1;collapsible=0;pointerEvents=0;horizontal=1;spacingLeft=22;fontStyle=1;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="1120" y="290" width="480" height="610" />
+        <mxCell id="content-functions" value="&lt;font style=&quot;font-size:27px&quot;&gt;知识库管理&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=27;fontColor=#1E293B;fillColor=#FFFFFF;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;swimlane;startSize=60;container=1;collapsible=0;pointerEvents=0;horizontal=1;spacingLeft=22;fontStyle=1;swimlaneFillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1120" y="290" width="480" height="880" />
         </mxCell>
-        <mxCell id="tables" value="&lt;b&gt;表查询&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;中文名称与英文标识&lt;br&gt;业务含义匹配&lt;br&gt;候选定位与核验&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="query-functions">
-          <mxGeometry as="geometry" x="30" y="100" width="250" height="190" />
+        <mxCell id="data-asset-agent" parent="query-functions" value="&lt;font style=&quot;font-size:24px&quot;&gt;数据资产Agent&lt;/font&gt;" vertex="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#FFFFFF;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;swimlane;startSize=60;container=1;collapsible=0;pointerEvents=0;horizontal=1;spacingLeft=22;fontStyle=1;swimlaneFillColor=#FFFFFF;">
+          <mxGeometry x="20" y="90" width="540" height="590" as="geometry" />
         </mxCell>
-        <mxCell id="columns" value="&lt;b&gt;字段查询&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;确认所属表&lt;br&gt;字段名称与类型&lt;br&gt;关键标识及业务描述&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="query-functions">
-          <mxGeometry as="geometry" x="300" y="100" width="250" height="190" />
+        <mxCell id="tables" value="&lt;b&gt;表查询&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;中文名称与英文标识&lt;br&gt;业务含义匹配&lt;br&gt;候选定位与核验&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;fontSize=23;spacing=10;" vertex="1" parent="data-asset-agent">
+          <mxGeometry as="geometry" x="20" y="85" width="240" height="150" />
         </mxCell>
-        <mxCell id="codes" value="&lt;b&gt;字典与码值查询&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;字典类型定位&lt;br&gt;代码与含义互查&lt;br&gt;完整码值明细&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="query-functions">
-          <mxGeometry as="geometry" x="30" y="340" width="250" height="190" />
+        <mxCell id="columns" value="&lt;b&gt;字段查询&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;确认所属表&lt;br&gt;字段名称与类型&lt;br&gt;关键标识及业务描述&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;fontSize=23;spacing=10;" vertex="1" parent="data-asset-agent">
+          <mxGeometry as="geometry" x="280" y="85" width="240" height="150" />
         </mxCell>
-        <mxCell id="relations" value="&lt;b&gt;关联查询&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;表到字段&lt;br&gt;字段到字典类型&lt;br&gt;字典类型到码值&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="query-functions">
-          <mxGeometry as="geometry" x="300" y="340" width="250" height="190" />
+        <mxCell id="codes" value="&lt;b&gt;字典与码值查询&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;字典类型定位&lt;br&gt;代码与含义互查&lt;br&gt;完整码值明细&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;fontSize=23;spacing=10;" vertex="1" parent="data-asset-agent">
+          <mxGeometry as="geometry" x="20" y="265" width="240" height="150" />
         </mxCell>
-        <mxCell id="confirmation" value="&lt;b&gt;候选确认&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;展示可区分信息，确认目标对象&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
-          <mxGeometry as="geometry" x="30" y="90" width="360" height="90" />
+        <mxCell id="relations" value="&lt;b&gt;关联查询&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;表到字段&lt;br&gt;字段到字典类型&lt;br&gt;字典类型到码值&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;fontSize=23;spacing=10;" vertex="1" parent="data-asset-agent">
+          <mxGeometry as="geometry" x="280" y="265" width="240" height="150" />
         </mxCell>
-        <mxCell id="context" value="&lt;b&gt;上下文续接&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;候选序号 · 连续追问 · 对象切换&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
-          <mxGeometry as="geometry" x="30" y="210" width="360" height="90" />
+        <mxCell id="confirmation" value="&lt;b&gt;SKILL 引用&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;Agent 使用查询规则与阶段参考&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
+          <mxGeometry as="geometry" x="30" y="110" width="360" height="140" />
         </mxCell>
-        <mxCell id="presentation" value="&lt;b&gt;结果展示&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;来源 · 缺失说明 · 完整性范围&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
-          <mxGeometry as="geometry" x="30" y="330" width="360" height="90" />
+        <mxCell id="context" value="&lt;b&gt;知识库与数据库接入&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;Agent 检索候选与核验取数&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
+          <mxGeometry as="geometry" x="30" y="300" width="360" height="140" />
         </mxCell>
-        <mxCell id="suggestion" value="&lt;b&gt;提问建议&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;围绕当前对象生成相关后续问题&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
-          <mxGeometry as="geometry" x="30" y="450" width="360" height="90" />
+        <mxCell id="presentation" value="&lt;b&gt;会话与交互能力&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;会话上下文 · 结果呈现 · 提问建议&lt;br&gt;业务规则由 Agent 配置&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
+          <mxGeometry as="geometry" x="30" y="490" width="360" height="140" />
         </mxCell>
-        <mxCell id="preparation" value="&lt;b&gt;治理数据整理&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;名称与字段整理&lt;br&gt;格式与关联校验&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="content-functions">
-          <mxGeometry as="geometry" x="30" y="100" width="420" height="130" />
+        <mxCell id="suggestion" value="&lt;b&gt;其他 Agent 引用&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:20px&quot;&gt;平台支持 Agent 组合&lt;br&gt;后续按复杂能力扩展&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="interaction-functions">
+          <mxGeometry as="geometry" x="30" y="680" width="360" height="140" />
         </mxCell>
-        <mxCell id="knowledge-content" value="&lt;b&gt;知识内容组织&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;表结构内容生成&lt;br&gt;字典类型与码值内容生成&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="content-functions">
-          <mxGeometry as="geometry" x="30" y="270" width="420" height="130" />
+        <mxCell id="preparation" value="&lt;b&gt;知识内容加工&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;治理数据整理与格式校验&lt;br&gt;保留表结构与字典业务含义&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="content-functions">
+          <mxGeometry as="geometry" x="30" y="110" width="420" height="140" />
         </mxCell>
-        <mxCell id="query-data" value="&lt;b&gt;查询数据准备&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;表字段与字典数据导入&lt;br&gt;支持按配置更新内容&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="content-functions">
-          <mxGeometry as="geometry" x="30" y="440" width="420" height="130" />
+        <mxCell id="knowledge-content" value="&lt;b&gt;知识文件组织&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;生成表结构与字典 Markdown&lt;br&gt;按对象组织标题、内容与文件&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="content-functions">
+          <mxGeometry as="geometry" x="30" y="300" width="420" height="140" />
         </mxCell>
-        <mxCell id="shared-rules" value="共享查询规则" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#F5F3FF;strokeColor=#8B5CF6;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;spacingLeft=22;fontStyle=1;container=1;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="40" y="940" width="1560" height="100" />
+        <mxCell id="query-data" value="&lt;b&gt;配置驱动的知识库写入&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;目标知识库 · 文件路径 · 写入参数&lt;br&gt;程序将知识文件写入 HiAgent&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="content-functions">
+          <mxGeometry as="geometry" x="30" y="490" width="420" height="140" />
+        </mxCell>
+        <mxCell id="shared-rules" value="数据资产查询规则" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#F5F3FF;strokeColor=#8B5CF6;strokeWidth=1.5;spacing=14;align=left;verticalAlign=middle;spacingLeft=22;fontStyle=1;container=1;pointerEvents=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="1210" width="1560" height="100" />
         </mxCell>
         <mxCell id="shared-0" value="对象范围明确" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#1E293B;fillColor=#F5F3FF;strokeColor=none;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="shared-rules">
           <mxGeometry as="geometry" x="280" y="25" width="290" height="50" />
@@ -71,8 +74,17 @@
         <mxCell id="shared-3" value="完整性与异常分别说明" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#1E293B;fillColor=#F5F3FF;strokeColor=none;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="shared-rules">
           <mxGeometry as="geometry" x="1210" y="25" width="290" height="50" />
         </mxCell>
-        <mxCell id="implementation" value="本期实现载体：主提示词 · 统一查询 SKILL 及阶段参考 · 知识库配置 · Python 数据加工程序" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#64748B;fillColor=none;strokeColor=none;strokeWidth=1.5;spacing=0;align=left;verticalAlign=middle;text;fontStyle=0;" vertex="1" parent="1">
-          <mxGeometry as="geometry" x="40" y="1080" width="1560" height="40" />
+        <mxCell id="implementation" value="层级：Agent服务 → 数据资产Agent / 其他 Agent；查询能力归属数据资产Agent。资源引用与调用由 Agent 组织。" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=21;fontColor=#64748B;fillColor=none;strokeColor=none;strokeWidth=1.5;spacing=0;align=left;verticalAlign=middle;text;fontStyle=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="40" y="1350" width="1560" height="50" />
+        </mxCell>
+        <mxCell id="agent-rules" value="&lt;b&gt;业务交互与回答规则&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;候选确认 · 来源与完整性说明&lt;br&gt;原始码值保留 · 异常处理&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#ECFDF5;strokeColor=#10B981;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="data-asset-agent">
+          <mxGeometry x="20" y="445" width="500" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="content-config" value="&lt;b&gt;写入状态与检索验证&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;核对文件处理状态与知识内容&lt;br&gt;验证候选定位和检索可用性&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=25;fontColor=#1E293B;fillColor=#FFFBEB;strokeColor=#D97706;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;" vertex="1" parent="content-functions">
+          <mxGeometry x="30" y="680" width="420" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="other-agent-services" parent="query-functions" value="&lt;b&gt;其他 Agent 服务（后续扩展）&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:21px&quot;&gt;与数据资产Agent同级，按业务职责扩展&lt;br&gt;Agent 可引用多个 Agent 组合复杂能力&lt;/font&gt;" vertex="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fontFamily=Arial;fontSize=24;fontColor=#1E293B;fillColor=#EFF6FF;strokeColor=#3B82F6;strokeWidth=1.5;spacing=14;align=center;verticalAlign=middle;">
+          <mxGeometry x="20" y="720" width="540" height="120" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
