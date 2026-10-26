@@ -11,7 +11,7 @@ Vue3 对话页 → Spring Boot SSE → Spring AI Alibaba Agent
                                   └─ 大模型根据数据库证据总结
 ```
 
-运行时加载 [V10 单一 data-asset-query SKILL](docs/hiagent/versions/v10/skills/data-asset-query/SKILL.md)，并按查询阶段读取四份参考，不把知识库片段当作资产事实。MySQL 的 `table_schema` 与 `data_asset_code_kb` 只包含当前已确认的事实字段；会话另存于 `agent_chat_session` 和 `agent_chat_message`。MyBatis 查询均定义在 Mapper XML，无 Wrapper、动态表名或任意 SQL 执行入口。
+运行时加载 [V10 单一 data-asset-query SKILL](docs/hiagent/skills/versions/v10/skills/data-asset-query/SKILL.md)，并按查询阶段读取四份参考，不把知识库片段当作资产事实。MySQL 的 `table_schema` 与 `data_asset_code_kb` 只包含当前已确认的事实字段；会话另存于 `agent_chat_session` 和 `agent_chat_message`。MyBatis 查询均定义在 Mapper XML，无 Wrapper、动态表名或任意 SQL 执行入口。
 
 两种模式有独立的代码路径，入口 [ChatService](backend/src/main/java/com/dataengineer/agent/chat/ChatService.java) 按 `ChatMode` 分派：
 
