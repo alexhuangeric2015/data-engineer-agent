@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" version="24.7.17">
+  <diagram id="14" name="14-企业语义与存量适配-V0.8">
+    <mxGraphModel dx="2400" dy="1450" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="2400" pageHeight="1450" background="#F3F6FA">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n1" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F3F6FA;strokeColor=#F3F6FA;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="0" y="0" width="2400" height="1450" />
+        </mxCell>
+        <mxCell id="n2" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#163456;strokeColor=#163456;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="0" y="0" width="2400" height="116" />
+        </mxCell>
+        <mxCell id="n3" value="HIAGENT  /  DATA INTELLIGENCE" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=15;fontColor=#AFC7E6;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48" y="17" width="2280" height="24" />
+        </mxCell>
+        <mxCell id="n4" value="企业语义与存量适配架构" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=33;fontColor=#FFFFFF;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48" y="45" width="2280" height="47" />
+        </mxCell>
+        <mxCell id="n5" value="在存量资产之上建立逻辑映射，优先复用既有平台，不把统一改表作为智能体建设前提。" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=18;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48" y="129" width="2280" height="32" />
+        </mxCell>
+        <mxCell id="n6" value="规划讨论稿 V0.8  ·  2026.10.28  ·  绿色突出当前建设范围，其他为目标规划；不表示已投产或通过验收。" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=16;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48" y="1410" width="1870" height="24" />
+        </mxCell>
+        <mxCell id="n7" value="治理与协同版 V0.8" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=right;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=15;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="2110" y="1410" width="240" height="24" />
+        </mxCell>
+        <mxCell id="n8" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EBF2FC;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48" y="190" width="2304" height="160" />
+        </mxCell>
+        <mxCell id="n9" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n8">
+          <mxGeometry as="geometry" x="18" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n10" value="业务表达与任务约束" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n8">
+          <mxGeometry as="geometry" x="37" y="14" width="2249" height="44" />
+        </mxCell>
+        <mxCell id="n11" value="客户 / 机构 / 指标 / 客群 / 分析目标 → 术语与标准指标标识" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n8">
+          <mxGeometry as="geometry" x="25" y="75" width="2254" height="65" />
+        </mxCell>
+        <mxCell id="n12" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48" y="490" width="752" height="260" />
+        </mxCell>
+        <mxCell id="n13" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n12">
+          <mxGeometry as="geometry" x="18" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n14" value="业务语义" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n12">
+          <mxGeometry as="geometry" x="37" y="14" width="697" height="44" />
+        </mxCell>
+        <mxCell id="n15" value="术语 / 同义词 / 业务对象&#10;指标定义 / 粒度 / 适用维度" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n12">
+          <mxGeometry as="geometry" x="25" y="75" width="702" height="165" />
+        </mxCell>
+        <mxCell id="n16" style="edgeStyle=none;rounded=0;html=0;strokeColor=#2861B5;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" edge="1" parent="1" source="n8" target="n12">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1200" y="354" />
+            <mxPoint as="targetPoint" x="424" y="486" />
+            <Array as="points">
+              <mxPoint x="1200" y="420" />
+              <mxPoint x="424" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n17" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="824" y="490" width="752" height="260" />
+        </mxCell>
+        <mxCell id="n18" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n17">
+          <mxGeometry as="geometry" x="18" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n19" value="模型与关联约束" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n17">
+          <mxGeometry as="geometry" x="37" y="14" width="697" height="44" />
+        </mxCell>
+        <mxCell id="n20" value="关联键 / 基数 / 去重规则&#10;时间有效期 / 跨域业务约束" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n17">
+          <mxGeometry as="geometry" x="25" y="75" width="702" height="165" />
+        </mxCell>
+        <mxCell id="n21" style="edgeStyle=none;rounded=0;html=0;strokeColor=#2861B5;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" edge="1" parent="1" source="n8" target="n17">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1200" y="354" />
+            <mxPoint as="targetPoint" x="1200" y="486" />
+            <Array as="points">
+              <mxPoint x="1200" y="420" />
+              <mxPoint x="1200" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n22" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1600" y="490" width="752" height="260" />
+        </mxCell>
+        <mxCell id="n23" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n22">
+          <mxGeometry as="geometry" x="18" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n24" value="实现与权威归属" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n22">
+          <mxGeometry as="geometry" x="37" y="14" width="697" height="44" />
+        </mxCell>
+        <mxCell id="n25" value="SQL / API / 物理表字段&#10;更新时点 / 来源版本 / 责任" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n22">
+          <mxGeometry as="geometry" x="25" y="75" width="702" height="165" />
+        </mxCell>
+        <mxCell id="n26" style="edgeStyle=none;rounded=0;html=0;strokeColor=#2861B5;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" edge="1" parent="1" source="n8" target="n22">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1200" y="354" />
+            <mxPoint as="targetPoint" x="1976" y="486" />
+            <Array as="points">
+              <mxPoint x="1200" y="420" />
+              <mxPoint x="1976" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n27" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48" y="905" width="752" height="240" />
+        </mxCell>
+        <mxCell id="n28" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n27">
+          <mxGeometry as="geometry" x="18" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n29" value="现有资产 / 指标平台" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n27">
+          <mxGeometry as="geometry" x="37" y="14" width="697" height="44" />
+        </mxCell>
+        <mxCell id="n30" value="管理定义、模型与已有实现&#10;补强语义、检索、版本与服务接口" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n27">
+          <mxGeometry as="geometry" x="25" y="75" width="702" height="145" />
+        </mxCell>
+        <mxCell id="n31" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="824" y="905" width="752" height="240" />
+        </mxCell>
+        <mxCell id="n32" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n31">
+          <mxGeometry as="geometry" x="18" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n33" value="数仓 / 计算引擎" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n31">
+          <mxGeometry as="geometry" x="37" y="14" width="697" height="44" />
+        </mxCell>
+        <mxCell id="n34" value="保存实际数据并执行受控计算&#10;质量和性能仍需原平台治理" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n31">
+          <mxGeometry as="geometry" x="25" y="75" width="702" height="145" />
+        </mxCell>
+        <mxCell id="n35" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1600" y="905" width="752" height="240" />
+        </mxCell>
+        <mxCell id="n36" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n35">
+          <mxGeometry as="geometry" x="18" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n37" value="业务系统与规则来源" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n35">
+          <mxGeometry as="geometry" x="37" y="14" width="697" height="44" />
+        </mxCell>
+        <mxCell id="n38" value="业务记录、组织与历史约束&#10;业务责任人确认解释和适用范围" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n35">
+          <mxGeometry as="geometry" x="25" y="75" width="702" height="145" />
+        </mxCell>
+        <mxCell id="n39" style="edgeStyle=none;rounded=0;html=0;strokeColor=#2861B5;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" edge="1" parent="1" source="n12" target="n27">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="424" y="754" />
+            <mxPoint as="targetPoint" x="424" y="901" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n40" style="edgeStyle=none;rounded=0;html=0;strokeColor=#2861B5;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" edge="1" parent="1" source="n17" target="n31">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1200" y="754" />
+            <mxPoint as="targetPoint" x="1200" y="901" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n41" style="edgeStyle=none;rounded=0;html=0;strokeColor=#2861B5;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitPerimeter=0;entryX=0.5;entryY=0;entryPerimeter=0;" edge="1" parent="1" source="n22" target="n35">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1976" y="754" />
+            <mxPoint as="targetPoint" x="1976" y="901" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n42" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="48.0" y="1200" width="1140.0" height="188" />
+        </mxCell>
+        <mxCell id="n43" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n42">
+          <mxGeometry as="geometry" x="18.0" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n44" value="主要难点" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n42">
+          <mxGeometry as="geometry" x="37.0" y="14" width="1085.0" height="44" />
+        </mxCell>
+        <mxCell id="n45" value="同名不同义、关联放大、历史有效期与多实现一致性。&#10;先选限定域核验，逐步补强语义，不承诺自动解决全部缺陷。" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n42">
+          <mxGeometry as="geometry" x="25.0" y="75" width="1090.0" height="93" />
+        </mxCell>
+        <mxCell id="n46" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#D7E1ED;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="1212.0" y="1200" width="1140.0" height="188" />
+        </mxCell>
+        <mxCell id="n47" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#2861B5;strokeColor=#2861B5;strokeWidth=1.3;container=1;collapsible=0;" vertex="1" parent="n46">
+          <mxGeometry as="geometry" x="18.0" y="22" width="5" height="27" />
+        </mxCell>
+        <mxCell id="n48" value="存量治理原则" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=25;fontColor=#2861B5;fontStyle=1;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n46">
+          <mxGeometry as="geometry" x="37.0" y="14" width="1085.0" height="44" />
+        </mxCell>
+        <mxCell id="n49" value="优先保留存量结构；必要修复经原有变更流程。&#10;业务关系、码值映射与真实加工血缘保持不同语义。" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=Noto Sans CJK SC;fontSize=21;fontColor=#60758C;fontStyle=0;spacing=0;strokeColor=none;fillColor=none;" vertex="1" parent="n46">
+          <mxGeometry as="geometry" x="25.0" y="75" width="1090.0" height="93" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

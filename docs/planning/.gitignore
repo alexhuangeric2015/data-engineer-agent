@@ -1,0 +1,4 @@
+# Internal renders and generated Python caches.
+**/qa/
+**/__pycache__/
+**/*.pyc
