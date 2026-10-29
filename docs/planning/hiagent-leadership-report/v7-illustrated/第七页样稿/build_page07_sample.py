@@ -186,66 +186,83 @@ def add_panel(slide, x, y, w, h):
     add_shape(slide, x, y, w, h, WHITE, BORDER, radius=0.08, shadow=True)
 
 
-def add_column_title(slide, x, y, w, title, judgment) -> float:
-    """列标题和取自备注的判断句。返回内容区起点。"""
-    add_text(slide, x + 0.16, y + 0.10, w - 0.32, 0.34, title, 16, TITLE, True)
-    add_text(slide, x + 0.16, y + 0.44, w - 0.32, 0.28, judgment, 12, BLUE, False)
-    add_line(slide, x + 0.16, y + 0.80, x + w - 0.16, y + 0.80)
-    return y + 0.92
+def add_compact_title(slide, x, y, w, title, judgment) -> float:
+    """短列头，给下方卡片留出高度。"""
+    add_text(slide, x + 0.16, y + 0.08, w - 0.32, 0.30, title, 16, TITLE, True)
+    add_text(slide, x + 0.16, y + 0.38, w - 0.32, 0.24, judgment, 12, BLUE)
+    add_line(slide, x + 0.16, y + 0.66, x + w - 0.16, y + 0.66)
+    return y + 0.76
 
 
-def add_inventory_card(slide, x, y, w, h, title, kind) -> None:
-    """支撑组里的单行原文卡片。"""
-    add_shape(slide, x, y, w, h, CHIP, radius=0.1)
-    add_icon(slide, x + 0.12, y + (h - 0.36) / 2, 0.36, kind)
-    add_text(slide, x + 0.58, y, w - 0.70, h, title, 14, INK, True)
-
-
-def add_service_column(slide, x, y, w, h) -> None:
-    """专业服务按包含关系画：资产 Agent 在内，其余同级并排。"""
+def add_service_panel(slide, x, y, w, h) -> None:
+    """归属是主结构：主体卡片最大，同级服务横向并排。"""
     add_panel(slide, x, y, w, h)
-    cursor = add_column_title(slide, x, y, w, "专业服务", "资产Agent为具体服务主体")
-    # 主体卡片要包住内部能力，同时给下方同级行留出底边距。
-    hero_h = 1.40
+    cursor = add_compact_title(slide, x, y, w, "专业服务", "资产Agent为具体服务主体")
+    hero_h = 1.58
     add_shape(slide, x + 0.16, cursor, w - 0.32, hero_h, HERO, HERO_LINE, radius=0.1)
-    add_icon(slide, x + 0.30, cursor + 0.14, 0.40, "can")
-    add_text(slide, x + 0.82, cursor + 0.10, 2.15, 0.32, "数据资产Agent", 16, TITLE, True)
-    add_pill(slide, x + w - 1.02, cursor + 0.12, 0.70, 0.28, "当前", BLUE, WHITE, 12)
-    add_text(slide, x + 0.82, cursor + 0.42, 3.50, 0.26, "表字段、字典码值为内部能力", 12, MUTED)
-    chip_y = cursor + 0.84
-    chip_w = (w - 0.32 - 0.28 - 0.12) / 2
-    add_shape(slide, x + 0.30, chip_y, chip_w, 0.42, WHITE, HERO_LINE, radius=0.12)
-    add_shape(slide, x + 0.30 + chip_w + 0.12, chip_y, chip_w, 0.42, WHITE, HERO_LINE, radius=0.12)
-    add_text(slide, x + 0.30, chip_y, chip_w, 0.42, "表字段", 14, TITLE, True, "center")
-    add_text(slide, x + 0.30 + chip_w + 0.12, chip_y, chip_w, 0.42, "字典码值", 14, TITLE, True, "center")
+    add_icon(slide, x + 0.32, cursor + 0.16, 0.42, "can")
+    add_text(slide, x + 0.88, cursor + 0.14, 3.40, 0.36, "资产Agent", 20, TITLE, True)
+    add_pill(slide, x + w - 1.08, cursor + 0.18, 0.74, 0.30, "当前", BLUE, WHITE, 13)
+    add_text(slide, x + 0.88, cursor + 0.52, 5.40, 0.28, "表字段、字典码值为内部能力", 13, MUTED)
+    chip_y = cursor + 0.96
+    chip_w = (w - 0.64 - 0.14) / 2
+    add_shape(slide, x + 0.32, chip_y, chip_w, 0.46, WHITE, HERO_LINE, radius=0.12)
+    add_shape(slide, x + 0.32 + chip_w + 0.14, chip_y, chip_w, 0.46, WHITE, HERO_LINE, radius=0.12)
+    add_text(slide, x + 0.32, chip_y, chip_w, 0.46, "表字段", 16, TITLE, True, "center")
+    add_text(slide, x + 0.32 + chip_w + 0.14, chip_y, chip_w, 0.46, "字典码值", 16, TITLE, True, "center")
 
-    label_y = cursor + hero_h + 0.12
-    add_text(slide, x + 0.16, label_y, w - 0.32, 0.26, "与资产Agent同级", 12, MUTED, True)
-    rows = [
+    label_y = cursor + hero_h + 0.10
+    add_text(slide, x + 0.16, label_y, w - 0.32, 0.26, "与资产Agent同级", 13, MUTED, True)
+    peers = [
         ("生产", "需求 / 设计 / 开发"),
         ("交付", "测试 / 评审"),
         ("运营分析", "治理 / 运维 / 分析"),
     ]
-    row_y = label_y + 0.30
-    row_h = 0.40
-    for name, detail in rows:
-        add_shape(slide, x + 0.16, row_y, w - 0.32, row_h, CHIP, radius=0.1)
-        add_text(slide, x + 0.30, row_y, 1.15, row_h, name, 14, TITLE, True)
-        add_text(slide, x + 1.45, row_y, 2.15, row_h, detail, 13, INK)
-        add_pill(slide, x + w - 0.92, row_y + 0.07, 0.62, 0.28, "规划", PLAN, MUTED, 11)
-        row_y += row_h + 0.08
+    card_y = label_y + 0.30
+    card_h = y + h - 0.16 - card_y
+    card_w = (w - 0.32 - 0.24) / 3
+    for index, (name, detail) in enumerate(peers):
+        card_x = x + 0.16 + index * (card_w + 0.12)
+        add_shape(slide, card_x, card_y, card_w, card_h, CHIP, radius=0.1)
+        add_text(slide, card_x + 0.12, card_y + 0.10, card_w - 0.86, 0.32, name, 15, TITLE, True)
+        add_pill(slide, card_x + card_w - 0.74, card_y + 0.12, 0.60, 0.28, "规划", PLAN, MUTED, 12)
+        add_text(slide, card_x + 0.12, card_y + 0.48, card_w - 0.24, 0.40, detail, 13, INK)
 
 
-def add_stack_column(slide, x, y, w, h, title, judgment, items) -> None:
-    """内容或连接列：判断在列头，原文各占一张卡片。"""
+def add_content_grid(slide, x, y, w, h) -> None:
+    """内容用四宫格，避免再排成和服务列一样的长条。"""
     add_panel(slide, x, y, w, h)
-    cursor = add_column_title(slide, x, y, w, title, judgment)
+    cursor = add_compact_title(slide, x, y, w, "内容与方法", "SKILL提供方法，由Agent实际调用资源")
+    items = ["术语 / 指标 / 模型语义", "规则 / 模板 / SKILL", "知识文件 / 检索索引", "事实查询数据 / 来源版本"]
     gap = 0.10
-    count = len(items)
-    card_h = (y + h - 0.16 - cursor - gap * (count - 1)) / count
-    for name, kind in items:
-        add_inventory_card(slide, x + 0.16, cursor, w - 0.32, card_h, name, kind)
-        cursor += card_h + gap
+    tile_w = (w - 0.32 - gap) / 2
+    tile_h = (y + h - 0.14 - cursor - gap) / 2
+    for index, name in enumerate(items):
+        tile_x = x + 0.16 + (index % 2) * (tile_w + gap)
+        tile_y = cursor + (index // 2) * (tile_h + gap)
+        add_shape(slide, tile_x, tile_y, tile_w, tile_h, CHIP, radius=0.1)
+        add_text(slide, tile_x + 0.08, tile_y, tile_w - 0.16, tile_h, name, 13, TITLE, True, "center")
+
+
+def add_platform_panel(slide, x, y, w, h) -> None:
+    """连接、运营左右分列，每条独占一行，避免两行叠字。"""
+    add_panel(slide, x, y, w, h)
+    cursor = add_compact_title(slide, x, y, w, "平台连接与运营", "模块可复用现有系统承载")
+    groups = [
+        ("连接", ["目录 / 指标 / 血缘接口", "开发 / 调度 / 质量接入"]),
+        ("运营", ["身份 / 权限 / 操作确认", "评测 / 反馈 / 内容更新"]),
+    ]
+    col_gap = 0.12
+    col_w = (w - 0.32 - col_gap) / 2
+    body_h = y + h - 0.14 - cursor
+    line_h = (body_h - 0.34) / 2
+    for index, (label, lines) in enumerate(groups):
+        col_x = x + 0.16 + index * (col_w + col_gap)
+        add_text(slide, col_x, cursor, col_w, 0.26, label, 13, BLUE, True)
+        for line_index, line in enumerate(lines):
+            line_y = cursor + 0.32 + line_index * (line_h + 0.06)
+            add_shape(slide, col_x, line_y, col_w, line_h - 0.06, CHIP, radius=0.1)
+            add_text(slide, col_x + 0.08, line_y, col_w - 0.16, line_h - 0.06, line, 13, INK, True, "center")
 
 
 def add_entry(slide) -> None:
@@ -310,38 +327,10 @@ def build() -> Presentation:
 
     add_header(slide)
     add_entry(slide)
-    column_y, column_h = 1.58, 4.24
-    add_service_column(slide, 0.38, column_y, 4.72, column_h)
-    add_stack_column(
-        slide,
-        5.24,
-        column_y,
-        3.95,
-        column_h,
-        "内容与方法",
-        "SKILL提供方法，由Agent实际调用资源",
-        [
-            ("术语 / 指标 / 模型语义", "doc"),
-            ("规则 / 模板 / SKILL", "book"),
-            ("知识文件 / 检索索引", "doc"),
-            ("事实查询数据 / 来源版本", "can"),
-        ],
-    )
-    add_stack_column(
-        slide,
-        9.33,
-        column_y,
-        3.62,
-        column_h,
-        "平台连接与运营",
-        "模块可复用现有系统承载",
-        [
-            ("目录 / 指标 / 血缘接口", "link"),
-            ("开发 / 调度 / 质量接入", "flow"),
-            ("身份 / 权限 / 操作确认", "check"),
-            ("评测 / 反馈 / 内容更新", "table"),
-        ],
-    )
+    # 左侧归属区明显大于右侧两组，右侧内容与连接的内部结构也不相同。
+    add_service_panel(slide, 0.34, 1.60, 7.56, 4.24)
+    add_content_grid(slide, 8.04, 1.60, 4.94, 1.96)
+    add_platform_panel(slide, 8.04, 3.68, 4.94, 2.16)
     add_landing(slide)
     add_footer(slide)
     notes = (
@@ -369,7 +358,7 @@ def assert_source_text(presentation: Presentation) -> None:
         "数据平台入口",
         "按场景嵌入",
         "专业服务",
-        "数据资产Agent",
+        "资产Agent",
         "当前",
         "表字段",
         "字典码值",
